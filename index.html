@@ -7,22 +7,43 @@
 </head>
 <body>
     <div id="game-container">
+        <img src="logo.png" alt="Game Logo" id="game-logo">
         <input type="text" id="wager" placeholder="Enter your wager ($1-$20)">
         <button id="start-game">Start Game</button>
+
+        <h2 id="round-info"></h2>
         <div id="wager-info" hidden>
             <h2 id="starting-wager"></h2>
             <h2 id="current-wager"></h2>
         </div>
-        <h2 id="round-info"></h2>
         <h2 id="odds-info"></h2>
+
         <button id="the-button" hidden>Click the Button</button>
         <button id="cash-out" hidden>Cash Out</button>
         <div id="money-tracker">
-            <h3 id="total-money-wagered">TOTAL MONEY WAGERED: $0</h3>
+            <!-- <h3 id="total-money-wagered">TOTAL MONEY WAGERED: $0</h3>
             <h3 id="total-money-won">TOTAL MONEY WON: $0</h3>
-            <h3 id="net-profit">NET PROFIT: $0</h3>
+            <h3 id="net-profit">NET PROFIT: $0</h3> -->
+            <h3>Betting Overview:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Total Money Wagered</th>
+                        <th>Total Money Won</th>
+                        <th>Net Profit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="money-info">
+                        <td id="total-money-wagered">$0</td>
+                        <td id="total-money-won">$0</td>
+                        <td id="net-profit">$0</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div id="betting-history">
+        <br>
+        <div id="betting-history" hidden>
             <h3>Betting History:</h3>
             <table id="history-table">
                 <tr>
@@ -36,7 +57,7 @@
             </table>
         </div>
         <div id="round-overview" hidden>
-            <h3>Round Overview:</h3>
+            <!-- <h3>Round Overview:</h3> -->
             <div id="legend">
                 <span class="legend-item"><span class="color-box passed"></span> Passed Rounds</span>
                 <span class="legend-item"><span class="color-box current"></span> Current Round</span>
@@ -45,7 +66,7 @@
                 <tr>
                     <th>Round</th>
                     <th>Chance of Explosion</th>
-                    <th>Possible Winning</th>
+                    <th>Future Winnings</th>
                 </tr>
                 <!-- Round overview rows will be added here dynamically -->
             </table>
