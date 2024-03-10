@@ -19,24 +19,28 @@
     color: white;
 }
 
-#money-tracker h3, #betting-history h3 {
+#money-tracker h3, #betting-history h3, #round-overview h3 {
     margin: 10px 0;
 }
 
-#history-table {
+table {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
     border-collapse: collapse;
 }
 
-#history-table th, #history-table td {
+th, td {
     border: 1px solid black;
     padding: 8px;
 }
 
-#history-table tr:nth-child(even) {
+tr:nth-child(even) {
     background-color: #f2f2f2;
+}
+
+tr.passed {
+    background-color: #ccffcc; /* Green background for passed rounds */
 }
 
 .loss {
