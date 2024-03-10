@@ -1,0 +1,92 @@
+let round = 1;
+let odds = 1;
+let startingWager = 0;
+let currentWager = 0;
+let totalMoneyWagered = 0;
+let totalMoneyWon = 0;
+let betCount = 0;
+
+document.getElementById('start-game').addEventListener('click', function() {
+    let wager = parseFloat(document.getElementById('wager').value);
+    if (!wager || !wager.toString().match(/^\d+(\.\d{0,2})?$/) || wager < 1 || wager > 20) {
+        alert('Invalid wager amount. Please enter a valid amount with up to two decimal places.');
+        return;
+    }
+
+    startingWager = wager;
+    currentWager = wager;
+    totalMoneyWagered += wager;
+    betCount++;
+    updateUI();
+});
+
+document.getElementById('the-button').addEventListener('click', function() {
+    // Apply the "House Always Wins" principle here
+    currentWager *= (1 + (odds / 100 * 0.99));
+    odds++;
+    round++;
+    updateUI();
+
+    let explosion = Math.random() < (odds / 100);
+    if (explosion) {
+        alert('The button exploded! Game over. Your final wager worth was: $' + currentWager.toFixed(3));
+        addToHistory(round, startingWager, -startingWager); // Lost wager
+        resetGame();
+    }
+});
+
+document.getElementById('cash-out').addEventListener('click', function() {
+    totalMoneyWon += currentWager; // Add to total money won immediately upon cashing out
+    alert('You have cashed out. Your final wager worth is: $' + currentWager.toFixed(3));
+    addToHistory(round, startingWager, currentWager - startingWager); // Won amount
+    updateMoneyTracking(); // Update money tracking immediately before reset
+    resetGame();
+});
+
+function updateUI() {
+    document.getElementById('wager').hidden = true;
+    document.getElementById('start-game').hidden = true;
+    document.getElementById('wager-info').hidden = false;
+    document.getElementById('the-button').hidden = false;
+    document.getElementById('cash-out').hidden = false;
+    document.getElementById('starting-wager').innerText = 'The starting wager is: $' + startingWager.toFixed(2);
+    document.getElementById('current-wager').innerText = 'Current wager worth is: $' + currentWager.toFixed(3);
+    document.getElementById('round-info').innerText = 'Round: ' + round;
+    document.getElementById('odds-info').innerText = 'Odds of exploding: ' + odds + '%';
+    updateMoneyTracking();
+}
+
+function updateMoneyTracking() {
+    document.getElementById('total-money-wagered').innerText = 'TOTAL MONEY WAGERED: $' + totalMoneyWagered.toFixed(2);
+    document.getElementById('total-money-won').innerText = 'TOTAL MONEY WON: $' + totalMoneyWon.toFixed(2);
+    document.getElementById('net-profit').innerText = 'NET PROFIT: $' + (totalMoneyWon - totalMoneyWagered).toFixed(2);
+}
+
+function resetGame() {
+    document.getElementById('wager').hidden = false;
+    document.getElementById('start-game').hidden = false;
+    document.getElementById('wager-info').hidden = true;
+    document.getElementById('the-button').hidden = true;
+    document.getElementById('cash-out').hidden = true;
+    round = 1;
+    odds = 1;
+    document.getElementById('wager').value = ''; // Clear wager input for next game
+}
+
+function addToHistory(roundEnded, initialWager, moneyOutcome) {
+    let historyTable = document.getElementById('history-table');
+    let newRow = historyTable.insertRow(-1); // Add a new row at the end of the table
+    let currentTime = new Date().toLocaleTimeString();
+    newRow.innerHTML = `<td>${currentTime}</td><td>${betCount}</td><td>$${initialWager.toFixed(2)}</td><td>${roundEnded}</td><td class="${moneyOutcome >= 0 ? 'win' : 'loss'}">$${moneyOutcome.toFixed(2)}</td>`;
+    document.getElementById('betting-history').hidden = false; // Show history if hidden
+}
+
+function hideBettingHistoryOnStart() {
+    // Check if only the header row exists in the table, then keep the history hidden
+    if (document.getElementById('history-table').rows.length <= 1) { 
+        document.getElementById('betting-history').hidden = true;
+    }
+}
+
+// Call this function initially to hide the betting history if no bets have been made yet
+hideBettingHistoryOnStart();
