@@ -25,7 +25,8 @@ document.getElementById('start-game').addEventListener('click', function() {
 });
 
 document.getElementById('the-button').addEventListener('click', function() {
-    currentWager *= (1 + (odds / 100 * 0.99)); // Apply the "House Always Wins" principle here
+    // currentWager *= (1 + (odds / 100 * 0.99)); // Apply the "House Always Wins" principle here
+    currentWager *= 1 / (1 - (odds / 100)) * 0.995;
     odds++;
     round++;
     updateUI();
@@ -33,14 +34,14 @@ document.getElementById('the-button').addEventListener('click', function() {
     let explosion = Math.random() < (odds / 100);
     if (explosion) {
         alert('The button exploded! Game over.');
-        addToHistory(round, startingWager, -startingWager); // Note the loss in history
+        addToHistory(round - 1, startingWager, -startingWager); // Note the loss in history
         resetGame();
     }
 });
 
 document.getElementById('cash-out').addEventListener('click', function() {
     totalMoneyWon += currentWager; // Add to total money won immediately upon cashing out
-    alert('You have cashed out. Your final wager worth is: $' + currentWager.toFixed(3));
+    alert('You have cashed out. Your final winnings are: $' + currentWager.toFixed(3));
     addToHistory(round, startingWager, currentWager - startingWager); // Record the win
     updateMoneyTracking(); // Immediate update before reset
     resetGame();
@@ -52,17 +53,37 @@ function updateUI() {
     document.getElementById('wager-info').hidden = false;
     document.getElementById('the-button').hidden = false;
     document.getElementById('cash-out').hidden = false;
-    document.getElementById('starting-wager').innerText = 'The starting wager is: $' + startingWager.toFixed(2);
-    document.getElementById('current-wager').innerText = 'Current wager worth is: $' + currentWager.toFixed(2);
+    document.getElementById('round-info').hidden = false;
+    document.getElementById('odds-info').hidden = false;
     document.getElementById('round-info').innerText = 'Round: ' + round;
+    document.getElementById('starting-wager').innerText = 'You started with: $' + startingWager.toFixed(2);
+    document.getElementById('current-wager').innerText = 'You now have: $' + currentWager.toFixed(2);
     document.getElementById('odds-info').innerText = 'Odds of exploding: ' + odds + '%';
     updateMoneyTracking();
 }
 
+// function updateMoneyTracking() {
+//     document.getElementById('total-money-wagered').innerText = 'TOTAL MONEY WAGERED: $' + totalMoneyWagered.toFixed(2);
+//     document.getElementById('total-money-won').innerText = 'TOTAL MONEY WON: $' + totalMoneyWon.toFixed(2);
+//     document.getElementById('net-profit').innerText = 'NET PROFIT: $' + (totalMoneyWon - totalMoneyWagered).toFixed(2);
+// }
+
 function updateMoneyTracking() {
-    document.getElementById('total-money-wagered').innerText = 'TOTAL MONEY WAGERED: $' + totalMoneyWagered.toFixed(2);
-    document.getElementById('total-money-won').innerText = 'TOTAL MONEY WON: $' + totalMoneyWon.toFixed(2);
-    document.getElementById('net-profit').innerText = 'NET PROFIT: $' + (totalMoneyWon - totalMoneyWagered).toFixed(2);
+    let wagered = totalMoneyWagered.toFixed(2);
+    let won = totalMoneyWon.toFixed(2);
+    let profit = (totalMoneyWon - totalMoneyWagered).toFixed(2);
+    
+    document.getElementById('total-money-wagered').textContent = '$' + wagered;
+    document.getElementById('total-money-won').textContent = '$' + won;
+    let netProfitCell = document.getElementById('net-profit');
+    netProfitCell.textContent = '$' + profit;
+    
+    // Update the class based on whether the net profit is positive or negative
+    if (totalMoneyWon - totalMoneyWagered > 0) {
+        netProfitCell.className = 'profit-positive'; // Add the class for a positive profit
+    } else {
+        netProfitCell.className = 'profit-negative'; // Add the class for a negative profit
+    }
 }
 
 function resetGame() {
@@ -71,6 +92,8 @@ function resetGame() {
     document.getElementById('wager-info').hidden = true;
     document.getElementById('the-button').hidden = true;
     document.getElementById('cash-out').hidden = true;
+    document.getElementById('round-info').hidden = true;
+    document.getElementById('odds-info').hidden = true;
     document.getElementById('betting-history').hidden = false; // Show again for new wager
     round = 1;
     odds = 1;
@@ -106,8 +129,9 @@ function populateRoundOverview() {
         cell2.innerHTML = i + '%'; // Explosion chance
 
         // Calculate potential winnings for this round
-        if (i > 1) { // For round 1, simulatedWager is already equal to startingWager
-            simulatedWager *= ((i - 1) / 100 * 0.99 + 1); // Update simulatedWager for each round, based on the previous round's winnings
+        if (i > 0) { // For round 1, simulatedWager is already equal to startingWager
+            // simulatedWager *= ((i - 1) / 100 * 0.99 + 1); // Update simulatedWager for each round, based on the previous round's winnings
+            simulatedWager *=  (1 / (1 - (i / 100))) * 0.995; // Update simulatedWager for each round, based on the previous round's winnings
         }
         cell3.innerHTML = '$' + simulatedWager.toFixed(2);
 
