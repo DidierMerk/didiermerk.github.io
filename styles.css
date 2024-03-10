@@ -50,3 +50,34 @@ tr.passed {
 .win {
     background-color: #ccffcc;
 }
+
+#legend {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.legend-item {
+    margin: 0 15px;
+    display: flex;
+    align-items: center;
+}
+
+.color-box {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.color-box.passed {
+    background-color: #ccffcc;
+}
+
+.color-box.current {
+    background-color: #cccccc;
+}
+
+tr.current {
+    background-color: #cccccc;
+}
