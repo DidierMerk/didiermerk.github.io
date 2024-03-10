@@ -1,7 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Button Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <div id="game-container">
+        <input type="text" id="wager" placeholder="Enter your wager ($1-$20)">
+        <button id="start-game">Start Game</button>
+        <div id="wager-info" hidden>
+            <h2 id="starting-wager"></h2>
+            <h2 id="current-wager"></h2>
+        </div>
+        <h2 id="round-info"></h2>
+        <h2 id="odds-info"></h2>
+        <button id="the-button" hidden>Click the Button</button>
+        <button id="cash-out" hidden>Cash Out</button>
+        <div id="money-tracker">
+            <h3 id="total-money-wagered">TOTAL MONEY WAGERED: $0</h3>
+            <h3 id="total-money-won">TOTAL MONEY WON: $0</h3>
+            <h3 id="net-profit">NET PROFIT: $0</h3>
+        </div>
+        <div id="betting-history" hidden>
+            <h3>Betting History:</h3>
+            <table id="history-table">
+                <tr>
+                    <th>Time</th>
+                    <th>Bet Number</th>
+                    <th>Initial Wager</th>
+                    <th>Round Ended</th>
+                    <th>Money Won/Lost</th>
+                </tr>
+                <!-- Betting history rows will be added here -->
+            </table>
+        </div>
+    </div>
+    <script src="game.js"></script>
 </body>
 </html>
