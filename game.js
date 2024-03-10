@@ -16,10 +16,12 @@ document.getElementById('start-game').addEventListener('click', function() {
     currentWager = wager;
     totalMoneyWagered += wager;
     betCount++;
+    round = 1;
     document.getElementById('betting-history').hidden = true; // Hide during game play
     updateUI();
     document.getElementById('round-overview').hidden = false;
     populateRoundOverview(); // Prepare the round overview table
+    updateRoundOverview();
 });
 
 document.getElementById('the-button').addEventListener('click', function() {
@@ -30,7 +32,7 @@ document.getElementById('the-button').addEventListener('click', function() {
     updateRoundOverview(); // Update which round has been completed in the overview
     let explosion = Math.random() < (odds / 100);
     if (explosion) {
-        alert('The button exploded! Game over. Your final wager worth was: $' + currentWager.toFixed(3));
+        alert('The button exploded! Game over.');
         addToHistory(round, startingWager, -startingWager); // Note the loss in history
         resetGame();
     }
@@ -51,7 +53,7 @@ function updateUI() {
     document.getElementById('the-button').hidden = false;
     document.getElementById('cash-out').hidden = false;
     document.getElementById('starting-wager').innerText = 'The starting wager is: $' + startingWager.toFixed(2);
-    document.getElementById('current-wager').innerText = 'Current wager worth is: $' + currentWager.toFixed(3);
+    document.getElementById('current-wager').innerText = 'Current wager worth is: $' + currentWager.toFixed(2);
     document.getElementById('round-info').innerText = 'Round: ' + round;
     document.getElementById('odds-info').innerText = 'Odds of exploding: ' + odds + '%';
     updateMoneyTracking();
@@ -105,9 +107,9 @@ function populateRoundOverview() {
 
         // Calculate potential winnings for this round
         if (i > 1) { // For round 1, simulatedWager is already equal to startingWager
-            simulatedWager *= ((i - 1) / 100 * 0.995 + 1); // Update simulatedWager for each round, based on the previous round's winnings
+            simulatedWager *= ((i - 1) / 100 * 0.99 + 1); // Update simulatedWager for each round, based on the previous round's winnings
         }
-        cell3.innerHTML = '$' + simulatedWager.toFixed(3);
+        cell3.innerHTML = '$' + simulatedWager.toFixed(2);
 
         // Note: This loop updates simulatedWager as if the player wins every round
     }
@@ -119,8 +121,12 @@ function updateRoundOverview() {
         let row = overviewTable.rows[i];
         if (i < round) {
             row.classList.add('passed'); // Mark past rounds as passed
+            row.classList.remove('current'); // Ensure it's not marked as current
+        } else if (i === round) {
+            row.classList.remove('passed'); // Current round is not passed
+            row.classList.add('current'); // Mark as current round
         } else {
-            row.classList.remove('passed'); // Ensure future rounds are not marked
+            row.classList.remove('passed', 'current'); // Future rounds are neither passed nor current
         }
     }
 }
