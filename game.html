@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Page - Treasure Hunter</title>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="actual-game">
+            <h2 style="text-align:center;">Treasure Hunter</h2>
+            <div id="round-counter">Round - <span id="current-round">1</span></div>
+            <div id="chests" class="chests-container"></div>
+        </div>
+        <div id="account-money">
+            <div id="player-info" style="display: none;">
+                <p id="player-details"></p>
+                <button id="deposit-button">Deposit Money</button>
+                <form id="deposit-form" style="display: none;">
+                    <input type="number" id="deposit-amount" placeholder="Amount (1-100)$" min="1" max="100" required>
+                    <button type="submit">Deposit</button>
+                </form>
+                <div id="stake-selection" style="display: none;">
+                    <p>Select Your Stake: </p>
+                    <button class="stake-button" data-stake="1">$1</button>
+                    <button class="stake-button" data-stake="2">$2</button>
+                    <button class="stake-button" data-stake="5">$5</button>
+                    <button class="stake-button" data-stake="10">$10</button>
+                    <button class="stake-button" data-stake="25">$25</button>
+                    <button class="stake-button" data-stake="50">$50</button>
+                </div>
+                <p>Starting Stake: <span id="starting-stake">$0</span></p>
+                <p>Current Stake Worth: <span id="current-stake-worth">$0</span></p>
+                <button id="cash-out" style="display: none;">Cash Out</button>
+            </div>
+            <div id="click-history">Previously Clicked Chests: <span id="click-list"></span></div>
+        </div>
+        <div id="game-progress">
+            <h3>Game Progress</h3>
+            <table id="progress-table">
+                <thead>
+                    <tr>
+                        <th>Round</th>
+                        <th>Chance of Explosion</th>
+                        <th>Future winnings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows added dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="game-script.js"></script>
+</body>
+</html>
