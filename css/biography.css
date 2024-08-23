@@ -1,0 +1,285 @@
+/* Biography Block */
+.bio-block {
+    width: 85%;
+    margin: 0 auto;
+    padding: 40px 0px;
+    background-color: #ffffff;
+}
+
+.bio-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align tops of both containers */
+    padding-bottom: 80px;
+}
+
+.left-container {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensure the bottom aligns with the right container */
+    align-items: center;
+    text-align: center;
+}
+
+.avatar {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    margin-top: 30px;
+}
+
+.name {
+    font-size: 2.3em;
+    font-weight: 500; /* Slightly thicker font */
+    margin: 5px 0;
+}
+
+.role, .institution {
+    font-size: 1.1em;
+    font-weight: 500;
+    margin: 5px 0;
+    color: #797979;
+}
+
+.institution {
+    color: #0052ab; /* Institution link color */
+    text-decoration: none;
+}
+
+.institution:hover {
+    text-decoration: underline;
+}
+
+.socials {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.social-icon {
+    font-size: 2.3em;
+    margin: 10px 5px;
+    color: #0062cb; /* Set the color for the social icons */
+    text-decoration: none;
+    transition: color 0.3s ease;
+    transform-origin: center;
+}
+
+.social-icon:hover {
+    transform: scale(1.2);
+}
+
+.right-container {
+    width: 65%;
+    padding-left: 10px;
+}
+
+.right-container h1 {
+    font-size: 2.2em;
+    font-weight: 300;
+    margin-bottom: -10px;
+}
+
+.right-container p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-weight: 200;
+}
+
+.right-container h2 {
+    font-size: 1.3em; /* Match the larger, bold 'Education' text */
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.education-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.education-list li {
+    margin-bottom: 20px; /* Space between each education item */
+}
+
+.degree-container {
+    display: flex;
+    align-items: center;
+}
+
+.education-list i {
+    margin-right: 10px;
+    margin-left: 5px;
+    color: #373737; /* Ensure the education icons match the social icons */
+    font-size: 1.0em;
+}
+
+.education-list .degree {
+    font-size: 1.0em;
+    font-weight: 500; /* Thicker font for the degree */
+    display: inline-block;
+    margin-top: -10px;
+    margin-left: 5px;
+}
+
+.education-list .institution-list {
+    font-size: 0.9em; /* Smaller font for the institution name */
+    font-weight: 400;
+    color: #757575; /* Slightly lighter color for the institution name */
+    display: block; /* Forces the institution name onto a new line */
+    margin-left: 40px; /* Align with degree text considering the icon width */
+    margin-top: 3px;
+}
+
+/* Dark Mode Biography Styles */
+body.dark-mode {
+    background-color: #272935; /* Dark background for the entire page */
+}
+
+body.dark-mode .bio-block {
+    background-color: #272935; /* Darker background for biography block */
+}
+
+body.dark-mode .role {
+    color: #9c9da2;
+}
+
+body.dark-mode .name, 
+body.dark-mode .right-container h1,
+body.dark-mode .right-container p,
+body.dark-mode .right-container h2,
+body.dark-mode .education-list .degree {
+    color: #ffffff; /* Light text color for dark mode */
+}
+
+body.dark-mode .education-list .institution-list {
+    color: #b6b6b6;
+}
+
+body.dark-mode .institution {
+    color: #64b5f6; /* Light blue for institution link color */
+}
+
+body.dark-mode .social-icon {
+    color: #64b5f6; /* Light blue for social icons in dark mode */
+}
+
+body.dark-mode .education-list i {
+    color: #ffffff; /* Light color for education icons */
+}
+
+/* Mobile Layout */
+@media only screen and (max-width: 992px) {
+    .bio-block {
+        padding: 30px 0; /* Reduce padding for smaller screens */
+    }
+
+    .bio-container {
+        display: block;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .left-container, 
+    .right-container {
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .left-container {
+        margin-bottom: 30px; /* Add some spacing between the two containers */
+        text-align: center;  /* Center the text inside the left container */
+    }
+
+    .right-container {
+        padding-left: 0; /* Remove left padding for mobile */
+    }
+
+    .avatar {
+        width: 200px; /* Smaller avatar for mobile */
+        height: 200px;
+    }
+
+    .name {
+        font-size: 1.8em; /* Slightly smaller font size for mobile */
+    }
+
+    .role, .institution {
+        font-size: 1em; /* Smaller font size for mobile */
+    }
+
+    .social-icon {
+        font-size: 1.8em; /* Smaller social icons for mobile */
+    }
+
+    .right-container h1 {
+        font-size: 1.6em; /* Reduce the heading size for mobile */
+        margin-bottom: 5px;
+    }
+
+    .right-container p {
+        font-size: 0.8em; /* Reduce the paragraph font size for mobile */
+    }
+
+    .right-container h2 {
+        font-size: 1.0em; /* Reduce the subheading size for mobile */
+        margin-top: 30px;
+    }
+
+    .education-list .degree {
+        font-size: 0.8em;
+    }
+
+    .education-list .institution-list {
+        font-size: 0.7em;
+        margin-top: -1px;
+        margin-bottom: 10px;
+    }
+
+    .education-list i {
+        font-size: 1.0em;
+    }
+}
+
+/* Mobile Layout for screens below 680px */
+@media only screen and (max-width: 680px) {
+    .bio-block {
+        padding: 5px 0; /* Further reduce padding for smaller screens */
+    }
+
+    .bio-container {
+        width: 95%; /* Increase the width of the container */
+        margin: 0 auto;
+    }
+
+    .avatar {
+        width: 120px; /* Further reduce avatar size for very small screens */
+        height: 120px;
+    }
+
+    .name {
+        font-size: 1.6em; /* Further reduce font size for very small screens */
+    }
+
+    .role, .institution {
+        font-size: 0.9em; /* Smaller font size for very small screens */
+    }
+
+    .social-icon {
+        font-size: 1.5em; /* Smaller social icons for very small screens */
+    }
+
+    .right-container h1 {
+        font-size: 1.4em; /* Further reduce heading size for very small screens */
+    }
+
+    .right-container p {
+        font-size: 0.7em; /* Further reduce paragraph font size for very small screens */
+    }
+
+    .right-container h2 {
+        font-size: 0.9em; /* Further reduce subheading size for very small screens */
+    }
+}

@@ -1,0 +1,218 @@
+/* Publications Block */
+.publications-block {
+    padding: 80px 0;
+    background-color: #f7f7f7;
+    padding-bottom: 140px;
+}
+
+.publications-container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+}
+
+.publications-left-container {
+    width: 34%;
+    margin-top: -30px;
+}
+
+.publications-left-container h1 {
+    font-size: 2.2em;
+    font-weight: 300;
+    margin-bottom: -10px;
+}
+
+.publications-right-container {
+    width: 66%;
+    position: relative;
+}
+
+.publication-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.publication-box {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 25px 20px; /* Uniform padding */
+    border-radius: 3px;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1); /* Smaller shadow */
+    width: 100%;
+    transition: none; /* No hover effect */
+}
+
+/* Adjusted CSS for publication cards */
+.publication-authors {
+    font-size: 0.95em;
+    font-weight: 300;
+    color: #757575;
+    margin: 0;
+    line-height: 0.7;
+    margin-bottom: 0px; /* Space between authors and date */
+}
+
+.publication-details {
+    font-size: 0.8em;
+    font-weight: 300;
+    color: #6b6b6b;
+    margin-bottom: 25px; /* Space between date and title */
+    line-height: 1;
+}
+
+.publication-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #262626;
+    margin: 0px 0;
+    line-height: 1.4;
+}
+
+.publication-title a {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #262626;
+    text-decoration: none; /* Remove underline by default */
+    line-height: 1.4;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.publication-title a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+.publication-description {
+    font-size: 0.9em;
+    line-height: 1.6;
+    color: #1a1a1a;
+    margin-top: 10px;
+    margin-bottom: 25px; /* Space between description and buttons */
+}
+
+.publication-links {
+    display: flex;
+    gap: 10px;
+}
+
+.publication-links a {
+    font-size: 0.85em;
+    color: #0064d0;
+    text-decoration: none;
+    border: 1px solid #0064d0;
+    padding: 5px 10px;
+    border-radius: 3px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.publication-links a:hover {
+    background-color: #0064d0;
+    color: #ffffff;
+}
+
+/* Dark Mode Publications Block Styles */
+body.dark-mode .publications-block {
+    background-color: #23252f; /* Dark background color for publications block */
+}
+
+body.dark-mode .publications-left-container h1 {
+    color: #ffffff;
+}
+
+body.dark-mode .publication-box {
+    background-color: #282a36; /* Darker background for publication boxes */
+    border: 1px solid #454759; /* Darker border color */
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.5); /* Darker shadow */
+}
+
+body.dark-mode .publication-authors,
+body.dark-mode .publication-details {
+    color: #b6b6b6;
+}
+
+body.dark-mode .publication-title,
+body.dark-mode .publication-description {
+    color: #ffffff; /* Light text color for dark mode */
+}
+
+body.dark-mode .publication-title a {
+    color: #ffffff; /* Light color for publication titles in dark mode */
+}
+
+body.dark-mode .publication-title a:hover {
+    color: #69bcffec; /* Light blue color for publication titles on hover */
+    text-decoration: underline; /* Keep the underline on hover */
+}
+
+body.dark-mode .publication-links a {
+    color: #64b5f6; /* Light blue color for buttons in dark mode */
+    border-color: #64b5f6; /* Match border to button color */
+}
+
+body.dark-mode .publication-links a:hover {
+    background-color: #64b5f6; /* Light blue background on hover */
+    color: #ffffff; /* White text on hover */
+}
+
+/* Mobile Layout for screens below 992px */
+@media only screen and (max-width: 992px) {
+    .publications-block {
+        padding: 30px 0;
+    }
+
+    .publications-container {
+        display: block;
+        width: 93%;
+    }
+
+    .publications-left-container, 
+    .publications-right-container {
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .publications-left-container {
+        margin-bottom: 30px; /* Add some spacing between the two containers */
+        text-align: center;  /* Center the text inside the left container */
+    }
+
+    .publications-right-container {
+        padding-left: 0; /* Remove left padding for mobile */
+    }
+
+    .publication-item {
+        flex-direction: column; /* Stack publication items vertically */
+        align-items: center;
+    }
+
+    .publication-box {
+        width: 70%; /* Publication cards take 70% of the page width */
+    }
+
+    .publication-title {
+        font-size: 0.9em; /* Slightly reduce the title font size for mobile */
+    }
+
+    .publication-description {
+        font-size: 0.75em; /* Adjust the description font size for mobile */
+    }
+}
+
+/* Mobile Layout for screens below 680px */
+@media only screen and (max-width: 680px) {
+    .publication-box {
+        width: 93%; /* Publication cards take 90% of the page width */
+    }
+
+    .publication-title {
+        font-size: 0.8em; /* Reduce the title font size for smaller screens */
+    }
+
+    .publication-description {
+        font-size: 0.7em; /* Adjust the description font size for smaller screens */
+    }
+}

@@ -1,0 +1,166 @@
+/* Projects Block */
+.projects-block {
+    padding: 70px 0;
+    background-color: #ffffff;
+}
+
+.projects-container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+}
+
+.projects-left-container {
+    width: 29%;
+    margin-top: -22px;
+}
+
+.projects-left-container h1 {
+    font-size: 2.2em;
+    font-weight: 300;
+    margin-bottom: -10px;
+}
+
+.projects-right-container {
+    width: 71%;
+    position: relative;
+}
+
+.project-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start; /* Align items at the top */
+    margin-bottom: 10px;
+    padding-left: 60px;
+}
+
+.project-image {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    border-radius: 5px;
+    margin-right: 20px;
+    margin-left: 7px;
+}
+
+.project-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.project-title span {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #000000;
+    line-height: 1.5;
+}
+
+.project-item-link .project-title span:hover {
+    text-decoration: underline; /* Underline title on hover */
+}
+
+.project-description {
+    font-size: 0.9em;
+    line-height: 1.7;
+    color: #1a1a1a;
+    margin-top: 3px;
+}
+
+/* Project Item Link */
+.project-item-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Dark Mode Projects Block Styles */
+body.dark-mode .projects-block {
+    background-color: #272935; /* Dark background color for projects block */
+}
+
+body.dark-mode .projects-left-container h1 {
+    color: #ffffff;
+}
+
+body.dark-mode .project-title span {
+    color: #ffffff; /* Light color for project titles */
+}
+
+body.dark-mode .project-title span:hover {
+    color: #64b5f6; /* Light blue color for project titles on hover in dark mode */
+    text-decoration: underline; /* Keep the underline on hover */
+}
+
+body.dark-mode .project-description {
+    color: #ffffff; /* Lighter text color for project descriptions */
+}
+
+body.dark-mode .project-item-link {
+    color: inherit; /* Ensure link color inherits the dark mode settings */
+}
+
+/* Mobile Layout */
+@media only screen and (max-width: 992px) {
+    .projects-block {
+        padding: 30px 0;
+    }
+
+    .projects-container {
+        display: block;
+        width: 90%;
+    }
+
+    .projects-left-container, 
+    .projects-right-container {
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .projects-left-container {
+        margin-bottom: 30px; /* Add some spacing between the two containers */
+        text-align: center;  /* Center the text inside the left container */
+    }
+
+    .projects-right-container {
+        padding-left: 0; /* Remove left padding for mobile */
+    }
+
+    .project-item {
+        padding-left: 0; /* Remove left padding for mobile */
+        flex-direction: row; /* Align the image and details side by side */
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .project-image {
+        width: 20%; /* Make the image smaller, 10% of the container width */
+        max-width: 20%; /* Ensure the image does not exceed 10% of the page width */
+        height: auto;
+        margin-right: 0px; /* Space between the image and the details */
+        margin-left: 0; /* Remove the left margin */
+        display: inline-block; /* Display the image inline with text */
+        border-radius: 1px;
+    }
+
+    .project-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-right: 10px;
+        width: 80%; /* Limit the width of the text to 85% of the page */
+        text-align: left; /* Align the text to the left */
+    }
+
+    .project-title span {
+        font-size: 1em; /* Slightly reduce the font size for mobile */
+    }
+
+    .project-description {
+        font-size: 0.7em;
+        margin-top: 5px; /* Add some spacing below the title */
+    }
+}
