@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Resume</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/biography.css">
+    <link rel="stylesheet" href="css/experience.css">
+    <link rel="stylesheet" href="css/projects.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/publications.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header Block -->
+    <div id="header">
+        <div class="header-left">
+            <a href="#" class="name-link">Didier Merk</a>
+            <nav class="header-nav">
+                <a href="#home">Home</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#publications">Publications</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div id="dark-mode-toggle" aria-label="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Header -->
+    <div id="mobile-header">
+        <div class="mobile-header-left">
+            <div id="menu-toggle" aria-label="Toggle Menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <a href="#" class="name-link">Didier Merk</a>
+        </div>
+        <div class="mobile-header-right">
+            <div id="dark-mode-toggle" aria-label="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu (hidden by default) -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#home">Home</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#publications">Publications</a>
+    </div>
+
+    <!-- Biography Block -->
+    <div id="home" class="bio-block">
+        <div class="bio-container">
+            <div class="left-container">
+                <img src="images/avatar.jpg" alt="Profile Picture" class="avatar">
+                <h2 class="name">Didier Merk</h2>
+                <p class="role">Master Student Artificial Intelligence</p>
+                <a href="https://www.uva.nl/shared-content/programmas/en/masters/artificial-intelligence/artificial-intelligence.html" class="institution">University of Amsterdam</a>
+                <div class="socials">
+                    <a href="mailto:your.email@example.com" class="social-icon"><i class="fas fa-envelope"></i></a>
+                    <a href="https://twitter.com/yourusername" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="https://scholar.google.com/citations?user=yourprofileid" class="social-icon"><i class="fas fa-graduation-cap"></i></a>
+                    <a href="https://github.com/yourusername" class="social-icon"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/yourusername" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="right-container">
+                <h1>Biography</h1>
+                <p>I am a third-year PhD student at the University of Edinburgh’s School of Informatics, where I am supervised by Dr. He Sun. My PhD research focuses on developing clustering algorithms for graphs, using techniques from spectral graph theory.</p>
+                <p>Before that, I was a research intern at Five, in their Oxford research group, where I worked on few-shot learning together with Dr. Luca Bertinetto.</p>
+                <p>I received my MSc in Artificial Intelligence graduate (with distinction) from the University of Edinburgh. For my thesis I received the Joint AI MSc Dissertation Prize, awarded to 2 out of 200+ students. I did my bachelors (summa cum laude) in mathematics and computer science at Amsterdam University College.</p>
+                <h2>Education</h2>
+                <ul class="education-list">
+                    <li>
+                        <div class="degree-container">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span class="degree">PhD in Computer Science, 2021 - Present</span>
+                        </div>
+                        <span class="institution-list">University of Edinburgh</span>
+                    </li>
+                    <li>
+                        <div class="degree-container">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span class="degree">MSc in Artificial Intelligence, 2019 - 2021</span>
+                        </div>
+                        <span class="institution-list">University of Oxford</span>
+                    </li>
+                    <li>
+                        <div class="degree-container">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span class="degree">BSc in Mathematics, 2015 - 2019</span>
+                        </div>
+                        <span class="institution-list">University of Amsterdam</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Experience Block -->
+    <div id="experience" class="experience-block">
+        <div class="experience-container">
+            <div class="experience-left-container">
+                <h1>Experience</h1>
+            </div>
+            <div class="experience-right-container">
+                <!-- Experience Items -->
+                <div class="experience-item">
+                    <div class="timeline-dot"></div>
+                    <div class="experience-box">
+                        <div class="experience-header">
+                            <img src="images/inglogo.png" alt="Company Logo" class="experience-company-logo">
+                            <div class="experience-details">
+                                <h2 class="experience-role">Machine Learning Intern</h2>
+                                <p class="experience-company-name">
+                                    <a href="https://www.ingwb.com/en/insights/empowering-with-advanced-analytics" target="_blank">ING Bank</a>
+                                </p>
+                                <p class="experience-date-location">Jan 2024 – Oct 2024 · Amsterdam, Netherlands</p>
+                            </div>
+                        </div>
+                        <p class="experience-description">Researched few-shot learning for image classification at FiveAI`s Oxford research group, which has close ties to the Torr Vision Group at Oxford University. The work I did together with Luca Bertinetto resulted in a contributed talk at the NeurIPS 2020 Meta Learning workshop, and a NeurIPS 2021 paper.</p>
+                    </div>
+                </div>
+                <div class="experience-item">
+                    <div class="timeline-dot"></div>
+                    <div class="experience-box">
+                        <div class="experience-header">
+                            <img src="images/uvalogo.png" alt="Company Logo" class="experience-company-logo">
+                            <div class="experience-details">
+                                <h2 class="experience-role">Tutorial Lecturer</h2>
+                                <p class="experience-company-name">
+                                    <a href="https://studiegids.uva.nl/xmlpages/page/2023-2024-en/search-course/course/109561" target="_blank">University of Amsterdam</a>
+                                </p>
+                                <p class="experience-date-location">Mar 2024 – Jun 2024· Amsterdam, Netherlands</p>
+                            </div>
+                        </div>
+                        <p class="experience-description">I worked on a project where we used drones equipped with RGB and infrared cameras to create orthomosaic maps of areas that contain geothermal lineaments. I developed an anomaly detection tool to automatically detect areas of geothermal importance using deep autoencoders and a one-class SVM. This work got published at the Stanford workshop on Geothermal Reservoir Engineering.</p>
+                    </div>
+                </div>
+                <div class="experience-item">
+                    <div class="timeline-dot"></div>
+                    <div class="experience-box">
+                        <div class="experience-header">
+                            <img src="images/cernlogo.png" alt="Company Logo" class="experience-company-logo">
+                            <div class="experience-details">
+                                <h2 class="experience-role">Research Intern</h2>
+                                <p class="experience-company-name">
+                                    <a href="https://home.cern/" target="_blank">CERN</a>
+                                </p>
+                                <p class="experience-date-location">Mar 2022 – Jul 2022 · Geneva, Switzerland</p>
+                            </div>
+                        </div>
+                        <p class="experience-description">Worked on a project which aimed to research the importance of bodily cues in social interaction. The work consisted of designing and programming automated intelligent social behaviour for virtual agents in Unity3D and C#. Constructed complex social behaviours for virtual agents such as glancing, conversing, and gesticulating. This work got published at a virtual agents conference.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects Block -->
+    <div id="projects" class="projects-block">
+        <div class="projects-container">
+            <div class="projects-left-container">
+                <h1>Projects</h1>
+            </div>
+            <div class="projects-right-container">
+                <!-- Project Items -->
+                <a href="https://project1.com" target="_blank" class="project-item-link">
+                    <div class="project-item">
+                        <div class="project-details">
+                            <div class="project-title">
+                                <span>Organisor of a talk series on societal impact of AI development</span>
+                            </div>
+                            <p class="project-description">At Edinburgh University I was heavily involved in initiating and organising a series of panel discussions titled We Need to Talk About AI, where we invited insightful speakers to discuss some pressing societal issues around AI development. I was involved in three events which related to Data & Privacy, the Future of Work and Autonomous Weapons. Due to the success of the talk series it is now officially funded and endorsed by the Edinburgh Futures Institute.</p>
+                        </div>
+                        <img src="images/project2.jpg" alt="Project Image" class="project-image">
+                    </div>
+                </a>
+                <a href="https://project2.com" target="_blank" class="project-item-link">
+                    <div class="project-item">
+                        <div class="project-details">
+                            <div class="project-title">
+                                <span>Research Team co-lead at EUFS</span>
+                            </div>
+                            <p class="project-description">While doing my AI MSc at the University of Edinburgh, I was part of the autonomous driving team at Edinburgh University Forumula Student, where I co-led the research team. We implemented a deep ConvNet to drive the car autonomously in ROS simulation using supervised learning.</p>
+                        </div>
+                        <img src="images/project1.gif" alt="Project Image" class="project-image">
+                    </div>
+                </a>
+                <!-- Add more project items as needed -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Publications Block -->
+    <div id="publications" class="publications-block">
+        <div class="publications-container">
+            <div class="publications-left-container">
+                <h1>Publications</h1>
+            </div>
+            <div class="publications-right-container">
+                <!-- Publication Items -->
+                <div class="publication-item">
+                    <div class="publication-box">
+                        <p class="publication-authors"><b>Steinar Laenen</b>, He Sun</p>
+                        <p class="publication-details">May 2024 &middot; to appear at <em>ICML 2024</em></p>
+                        <p class="publication-title">
+                            <a href="https://example.com/publication1" target="_blank">Dynamic Spectral Clustering with Provable Approximation Guarantee</a>
+                        </p>
+                        <p class="publication-description">We introduce an algorithm that can dynamically maintain the clusters of a graph as new edges and vertices are added.</p>
+                        <div class="publication-links">
+                            <a href="#">PDF</a>
+                            <a href="#">Cite</a>
+                            <a href="#">Code</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="publication-item">
+                    <div class="publication-box">
+                        <p class="publication-authors"><b>Steinar Laenen</b>, Bogdan Manghiuc, He Sun</p>
+                        <p class="publication-details">July 2023 &middot; at <em>ICML 2023</em></p>
+                        <p class="publication-title">
+                            <a href="https://example.com/publication2" target="_blank">Hierarchical Clustering: A Nearly-Optimal Construction for Well-Clustered Graphs</a>
+                        </p>
+                        <p class="publication-description">We present algorithms for constructing nearly-optimal hierarchical clustering trees with respect to Dasgupta’s cost function on well-clustered graphs.</p>
+                        <div class="publication-links">
+                            <a href="#">PDF</a>
+                            <a href="#">Cite</a>
+                            <a href="#">Code</a>
+                            <a href="#">Video</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more publication items as needed -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Block -->
+    <div id="footer">
+        <p>&copy; 2024 Didier Merk. Site design based on older Wowchemy template. Contact for info.</p>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        
+    // Scroll Spy to highlight active section in the header
+    document.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('div[id]');
+        const navLinks = document.querySelectorAll('.header-nav a');
+
+        let currentSection = '';
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 80;
+            if (pageYOffset >= sectionTop) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(currentSection)) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // Toggle the mobile menu
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuToggle.addEventListener('click', function() {
+        mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Script to dynamically adjust the height of the timeline lines
+    function adjustTimelineLines() {
+        const items = document.querySelectorAll('.experience-item');
+        
+        items.forEach((item, index) => {
+            const dot = item.querySelector('.timeline-dot');
+            if (dot && index < items.length - 1) {
+                const nextItem = items[index + 1];
+                const nextDot = nextItem.querySelector('.timeline-dot');
+
+                // Calculate the positions of the dots
+                const dotRect = dot.getBoundingClientRect();
+                const nextDotRect = nextDot.getBoundingClientRect();
+
+                const dotBottom = dotRect.bottom + window.scrollY;
+                const nextDotTop = nextDotRect.top + window.scrollY;
+
+                // Calculate the height of the line
+                const height = nextDotTop - dotBottom;
+                dot.style.setProperty('--line-height', `${height}px`);
+            }
+        });
+    }
+
+    window.addEventListener('resize', adjustTimelineLines);
+    window.addEventListener('load', adjustTimelineLines);
+    window.addEventListener('scroll', adjustTimelineLines);
+
+    // Dark Mode 
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const body = document.body;
+    const darkModeIcon = darkModeToggle.querySelector('i');
+
+    darkModeToggle.addEventListener('click', function() {
+        body.classList.toggle('dark-mode');
+
+        // Toggle the icon between moon and sun
+        if (body.classList.contains('dark-mode')) {
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+            localStorage.setItem('darkMode', 'disabled');
+        }
+    });
+
+    // Optional: Apply the user's preference on page load
+    window.addEventListener('load', function() {
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+        }
+    });
+    </script>
+</body>
+</html>
