@@ -159,7 +159,7 @@ body.dark-mode #dark-mode-toggle-mobile {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     z-index: 999;
     transform: translateY(-100%); /* Start off-screen above */
-    transition: transform 0.5s ease-in-out; /* Smooth slide-in transition */
+    transition: transform 0.5s ease-in-out, background-color 0.5s ease; /* Smooth slide-in transition */
 }
 
 /* Class to remove box-shadow from mobile header */
