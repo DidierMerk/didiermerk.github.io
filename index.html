@@ -16,10 +16,10 @@
 </head>
 <body>
 
-    <!-- Header Block -->
+    <!-- Desktop Header Block -->
     <div id="header">
         <div class="header-left">
-            <a href="#" class="name-link">Didier Merk</a>
+            <a href="#home" class="name-link">Didier Merk</a>
             <nav class="header-nav">
                 <a href="#home">Home</a>
                 <a href="#experience">Experience</a>
@@ -28,7 +28,7 @@
             </nav>
         </div>
         <div class="header-right">
-            <div id="dark-mode-toggle" aria-label="Toggle Dark Mode">
+            <div id="dark-mode-toggle-desktop" aria-label="Toggle Dark Mode">
                 <i class="fas fa-moon"></i>
             </div>
         </div>
@@ -40,10 +40,10 @@
             <div id="menu-toggle" aria-label="Toggle Menu">
                 <i class="fas fa-bars"></i>
             </div>
-            <a href="#" class="name-link">Didier Merk</a>
+            <a href="#home" class="mobile-name-link">Didier Merk</a>
         </div>
         <div class="mobile-header-right">
-            <div id="dark-mode-toggle" aria-label="Toggle Dark Mode">
+            <div id="dark-mode-toggle-mobile" aria-label="Toggle Dark Mode">
                 <i class="fas fa-moon"></i>
             </div>
         </div>
@@ -253,10 +253,11 @@
     <!-- JavaScript -->
     <script>
         
-    // Scroll Spy to highlight active section in the header
+    // Scroll Spy to highlight active section in both desktop header and mobile menu
     document.addEventListener('scroll', function() {
         const sections = document.querySelectorAll('div[id]');
-        const navLinks = document.querySelectorAll('.header-nav a');
+        const navLinksDesktop = document.querySelectorAll('.header-nav a');
+        const navLinksMobile = document.querySelectorAll('.mobile-menu a');
 
         let currentSection = '';
 
@@ -267,7 +268,14 @@
             }
         });
 
-        navLinks.forEach(link => {
+        navLinksDesktop.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(currentSection)) {
+                link.classList.add('active');
+            }
+        });
+
+        navLinksMobile.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('href').includes(currentSection)) {
                 link.classList.add('active');
@@ -278,15 +286,29 @@
     // Toggle the mobile menu
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
+    const mobileHeader = document.getElementById('mobile-header'); // Get the mobile header element
 
     menuToggle.addEventListener('click', function() {
-        mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+        // Toggle the 'open' class to add/remove sliding effect
+        mobileMenu.classList.toggle('open');
+
+        // Toggle the 'no-shadow' class to remove/add box-shadow from/to mobile header
+        mobileHeader.classList.toggle('no-shadow');
+    });
+
+    // Close the mobile menu when a link is clicked and restore the box-shadow
+    const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
+    mobileMenuLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            mobileMenu.classList.remove('open'); // Collapse the menu
+            mobileHeader.classList.remove('no-shadow'); // Restore the box-shadow
+        });
     });
 
     // Script to dynamically adjust the height of the timeline lines
     function adjustTimelineLines() {
         const items = document.querySelectorAll('.experience-item');
-        
+
         items.forEach((item, index) => {
             const dot = item.querySelector('.timeline-dot');
             if (dot && index < items.length - 1) {
@@ -312,32 +334,83 @@
     window.addEventListener('scroll', adjustTimelineLines);
 
     // Dark Mode 
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const darkModeToggleDesktop = document.getElementById('dark-mode-toggle-desktop');
+    const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
     const body = document.body;
-    const darkModeIcon = darkModeToggle.querySelector('i');
 
-    darkModeToggle.addEventListener('click', function() {
+    function toggleDarkMode() {
         body.classList.toggle('dark-mode');
 
         // Toggle the icon between moon and sun
+        const iconDesktop = darkModeToggleDesktop.querySelector('i');
+        const iconMobile = darkModeToggleMobile.querySelector('i');
+
         if (body.classList.contains('dark-mode')) {
-            darkModeIcon.classList.remove('fa-moon');
-            darkModeIcon.classList.add('fa-sun');
+            iconDesktop.classList.remove('fa-moon');
+            iconDesktop.classList.add('fa-sun');
+            iconMobile.classList.remove('fa-moon');
+            iconMobile.classList.add('fa-sun');
             localStorage.setItem('darkMode', 'enabled');
         } else {
-            darkModeIcon.classList.remove('fa-sun');
-            darkModeIcon.classList.add('fa-moon');
+            iconDesktop.classList.remove('fa-sun');
+            iconDesktop.classList.add('fa-moon');
+            iconMobile.classList.remove('fa-sun');
+            iconMobile.classList.add('fa-moon');
             localStorage.setItem('darkMode', 'disabled');
         }
-    });
+    }
+
+    darkModeToggleDesktop.addEventListener('click', toggleDarkMode);
+    darkModeToggleMobile.addEventListener('click', toggleDarkMode);
 
     // Optional: Apply the user's preference on page load
     window.addEventListener('load', function() {
         if (localStorage.getItem('darkMode') === 'enabled') {
             body.classList.add('dark-mode');
-            darkModeIcon.classList.remove('fa-moon');
-            darkModeIcon.classList.add('fa-sun');
+            darkModeToggleDesktop.querySelector('i').classList.remove('fa-moon');
+            darkModeToggleDesktop.querySelector('i').classList.add('fa-sun');
+            darkModeToggleMobile.querySelector('i').classList.remove('fa-moon');
+            darkModeToggleMobile.querySelector('i').classList.add('fa-sun');
         }
+    });
+
+    // Function to remove the fragment identifier from the URL
+    function removeHashFromUrl() {
+        history.replaceState(null, null, ' ');
+    }
+
+    // Add event listeners to all the header links
+    document.querySelectorAll('.header-nav a').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default anchor click behavior
+            const targetId = this.getAttribute('href'); // Get the target ID (e.g., #home)
+            const targetElement = document.querySelector(targetId); // Find the target element
+
+            // Smooth scroll to the target element
+            targetElement.scrollIntoView({
+                behavior: 'smooth'
+            });
+
+            // Remove the hash from the URL
+            setTimeout(removeHashFromUrl, 0);
+        });
+    });
+
+    // Also apply the same to the mobile menu links
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default anchor click behavior
+            const targetId = this.getAttribute('href'); // Get the target ID (e.g., #home)
+            const targetElement = document.querySelector(targetId); // Find the target element
+
+            // Smooth scroll to the target element
+            targetElement.scrollIntoView({
+                behavior: 'smooth'
+            });
+
+            // Remove the hash from the URL
+            setTimeout(removeHashFromUrl, 0);
+        });
     });
     </script>
 </body>
