@@ -1,0 +1,9 @@
+/* Main Content Styles */
+body {
+    padding-top: 8.5vh; /* Adds space equal to the height of the header */
+}
+
+#main {
+    background-color: #ffffff;
+    text-align: center;
+}

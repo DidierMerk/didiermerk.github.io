@@ -1,0 +1,32 @@
+/* Footer Styles */
+#footer {
+    background-color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.73em;
+    font-weight: 500;
+    color: #7e7e7e;
+    padding-top: 65px;
+}
+
+/* Dark Mode Footer Styles */
+body.dark-mode #footer {
+    background-color: #23252f; /* Dark background color for footer */
+    color: #b1b1b1; /* Light text color for footer in dark mode */
+}
+
+/* Mobile Layout for screens below 992px */
+@media only screen and (max-width: 992px) {
+    #footer {
+        padding-top: 37px;
+        font-size: 0.6em;
+    }
+}
+
+/* Mobile Layout for screens below 680px */
+@media only screen and (max-width: 680px) {
+    #footer {
+        padding-top: 37px;
+        font-size: 0.6em;
+    }
+}
