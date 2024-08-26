@@ -156,3 +156,39 @@ body.dark-mode .modal-buttons button:hover {
     transform: translateY(0);
     animation: fadeInSlideDown 0.7s ease;
 }
+
+/* Smaller Screens (below 992px) */
+@media only screen and (max-width: 992px) {
+    .modal-content {
+        width: 73%; /* Adjust the width to be more suitable for smaller screens */
+        padding: 10px 14px 15px 14px; /* Reduce padding */
+    }
+
+    .modal-header h2 {
+        font-size: 0.9em; /* Adjust header font size */
+    }
+
+    #bibtex-code {
+        font-size: 0.75em; /* Adjust BibTeX font size */
+        padding: 8px; /* Adjust padding */
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+
+    .modal-buttons button {
+        font-size: 0.7em; /* Adjust button font size */
+        padding: 5px 7px; /* Adjust padding for buttons */
+    }
+
+    .close-modal {
+        font-size: 20px;
+    }
+}
+
+/* Smaller Screens (below 680px) */
+@media only screen and (max-width: 680px) {
+    .modal-content {
+        width: 90%; /* Adjust the width to be more suitable for smaller screens */
+        padding: 10px 14px 15px 14px; /* Reduce padding */
+    }
+}
