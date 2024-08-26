@@ -56,12 +56,20 @@
     margin-bottom: 0px; /* Space between authors and date */
 }
 
+.publication-authors b {
+    transition: none;
+}
+
 .publication-details {
     font-size: 0.8em;
     font-weight: 300;
     color: #6b6b6b;
     margin-bottom: 25px; /* Space between date and title */
     line-height: 1;
+}
+
+.publication-details em {
+    transition: none;
 }
 
 .publication-title {

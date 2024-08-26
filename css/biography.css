@@ -89,6 +89,10 @@
     font-weight: 200;
 }
 
+.right-container p em {
+    transition: none;
+}
+
 .right-container h2 {
     font-size: 1.3em; /* Match the larger, bold 'Education' text */
     font-weight: 600;
