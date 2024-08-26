@@ -464,17 +464,33 @@
         function openModal(bibtex) {
             modal.style.display = "block";
             document.getElementById("bibtex-code").textContent = bibtex;
+
+            // Add the show class after a small delay to trigger animation
+            setTimeout(() => {
+                modal.classList.add('show');
+                modal.querySelector('.modal-content').classList.add('show');
+            }, 10);
         }
 
         // Function to close the modal
         span.onclick = function() {
-            modal.style.display = "none";
+            modal.querySelector('.modal-content').classList.remove('show');
+            modal.classList.remove('show');
+            
+            setTimeout(() => {
+                modal.style.display = "none";
+            }, 700); // Match this delay with the duration of your animation
         }
 
         // Close the modal if clicked outside of it
         window.onclick = function(event) {
             if (event.target == modal) {
-                modal.style.display = "none";
+                modal.querySelector('.modal-content').classList.remove('show');
+                modal.classList.remove('show');
+                
+                setTimeout(() => {
+                    modal.style.display = "none";
+                }, 700); // Match this delay with the duration of your animation
             }
         }
 
@@ -500,11 +516,12 @@
                 event.preventDefault(); // Prevent default link behavior
 
                 // Example BibTeX for demonstration
-                var bibtex = `@inproceedings{author2023example,
-  title={Example Title},
-  author={Author, Example and Coauthor, Another, Another, Another, Another, Another},
-  booktitle={Conference Title},
-  year={2023}
+                var bibtex = `@inproceedings{merk2023reproducibility,
+  title={Reproducibility Study of Latent Space Smoothing for Individually Fair Representations},
+  author={Didier Merk and Tsatsral Mendsuren and Denny Smit and Boaz Beukers},
+  booktitle={ML Reproducibility Challenge 2022},
+  year={2023},
+  url={https://openreview.net/forum?id=J-Lgb7Vc0wX}
 }`;
                 openModal(bibtex);
             });

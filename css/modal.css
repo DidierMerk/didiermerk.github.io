@@ -9,6 +9,12 @@
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
+    opacity: 0;
+    transition: opacity 0.7s ease;
+}
+
+.modal.show {
+    opacity: 1;
 }
 
 .modal-content {
@@ -20,6 +26,9 @@
     max-width: 460px;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
 .modal-header {
@@ -92,4 +101,58 @@
 
 .modal-buttons button.copied {
     box-shadow: 0 0 1px 3px #90b2e0; /* Blue shadow */
+}
+
+/* Dark Mode for Modal */
+body.dark-mode .modal-content {
+    background-color: #282a36; /* Darker background for modal content */
+    border: 1px solid #454759; /* Darker border color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Darker shadow */
+}
+
+body.dark-mode .modal-header h2 {
+    color: #ffffff; /* Light color for the header text */
+}
+
+body.dark-mode .close-modal {
+    color: #b6b6b6; /* Lighter close icon color */
+}
+
+body.dark-mode .close-modal:hover,
+body.dark-mode .close-modal:focus {
+    color: #ffffff; /* Lighter close icon on hover */
+}
+
+body.dark-mode #bibtex-code {
+    background-color: #44475a; /* Darker background for the BibTeX area */
+    color: #f8f8f2; /* Light text color for BibTeX */
+}
+
+body.dark-mode .modal-buttons button {
+    color: #64b5f6; /* Light blue color for buttons in dark mode */
+    border-color: #64b5f6; /* Match border to button color */
+}
+
+body.dark-mode .modal-buttons button:hover {
+    background-color: #64b5f6; /* Light blue background on hover */
+    color: #ffffff; /* White text on hover */
+}
+
+/* Animation Keyframes */
+@keyframes fadeInSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply animation to modal content */
+.modal-content.show {
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInSlideDown 0.7s ease;
 }
