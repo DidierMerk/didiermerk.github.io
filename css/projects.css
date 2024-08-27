@@ -78,23 +78,22 @@
 }
 
 .project-buttons {
-    margin-top: 10px; /* Add space above the buttons */
+    margin-top: 0px; /* Add space above the buttons */
 }
 
 .project-button {
-    display: inline-block;
-    padding: 8px 12px;
-    margin-right: 10px;
-    margin-bottom: 5px; /* Add space between buttons vertically */
-    background-color: #007bff; /* Button background color */
-    color: #fff; /* Button text color */
+    font-size: 0.85em;
+    color: #0064d0;
     text-decoration: none;
-    border-radius: 5px; /* Rounded corners */
-    font-size: 0.85em; /* Slightly smaller text size */
+    border: 1px solid #0064d0;
+    padding: 5px 10px;
+    border-radius: 3px;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .project-button:hover {
-    background-color: #0056b3; /* Darker background color on hover */
+    background-color: #0064d0; /* Darker background color on hover */
+    color: #ffffff;
 }
 
 /* Ensure that the buttons behave correctly in dark mode */
