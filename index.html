@@ -569,6 +569,18 @@
             }, 700); // Match this delay with the duration of your animation
         }
 
+        // Close the modal if clicked outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.querySelector('.modal-content').classList.remove('show');
+                modal.classList.remove('show');
+                
+                setTimeout(() => {
+                    modal.style.display = "none";
+                }, 700); // Match this delay with the duration of your animation
+            }
+        }
+
         // Function to copy BibTeX code to clipboard
         function copyBibtex(filename) {
             const bibtexCode = document.getElementById(`bibtex-code-${filename}`).textContent;
@@ -592,15 +604,6 @@
             link.download = `${filename}.bib`;
             link.click();
         }
-
-        // // Attach event listeners to all "Cite" buttons
-        // document.querySelectorAll('.cite-button').forEach((citeButton) => {
-        //     citeButton.addEventListener('click', function (event) {
-        //         event.preventDefault(); // Prevent default link behavior
-        //         const bibtexFilename = this.getAttribute('data-bibtex');
-        //         openModal(bibtexFilename);
-        //     });
-        // });
     </script>
 </body>
 </html>
