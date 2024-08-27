@@ -240,7 +240,27 @@
                         <div class="publication-links">
                             <a href="https://openreview.net/pdf?id=J-Lgb7Vc0wX" target="_blank">PDF</a>
                             <a href="https://mametchiii.github.io/lassi-reproducibility/" target="_blank">Website</a>
-                            <a href="#" class="cite-button">Cite</a>
+                            <a href="#" class="cite-button" data-bibtex="LASSI">Cite</a>
+                            <a href="https://github.com/Mametchiii/lassi-reproducibility" target="_blank">Code</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of Publication Item-->
+
+                <!-- Publication Item -->
+                <div class="publication-item">
+                    <div class="publication-box">
+                        <p class="publication-authors"><b>Didier Merk</b>, Tsatsral Mendsuren, Denny Smit, Boaz Beukers, Tsatsral Mendsuren, Denny Smit, Boaz Beukers</p>
+                        <p class="publication-details">July 2023 &middot; Accepted as poster at <em>NeurIPS 2023</em></p>
+                        <p class="publication-title">
+                            <a href="https://mametchiii.github.io/lassi-reproducibility/" target="_blank">Second [Re] Latent Space Smoothing For Individually Fair Representations</a>
+                        </p>
+                        <p class="publication-description">Fairness has become an increasingly more important topic within the AI community. Using recent advances in generative modelling and deep learning, researchers at DeepMind have proposed a novel representation learning method called LASSI. This model ensures that similar individuals are treated similarly, known as individual fairness. In this paper we aim to verify the original claims and extend the research by performing additional experiments to validate the robustness of LASSI.</p>
+                        <!-- Buttons below the publication description -->
+                        <div class="publication-links">
+                            <a href="https://openreview.net/pdf?id=J-Lgb7Vc0wX" target="_blank">PDF</a>
+                            <a href="https://mametchiii.github.io/lassi-reproducibility/" target="_blank">Website</a>
+                            <a href="#" class="cite-button" data-bibtex="LASSITWO">Cite</a>
                             <a href="https://github.com/Mametchiii/lassi-reproducibility" target="_blank">Code</a>
                         </div>
                     </div>
@@ -257,7 +277,9 @@
         <p>&copy; 2024 Didier Merk. Site design based on older Wowchemy template. Contact for info.</p>
     </div>
 
-    <!-- Modal Structure -->
+    <div id="modal-container"></div>
+
+    <!-- Modal Structure
     <div id="cite-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -281,7 +303,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- JavaScript -->
     <script>
@@ -329,12 +351,6 @@
 
         // Update active link on window resize
         window.addEventListener('resize', updateActiveLink);
-    
-        // // Event listener for scroll events
-        // document.addEventListener('scroll', updateActiveLink);
-    
-        // // Call the function once on page load to highlight the correct link initially
-        // window.addEventListener('load', updateActiveLink);
     
         // Toggle the mobile menu
         const menuToggle = document.getElementById('menu-toggle');
@@ -470,99 +486,209 @@
             });
         });
 
-        // Get the modal and elements
-        var modal = document.getElementById("cite-modal");
-        var span = document.getElementsByClassName("close-modal")[0];
-        var copyButton = document.getElementById("copy-bibtex");
+        // Function to fetch BibTeX data from the modals folder
+        async function fetchBibtexData(filename) {
+            try {
+                const response = await fetch(`modals/${filename}.bib`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const bibtexData = await response.text();
+                return bibtexData;
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+            }
+        }
 
-        // Function to open the modal
-        function openModal(bibtex) {
-            modal.style.display = "block";
-            document.getElementById("bibtex-code").textContent = bibtex;
+        // Function to open the modal with dynamic BibTeX content
+        async function openModal(filename) {
+            const bibtex = await fetchBibtexData(filename);
+            if (bibtex) {
+                // Create a unique modal ID based on the filename
+                const modalId = `modal-${filename}`;
 
-            // Add the modal-open class to the body to disable scrolling
-            document.body.classList.add('modal-open');
+                // Check if the modal already exists, if not, create it
+                let modal = document.getElementById(modalId);
+                if (!modal) {
+                    const modalContainer = document.getElementById('modal-container');
+                    modalContainer.insertAdjacentHTML('beforeend', `
+                        <div id="${modalId}" class="modal">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2>Cite</h2>
+                                    <span class="close-modal">&times;</span>
+                                </div>
+                                <pre id="bibtex-code-${filename}">${bibtex}</pre>
+                                <div class="modal-buttons">
+                                    <button id="copy-bibtex-${filename}">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                    <button id="download-bibtex-${filename}">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                    modal = document.getElementById(modalId);
+                }
 
-            // Add the show class after a small delay to trigger animation
-            setTimeout(() => {
-                modal.classList.add('show');
-                modal.querySelector('.modal-content').classList.add('show');
-            }, 10);
+                // Show the modal
+                modal.style.display = "block";
+                document.body.classList.add('modal-open');
+                setTimeout(() => {
+                    modal.classList.add('show');
+                    modal.querySelector('.modal-content').classList.add('show');
+                }, 10);
+
+                // Attach event listeners for close and copy buttons
+                const closeButton = modal.querySelector('.close-modal');
+                closeButton.onclick = () => closeModal(modal);
+
+                const copyButton = modal.querySelector(`#copy-bibtex-${filename}`);
+                copyButton.addEventListener('click', () => copyBibtex(filename));
+
+                const downloadButton = modal.querySelector(`#download-bibtex-${filename}`);
+                downloadButton.addEventListener('click', () => downloadBibtex(filename));
+            }
         }
 
         // Function to close the modal
-        span.onclick = function() {
+        function closeModal(modal) {
             modal.querySelector('.modal-content').classList.remove('show');
             modal.classList.remove('show');
-
-            // Remove the modal-open class to re-enable scrolling
             document.body.classList.remove('modal-open');
-            
             setTimeout(() => {
                 modal.style.display = "none";
             }, 700); // Match this delay with the duration of your animation
         }
 
-        // Close the modal if clicked outside of it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.querySelector('.modal-content').classList.remove('show');
-                modal.classList.remove('show');
-
-                // Remove the modal-open class to re-enable scrolling
-                document.body.classList.remove('modal-open');
-                
-                setTimeout(() => {
-                    modal.style.display = "none";
-                }, 700); // Match this delay with the duration of your animation
-            }
-        }
-
-        // Copy BibTeX code to clipboard
-        copyButton.addEventListener('click', function() {
-            var bibtexCode = document.getElementById("bibtex-code").textContent;
-            navigator.clipboard.writeText(bibtexCode).then(function() {
-                // Add a blue shadow around the button
+        // Function to copy BibTeX code to clipboard
+        function copyBibtex(filename) {
+            const bibtexCode = document.getElementById(`bibtex-code-${filename}`).textContent;
+            navigator.clipboard.writeText(bibtexCode).then(() => {
+                const copyButton = document.getElementById(`copy-bibtex-${filename}`);
                 copyButton.classList.add('copied');
-                
-                // Remove the shadow after 1.5 seconds
-                setTimeout(function() {
+                setTimeout(() => {
                     copyButton.classList.remove('copied');
                 }, 1500);
-            }).catch(function(error) {
+            }).catch((error) => {
                 console.error("Failed to copy text: " + error);
             });
-        });
+        }
 
-        // Attach event listener to all "Cite" buttons
-        document.querySelectorAll('.cite-button').forEach(function(citeButton) {
-            citeButton.addEventListener('click', function(event) {
+        // Function to download BibTeX as a file
+        function downloadBibtex(filename) {
+            const bibtexCode = document.getElementById(`bibtex-code-${filename}`).textContent;
+            const blob = new Blob([bibtexCode], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = `${filename}.bib`;
+            link.click();
+        }
+
+        // Attach event listeners to all "Cite" buttons
+        document.querySelectorAll('.cite-button').forEach((citeButton) => {
+            citeButton.addEventListener('click', function (event) {
                 event.preventDefault(); // Prevent default link behavior
-
-                // Example BibTeX for demonstration
-                var bibtex = `@inproceedings{merk2023reproducibility,
-  title={Reproducibility Study of Latent Space Smoothing for Individually Fair Representations},
-  author={Didier Merk and Tsatsral Mendsuren and Denny Smit and Boaz Beukers},
-  booktitle={ML Reproducibility Challenge 2022},
-  year={2023},
-  url={https://openreview.net/forum?id=J-Lgb7Vc0wX}
-}`;
-                openModal(bibtex);
+                const bibtexFilename = this.getAttribute('data-bibtex');
+                openModal(bibtexFilename);
             });
         });
 
-        // Get the download button
-        var downloadButton = document.getElementById("download-bibtex");
+//         // Get the modal and elements
+//         var modal = document.getElementById("cite-modal");
+//         var span = document.getElementsByClassName("close-modal")[0];
+//         var copyButton = document.getElementById("copy-bibtex");
 
-        // Function to download BibTeX as a file
-        downloadButton.addEventListener('click', function() {
-            var bibtexCode = document.getElementById("bibtex-code").textContent;
-            var blob = new Blob([bibtexCode], { type: 'text/plain' });
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = 'cite.bib';
-            link.click();
-        });
+//         // Function to open the modal
+//         function openModal(bibtex) {
+//             modal.style.display = "block";
+//             document.getElementById("bibtex-code").textContent = bibtex;
+
+//             // Add the modal-open class to the body to disable scrolling
+//             document.body.classList.add('modal-open');
+
+//             // Add the show class after a small delay to trigger animation
+//             setTimeout(() => {
+//                 modal.classList.add('show');
+//                 modal.querySelector('.modal-content').classList.add('show');
+//             }, 10);
+//         }
+
+//         // Function to close the modal
+//         span.onclick = function() {
+//             modal.querySelector('.modal-content').classList.remove('show');
+//             modal.classList.remove('show');
+
+//             // Remove the modal-open class to re-enable scrolling
+//             document.body.classList.remove('modal-open');
+            
+//             setTimeout(() => {
+//                 modal.style.display = "none";
+//             }, 700); // Match this delay with the duration of your animation
+//         }
+
+//         // Close the modal if clicked outside of it
+//         window.onclick = function(event) {
+//             if (event.target == modal) {
+//                 modal.querySelector('.modal-content').classList.remove('show');
+//                 modal.classList.remove('show');
+
+//                 // Remove the modal-open class to re-enable scrolling
+//                 document.body.classList.remove('modal-open');
+                
+//                 setTimeout(() => {
+//                     modal.style.display = "none";
+//                 }, 700); // Match this delay with the duration of your animation
+//             }
+//         }
+
+//         // Copy BibTeX code to clipboard
+//         copyButton.addEventListener('click', function() {
+//             var bibtexCode = document.getElementById("bibtex-code").textContent;
+//             navigator.clipboard.writeText(bibtexCode).then(function() {
+//                 // Add a blue shadow around the button
+//                 copyButton.classList.add('copied');
+                
+//                 // Remove the shadow after 1.5 seconds
+//                 setTimeout(function() {
+//                     copyButton.classList.remove('copied');
+//                 }, 1500);
+//             }).catch(function(error) {
+//                 console.error("Failed to copy text: " + error);
+//             });
+//         });
+
+//         // Attach event listener to all "Cite" buttons
+//         document.querySelectorAll('.cite-button').forEach(function(citeButton) {
+//             citeButton.addEventListener('click', function(event) {
+//                 event.preventDefault(); // Prevent default link behavior
+
+//                 // Example BibTeX for demonstration
+//                 var bibtex = `@inproceedings{merk2023reproducibility,
+//   title={Reproducibility Study of Latent Space Smoothing for Individually Fair Representations},
+//   author={Didier Merk and Tsatsral Mendsuren and Denny Smit and Boaz Beukers},
+//   booktitle={ML Reproducibility Challenge 2022},
+//   year={2023},
+//   url={https://openreview.net/forum?id=J-Lgb7Vc0wX}
+// }`;
+//                 openModal(bibtex);
+//             });
+//         });
+
+//         // Get the download button
+//         var downloadButton = document.getElementById("download-bibtex");
+
+//         // Function to download BibTeX as a file
+//         downloadButton.addEventListener('click', function() {
+//             var bibtexCode = document.getElementById("bibtex-code").textContent;
+//             var blob = new Blob([bibtexCode], { type: 'text/plain' });
+//             var link = document.createElement('a');
+//             link.href = window.URL.createObjectURL(blob);
+//             link.download = 'cite.bib';
+//             link.click();
+//         });
     </script>
 </body>
 </html>
