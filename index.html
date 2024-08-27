@@ -552,6 +552,13 @@
             const closeButton = modal.querySelector('.close-modal');
             closeButton.onclick = () => closeModal(modal);
 
+            // Close modal if clicking outside of modal content
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeModal(modal);
+                }
+            });
+
             const copyButton = modal.querySelector('.copy-bibtex');
             copyButton.addEventListener('click', () => copyBibtex(modalId));
 
@@ -567,18 +574,6 @@
             setTimeout(() => {
                 modal.style.display = "none";
             }, 700); // Match this delay with the duration of your animation
-        }
-
-        // Close the modal if clicked outside of it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.querySelector('.modal-content').classList.remove('show');
-                modal.classList.remove('show');
-                
-                setTimeout(() => {
-                    modal.style.display = "none";
-                }, 700); // Match this delay with the duration of your animation
-            }
         }
 
         // Function to copy BibTeX code to clipboard
