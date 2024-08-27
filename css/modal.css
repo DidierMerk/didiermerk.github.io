@@ -58,7 +58,7 @@
     cursor: pointer;
 }
 
-#bibtex-code {
+.bibtex-code {
     background-color: #f8f8f8;
     padding: 10px;
     border-radius: 4px;
@@ -123,7 +123,7 @@ body.dark-mode .close-modal:focus {
     color: #ffffff; /* Lighter close icon on hover */
 }
 
-body.dark-mode #bibtex-code {
+body.dark-mode .bibtex-code {
     background-color: #44475a; /* Darker background for the BibTeX area */
     color: #f8f8f2; /* Light text color for BibTeX */
 }
@@ -168,7 +168,7 @@ body.dark-mode .modal-buttons button:hover {
         font-size: 0.9em; /* Adjust header font size */
     }
 
-    #bibtex-code {
+    .bibtex-code {
         font-size: 0.75em; /* Adjust BibTeX font size */
         padding: 8px; /* Adjust padding */
         margin-top: 20px;
