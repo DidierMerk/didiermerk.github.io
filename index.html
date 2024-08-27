@@ -501,56 +501,50 @@
         }
 
         // Function to open the modal with dynamic BibTeX content
-        async function openModal(filename) {
-            const bibtex = await fetchBibtexData(filename);
-            if (bibtex) {
-                // Create a unique modal ID based on the filename
-                const modalId = `modal-${filename}`;
-
-                // Check if the modal already exists, if not, create it
-                let modal = document.getElementById(modalId);
-                if (!modal) {
-                    const modalContainer = document.getElementById('modal-container');
-                    modalContainer.insertAdjacentHTML('beforeend', `
-                        <div id="${modalId}" class="modal">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h2>Cite</h2>
-                                    <span class="close-modal">&times;</span>
-                                </div>
-                                <pre id="bibtex-code-${filename}">${bibtex}</pre>
-                                <div class="modal-buttons">
-                                    <button id="copy-bibtex-${filename}">
-                                        <i class="fas fa-copy"></i> Copy
-                                    </button>
-                                    <button id="download-bibtex-${filename}">
-                                        <i class="fas fa-download"></i> Download
-                                    </button>
-                                </div>
+        function openModal(bibtexData, modalId) {
+            // Check if the modal already exists, if not, create it
+            let modal = document.getElementById(modalId);
+            if (!modal) {
+                const modalContainer = document.getElementById('modal-container');
+                modalContainer.insertAdjacentHTML('beforeend', `
+                    <div id="${modalId}" class="modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2>Cite</h2>
+                                <span class="close-modal">&times;</span>
+                            </div>
+                            <pre class="bibtex-code">${bibtexData}</pre> <!-- Use class instead of ID -->
+                            <div class="modal-buttons">
+                                <button class="copy-bibtex">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                                <button class="download-bibtex">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
                             </div>
                         </div>
-                    `);
-                    modal = document.getElementById(modalId);
-                }
-
-                // Show the modal
-                modal.style.display = "block";
-                document.body.classList.add('modal-open');
-                setTimeout(() => {
-                    modal.classList.add('show');
-                    modal.querySelector('.modal-content').classList.add('show');
-                }, 10);
-
-                // Attach event listeners for close and copy buttons
-                const closeButton = modal.querySelector('.close-modal');
-                closeButton.onclick = () => closeModal(modal);
-
-                const copyButton = modal.querySelector(`#copy-bibtex-${filename}`);
-                copyButton.addEventListener('click', () => copyBibtex(filename));
-
-                const downloadButton = modal.querySelector(`#download-bibtex-${filename}`);
-                downloadButton.addEventListener('click', () => downloadBibtex(filename));
+                    </div>
+                `);
+                modal = document.getElementById(modalId);
             }
+
+            // Show the modal
+            modal.style.display = "block";
+            document.body.classList.add('modal-open');
+            setTimeout(() => {
+                modal.classList.add('show');
+                modal.querySelector('.modal-content').classList.add('show');
+            }, 10);
+
+            // Attach event listeners for close and copy buttons
+            const closeButton = modal.querySelector('.close-modal');
+            closeButton.onclick = () => closeModal(modal);
+
+            const copyButton = modal.querySelector('.copy-bibtex');
+            copyButton.addEventListener('click', () => copyBibtex(modalId));
+
+            const downloadButton = modal.querySelector('.download-bibtex');
+            downloadButton.addEventListener('click', () => downloadBibtex(modalId));
         }
 
         // Function to close the modal
