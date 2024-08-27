@@ -90,7 +90,7 @@
     color: #fff; /* Button text color */
     text-decoration: none;
     border-radius: 5px; /* Rounded corners */
-    font-size: 0.85em; /* Slightly smaller text size */
+    font-size: 1.85em; /* Slightly smaller text size */
 }
 
 .project-button:hover {
