@@ -577,10 +577,10 @@
         }
 
         // Function to copy BibTeX code to clipboard
-        function copyBibtex(filename) {
-            const bibtexCode = document.getElementById(`bibtex-code-${filename}`).textContent;
+        function copyBibtex(modalId) {
+            const bibtexCode = document.querySelector(`#${modalId} .bibtex-code`).textContent;
             navigator.clipboard.writeText(bibtexCode).then(() => {
-                const copyButton = document.getElementById(`copy-bibtex-${filename}`);
+                const copyButton = document.querySelector(`#${modalId} .copy-bibtex`);
                 copyButton.classList.add('copied');
                 setTimeout(() => {
                     copyButton.classList.remove('copied');
@@ -591,12 +591,12 @@
         }
 
         // Function to download BibTeX as a file
-        function downloadBibtex(filename) {
-            const bibtexCode = document.getElementById(`bibtex-code-${filename}`).textContent;
+        function downloadBibtex(modalId) {
+            const bibtexCode = document.querySelector(`#${modalId} .bibtex-code`).textContent;
             const blob = new Blob([bibtexCode], { type: 'text/plain' });
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = `${filename}.bib`;
+            link.download = `${modalId}.bib`;
             link.click();
         }
     </script>
