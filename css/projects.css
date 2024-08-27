@@ -81,7 +81,7 @@
     margin-top: 0px; /* Add space above the buttons */
 }
 
-.project-button a {
+.project-buttons .project-button a {
     font-size: 0.85em;
     color: #0064d0; 
     text-decoration: none;
@@ -92,7 +92,7 @@
     transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-.project-button a:hover {
+.project-buttons .project-button a:hover {
     background-color: #0064d0; /* Darker background color on hover */
     color: #ffffff;
 }
