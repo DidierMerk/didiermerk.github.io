@@ -31,7 +31,7 @@
     text-decoration: none;
     color: #5d5c5c;
     font-size: 0.85em;
-    transition: background-color 0.5s ease, color 0.5s ease;
+    transition: text-decoration 0.5s ease, background-color 0.5s ease, color 0.5s ease;
     border: none; /* Remove horizontal lines between tabs */
 }
 
@@ -70,6 +70,10 @@ body.dark-mode #header .name-link,
 body.dark-mode #header .header-nav a,
 body.dark-mode #dark-mode-toggle-desktop i {
     color: #ffffff;
+}
+
+body.dark-mode #header .header-nav a.active {
+    color: #007bff;
 }
 
 #header .header-right #dark-mode-toggle-desktop i {

@@ -13,6 +13,10 @@ body {
     background-color: #ffffff; /* Set global background to white */
 }
 
+body.modal-open {
+    overflow: hidden;
+}
+
 * {
     transition: background-color 0.5s ease, color 0.5s ease;
 }

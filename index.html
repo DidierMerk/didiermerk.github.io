@@ -230,7 +230,7 @@
                 <!-- Publication Item -->
                 <div class="publication-item">
                     <div class="publication-box">
-                        <p class="publication-authors"><b>Didier Merk</b>, Tsatsral Mendsuren, Denny Smit, Boaz Beukers</p>
+                        <p class="publication-authors"><b>Didier Merk</b>, Tsatsral Mendsuren, Denny Smit, Boaz Beukers, Tsatsral Mendsuren, Denny Smit, Boaz Beukers</p>
                         <p class="publication-details">July 2023 &middot; Accepted as poster at <em>NeurIPS 2023</em></p>
                         <p class="publication-title">
                             <a href="https://mametchiii.github.io/lassi-reproducibility/" target="_blank">[Re] Latent Space Smoothing For Individually Fair Representations</a>
@@ -290,36 +290,51 @@
             const sections = document.querySelectorAll('div[id]');
             const navLinksDesktop = document.querySelectorAll('.header-nav a');
             const navLinksMobile = document.querySelectorAll('.mobile-menu a');
-    
-            let currentSection = '';
-    
+            const headerHeight = document.getElementById('header').offsetHeight; // Get the height of the fixed header
+            
+            let foundActiveSection = false;
+
             sections.forEach(section => {
-                const sectionTop = section.offsetTop - 80;
-                if (pageYOffset >= sectionTop) {
-                    currentSection = section.getAttribute('id');
+                const sectionTop = section.offsetTop - headerHeight;
+                const sectionBottom = sectionTop + section.offsetHeight;
+
+                if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionBottom) {
+                    const currentSectionId = section.getAttribute('id');
+                    setActiveLink(currentSectionId, navLinksDesktop, navLinksMobile);
+                    foundActiveSection = true;
                 }
             });
-    
+
+            // If no section is active, default to the first navigation link
+            if (!foundActiveSection) {
+                setActiveLink(navLinksDesktop[0].getAttribute('href').substring(1), navLinksDesktop, navLinksMobile);
+            }
+        }
+
+        function setActiveLink(sectionId, navLinksDesktop, navLinksMobile) {
             navLinksDesktop.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').includes(currentSection)) {
-                    link.classList.add('active');
-                }
+                link.classList.toggle('active', link.getAttribute('href').substring(1) === sectionId);
             });
-    
+
             navLinksMobile.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').includes(currentSection)) {
-                    link.classList.add('active');
-                }
+                link.classList.toggle('active', link.getAttribute('href').substring(1) === sectionId);
             });
         }
-    
-        // Event listener for scroll events
-        document.addEventListener('scroll', updateActiveLink);
-    
-        // Call the function once on page load to highlight the correct link initially
+
+        // Ensure the first section is highlighted on page load
         window.addEventListener('load', updateActiveLink);
+
+        // Update active link on scroll
+        document.addEventListener('scroll', updateActiveLink);
+
+        // Update active link on window resize
+        window.addEventListener('resize', updateActiveLink);
+    
+        // // Event listener for scroll events
+        // document.addEventListener('scroll', updateActiveLink);
+    
+        // // Call the function once on page load to highlight the correct link initially
+        // window.addEventListener('load', updateActiveLink);
     
         // Toggle the mobile menu
         const menuToggle = document.getElementById('menu-toggle');
@@ -425,7 +440,7 @@
                 const targetElement = document.querySelector(targetId); // Find the target element
     
                 // Calculate the offset position from the top of the page
-                const offsetPosition = targetElement.offsetTop - 70; // Change 100 to whatever offset you need
+                const offsetPosition = targetElement.offsetTop - 65; // Change 100 to whatever offset you need
     
                 // Smooth scroll to the offset position
                 window.scrollTo({
@@ -465,6 +480,9 @@
             modal.style.display = "block";
             document.getElementById("bibtex-code").textContent = bibtex;
 
+            // Add the modal-open class to the body to disable scrolling
+            document.body.classList.add('modal-open');
+
             // Add the show class after a small delay to trigger animation
             setTimeout(() => {
                 modal.classList.add('show');
@@ -476,6 +494,9 @@
         span.onclick = function() {
             modal.querySelector('.modal-content').classList.remove('show');
             modal.classList.remove('show');
+
+            // Remove the modal-open class to re-enable scrolling
+            document.body.classList.remove('modal-open');
             
             setTimeout(() => {
                 modal.style.display = "none";
@@ -487,6 +508,9 @@
             if (event.target == modal) {
                 modal.querySelector('.modal-content').classList.remove('show');
                 modal.classList.remove('show');
+
+                // Remove the modal-open class to re-enable scrolling
+                document.body.classList.remove('modal-open');
                 
                 setTimeout(() => {
                     modal.style.display = "none";

@@ -52,8 +52,8 @@
     font-weight: 300;
     color: #757575;
     margin: 0;
-    line-height: 0.7;
-    margin-bottom: 0px; /* Space between authors and date */
+    line-height: 1.6;
+    margin-bottom: -7px; /* Space between authors and date */
 }
 
 .publication-authors b {
@@ -206,11 +206,12 @@ body.dark-mode .publication-links a:hover {
 
     .publication-authors {
         font-size: 0.87em;
-        line-height: 0.7;
+        line-height: 1.6;
+        margin-bottom: -8px;
     }
 
     .publication-details {
-        font-size: 0.85em;
+        font-size: 0.8em;
         margin-bottom: 20px; /* Space between date and title */
     }
 

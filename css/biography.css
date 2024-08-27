@@ -2,6 +2,7 @@
 .bio-block {
     width: 85%;
     margin: 0 auto;
+    margin-top: -10px;
     padding: 40px 0px;
     background-color: #ffffff;
 }
@@ -63,7 +64,7 @@
     margin: 10px 5px;
     color: #0062cb; /* Set the color for the social icons */
     text-decoration: none;
-    transition: background-color 0.5s, color 0.5s ease;
+    transition: none;
     transform-origin: center;
 }
 
@@ -91,6 +92,11 @@
 
 .right-container p em {
     transition: none;
+}
+
+.right-container p a {
+    color: #1665c0;
+    text-decoration: none;
 }
 
 .right-container h2 {
@@ -158,16 +164,20 @@ body.dark-mode .education-list .degree {
     color: #ffffff; /* Light text color for dark mode */
 }
 
+body.dark-mode .right-container p a {
+    color: #bbdefb;
+}
+
 body.dark-mode .education-list .institution-list {
     color: #b6b6b6;
 }
 
 body.dark-mode .institution {
-    color: #64b5f6; /* Light blue for institution link color */
+    color: #bbdefb; /* Light blue for institution link color */
 }
 
 body.dark-mode .social-icon {
-    color: #64b5f6; /* Light blue for social icons in dark mode */
+    color: #bbdefb; /* Light blue for social icons in dark mode */
 }
 
 body.dark-mode .education-list i {
