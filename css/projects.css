@@ -78,17 +78,18 @@
 }
 
 .project-buttons {
+    display: flex;
     margin-top: 0px; /* Add space above the buttons */
 }
 
 .project-button {
-    display: inline-block;
+    font-size: 0.85em;
+    color: #0064d0;
     padding: 5px 10px;
     background-color: #ffffff; /* Button background color */
-    color: #0064d0; /* Button text color */
     text-decoration: none;
+    border: 1px solid #0064d0;
     border-radius: 3px; /* Rounded corners */
-    font-size: 0.85em; /* Slightly smaller text size */
     transition: background-color 0.5s ease, color 0.5s ease;
 }
 
