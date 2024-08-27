@@ -198,6 +198,10 @@ body.dark-mode .publication-links a:hover {
         margin-bottom: 22px;
     }
 
+    .publication-links a {
+        font-size: 0.7em;
+    }
+
     .publication-box {
         width: 85%; /* Publication cards take 70% of the page width */
         box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1); /* Smaller shadow */
