@@ -77,6 +77,35 @@
     display: block;
 }
 
+.project-buttons {
+    margin-top: 10px; /* Add space above the buttons */
+}
+
+.project-button {
+    display: inline-block;
+    padding: 8px 12px;
+    margin-right: 10px;
+    margin-bottom: 5px; /* Add space between buttons vertically */
+    background-color: #007bff; /* Button background color */
+    color: #fff; /* Button text color */
+    text-decoration: none;
+    border-radius: 5px; /* Rounded corners */
+    font-size: 0.85em; /* Slightly smaller text size */
+}
+
+.project-button:hover {
+    background-color: #0056b3; /* Darker background color on hover */
+}
+
+/* Ensure that the buttons behave correctly in dark mode */
+body.dark-mode .project-button {
+    background-color: #1a73e8;
+}
+
+body.dark-mode .project-button:hover {
+    background-color: #1358c8;
+}
+
 /* Dark Mode Projects Block Styles */
 body.dark-mode .projects-block {
     background-color: #272935; /* Dark background color for projects block */
