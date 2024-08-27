@@ -79,31 +79,23 @@
 
 .project-buttons {
     display: flex;
-    margin-top: 0px; /* Add space above the buttons */
+    margin-right: 10px; /* Add space above the buttons */
 }
 
 .project-button {
     font-size: 0.85em;
     color: #0064d0;
-    padding: 5px 10px;
-    background-color: #ffffff; /* Button background color */
     text-decoration: none;
     border: 1px solid #0064d0;
+    padding: 5px 10px;
     border-radius: 3px; /* Rounded corners */
+    background-color: transparent; /* Button background color */
     transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .project-button:hover {
-    background-color: #0056b3; /* Darker background color on hover */
-}
-
-/* Ensure that the buttons behave correctly in dark mode */
-body.dark-mode .project-button {
-    background-color: #1a73e8;
-}
-
-body.dark-mode .project-button:hover {
-    background-color: #1358c8;
+    background-color: #0064d0;
+    color: #ffffff;
 }
 
 /* Dark Mode Projects Block Styles */
@@ -130,6 +122,17 @@ body.dark-mode .project-description {
 
 body.dark-mode .project-item-link {
     color: inherit; /* Ensure link color inherits the dark mode settings */
+}
+
+/* Ensure that the buttons behave correctly in dark mode */
+body.dark-mode .project-button {
+    color: #64b5f6; /* Light blue color for buttons in dark mode */
+    border-color: #64b5f6; /* Match border to button color */
+}
+
+body.dark-mode .project-button:hover {
+    background-color: #64b5f6; /* Light blue background on hover */
+    color: #ffffff; /* White text on hover */
 }
 
 /* Mobile Layout */
