@@ -89,8 +89,9 @@
     background-color: #007bff; /* Button background color */
     color: #fff; /* Button text color */
     text-decoration: none;
-    border-radius: 5px; /* Rounded corners */
-    font-size: 1.85em; /* Slightly smaller text size */
+    border-radius: 3px; /* Rounded corners */
+    font-size: 0.85em; /* Slightly smaller text size */
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .project-button:hover {
