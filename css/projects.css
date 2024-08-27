@@ -78,16 +78,14 @@
 }
 
 .project-buttons {
-    margin-top: 10px; /* Add space above the buttons */
+    margin-top: 0px; /* Add space above the buttons */
 }
 
 .project-button {
     display: inline-block;
-    padding: 8px 12px;
-    margin-right: 10px;
-    margin-bottom: 5px; /* Add space between buttons vertically */
-    background-color: #007bff; /* Button background color */
-    color: #fff; /* Button text color */
+    padding: 5px 10px;
+    background-color: #ffffff; /* Button background color */
+    color: #0064d0; /* Button text color */
     text-decoration: none;
     border-radius: 3px; /* Rounded corners */
     font-size: 0.85em; /* Slightly smaller text size */
