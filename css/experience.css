@@ -207,9 +207,7 @@ body.dark-mode .timeline-dot::before {
 }
 
 /* Mobile Layout for screens below 820px */
-@media 
-only screen and (max-width: 992px),
-only screen and (max-device-width: 992px) {
+@media only screen and (max-width: 992px) {
     .experience-block {
         padding: 35px 0; /* Reduce padding for smaller screens */
     }
@@ -283,14 +281,10 @@ only screen and (max-device-width: 992px) {
         line-height: 1.5;
         margin-top: -5px;
     }
-
-
 }
 
 /* Mobile Layout for screens below 680px */
-@media 
-only screen and (max-width: 680px),
-only screen and (max-device-width: 680px) {
+@media only screen and (max-width: 680px) {
     .experience-block {
         padding: 45px 0;
     }
