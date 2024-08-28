@@ -147,6 +147,11 @@
     transition: color 0.5s ease;
 }
 
+.experience-link {
+    color: #1665c0;
+    text-decoration: none;
+}
+
 .experience-description em {
     transition: color 0.0s ease;
 }
@@ -186,6 +191,10 @@ body.dark-mode .experience-company-name a {
 
 body.dark-mode .experience-company-name a:hover {
     text-decoration: none; /* Underline on hover */
+}
+
+body.dark-mode .experience-link {
+    color: #bbdefb;
 }
 
 body.dark-mode .timeline-dot {
