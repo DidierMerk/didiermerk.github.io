@@ -207,7 +207,7 @@ body.dark-mode .timeline-dot::before {
 }
 
 /* Mobile Layout for screens below 820px */
-@media only screen and (max-width: 992px) and (orientation: landscape) {
+@media only screen and (min-width: 681px) and (max-width: 992px) and (orientation: landscape) {
     .experience-block {
         padding: 35px 0; /* Reduce padding for smaller screens */
     }
