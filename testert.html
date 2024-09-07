@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beatle</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="logo.png">
+</head>
+<body>
+    <div class="mobile-container">
+        <header>
+            <button id="menu-btn"><i class="fas fa-bars"></i></button>
+            <div class="header-title">
+                <span class="fancy-d">D</span>
+                <span class="separator">|</span>
+                <span class="puzzles-text">Puzzles</span>
+            </div>
+            <button id="settings-btn"><i class="fas fa-cog"></i></button>
+        </header>
+        <div id="landing-page">
+            <main>
+                <div class="logo-container">
+                    <img src="logo.png" alt="Beatle Logo" class="logo">
+                </div>
+                <h2>Beatle</h2>
+                <p>Find hidden paths and uncover today's musical theme lalalalalala.</p>
+                <button id="start-game">Play</button>
+            </main>
+            <footer>
+                <div class="date"></div>
+                <div class="attribution">
+                    Puzzle by <a href="https://didiermerk.github.io" target="_blank" rel="noopener noreferrer">Didier Merk</a>
+                </div>
+            </footer>
+        </div>
+
+        <div id="game-page" class="hidden">
+            <div class="catchphrase">
+                <p>Connect the notes to find the hidden songs!</p>
+            </div>
+            <main>
+                <div class="grid-container">
+                    <div class="grid"></div>
+                    <svg class="lines-overlay"></svg>
+                </div>
+                <div class="game-info">
+                    <button id="hint-button">Hint</button>
+                    <p class="progress-text">0 of 5 songs found</p>
+                </div>
+            </main>
+        </div>
+    </div>
+    <div id="path-display">
+        <h2>Paths (for testing):</h2>
+        <pre id="path-list"></pre>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,431 @@
+:root {
+    --primary-color: #4a5568;
+    --secondary-color: #3182ce;
+    --background-color: #f0f4f8;
+    --container-color: #ffffff;
+    --text-color: #2d3748;
+    --accent-color: #63b3ed;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+.mobile-container {
+    width: 100%;
+    max-width: 414px;
+    height: 90vh;
+    max-height: 806px;
+    background-color: var(--container-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-radius: 2rem;
+}
+
+header {
+    padding: 1rem 0.5rem; /* Add some minimal side padding */
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    flex-grow: 1; /* Allow the title to take up available space */
+    justify-content: center; /* Center the title */
+}
+
+.fancy-d {
+    font-family: 'Cinzel Decorative', cursive;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.separator {
+    color: var(--text-color);
+    margin: 0 0.5rem;
+}
+
+.puzzles-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+#menu-btn, #settings-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 0.5rem;
+    min-width: 44px; /* Ensure a minimum touch target size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Updated styles for landing page */
+#landing-page main {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 100px; /* Adjusts spacing to center the text */
+}
+
+.logo-container {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1rem;
+}
+
+.logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+    text-align: center;
+}
+
+button {
+    background-color: var(--secondary-color);
+    color: var(--container-color);
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 200px;
+}
+
+button:hover {
+    background-color: var(--primary-color);
+}
+
+footer {
+    padding: 1rem;
+    text-align: center;
+    margin-top: auto;
+}
+
+.date, .attribution {
+    font-size: 0.8rem;
+    color: var(--text-color);
+    margin-top: 0.5rem;
+}
+
+.attribution a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.attribution a:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Updated styles for game page */
+#game-page main {
+    justify-content: flex-start;
+    padding-top: 0;
+}
+
+.catchphrase {
+    padding: 1rem;
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Ensure the catchphrase takes full width */
+}
+
+.catchphrase p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    white-space: nowrap;
+    text-overflow: clip; /* Ensure no ellipsis */
+    overflow: hidden;
+    margin: 0;
+    text-align: center;
+    width: 100%; /* Ensure the text stretches the width */
+}
+
+.grid-container {
+    width: 100%;
+    aspect-ratio: 6 / 7;
+    position: relative;
+    background-color: var(--container-color);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    gap: 1px;
+    height: 100%;
+}
+
+.grid-cell {
+    position: relative;
+    width: 70%; /* Reduce the clickable area to 90% of the original */
+    height: 70%; /* Same for height */
+    margin: 15%; /* Add margin to create space between cells */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.music-note {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: #000000;
+    z-index: 2;
+}
+
+/* Animation for bouncing */
+@keyframes bounceEffect {
+    0% {
+        transform: translate(-50%, -50%) scale(0); /* Ensure translation is consistent */
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1); /* Scale up with consistent translation */
+        opacity: 1;
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(0.9); /* Slightly smaller with consistent translation */
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1); /* Final size, fully centered */
+    }
+}
+
+.selection-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1); /* Ensure it's centered initially */
+    width: 120%;
+    height: 120%;
+    border-radius: 50%;
+    background-color: #dbd8c5;
+    z-index: 1;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.grid-cell.active .selection-circle {
+    display: block;
+    animation: bounceEffect 0.3s ease; /* Apply the bounce effect */
+    opacity: 1; /* Fade-in effect */
+}
+
+@keyframes bounceFoundEffect {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        background-color: #dbd8c5; /* Start with the active color */
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2); /* Scale up slightly */
+        background-color: #aedfee; /* Change to the found color */
+        opacity: 1;
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(0.9); /* Slightly shrink */
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1); /* Final size */
+        background-color: #aedfee; /* Final color */
+    }
+}
+
+.grid-cell.found .selection-circle {
+    display: block;
+    animation: bounceFoundEffect 0.3s ease;
+    background-color: #aedfee;
+    opacity: 1;
+}
+
+.lines-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.lines-overlay line {
+    stroke: #dbd8c5;
+    stroke-width: 12;
+    stroke-linecap: round;
+}
+
+.lines-overlay line.found {
+    stroke: #aedfee;
+}
+
+/* Colors of the paths */
+.path-0 { color: #DA70D6; }  /* Yellow */
+.path-1 { color: #FF7F50; }  /* Coral */
+.path-2 { color: #006eff; }  /* Turquoise */
+.path-3 { color: #FFD700; }  /* Orchid */
+.path-4 { color: #2b6a00; }  /* Bright Green */
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+#hint-button {
+    background-color: var(--secondary-color);
+    color: var(--container-color);
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: all 0s ease;
+    width: auto; /* Changed from fixed width to auto */
+    min-width: 120px; /* Add a minimum width */
+}
+
+#hint-button.give-up {
+    background-color: transparent;
+    color: var(--secondary-color);
+    border: 2px solid var(--secondary-color);
+}
+
+#hint-button:hover {
+    background-color: var(--primary-color);
+}
+
+#hint-button.give-up:hover {
+    background-color: rgba(49, 130, 206, 0.1); /* Light blue background on hover */
+}
+
+.grid-cell.hint {
+    animation: hintPulse 1s infinite;
+}
+
+@keyframes hintPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 215, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+    }
+}
+
+.grid-cell.hint-path-0 { border: 2px dashed #DA70D6; }
+.grid-cell.hint-path-1 { border: 2px dashed #FF7F50; }
+.grid-cell.hint-path-2 { border: 2px dashed #006eff; }
+.grid-cell.hint-path-3 { border: 2px dashed #FFD700; }
+.grid-cell.hint-path-4 { border: 2px dashed #2b6a00; }
+
+.music-note.hint-vocal {
+    color: #000000;
+}
+
+.progress-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0;
+}
+
+#path-display {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+#path-display h2 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+#path-list {
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+@media (min-width: 768px) {
+    body {
+        background-color: var(--background-color);
+    }
+
+    .mobile-container {
+        border-radius: 2rem;
+    }
+}
