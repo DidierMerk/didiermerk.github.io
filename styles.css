@@ -11,10 +11,12 @@
 body {
     font-family: 'Poppins', sans-serif;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start; /* Change from center to flex-start */
     align-items: center;
     min-height: 100vh;
     background-color: #f0f0f0;
+    padding-top: 0vh; /* Add some padding at the top */
 }
 
 /* Container for desktop version */
