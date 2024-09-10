@@ -3,61 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beatle</title>
+    <title>Beatle - The Musical Maze</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="icon" type="image/png" href="logo.png">
 </head>
 <body>
     <div class="mobile-container">
         <header>
-            <button id="menu-btn"><i class="fas fa-bars"></i></button>
-            <div class="header-title">
-                <span class="fancy-d">D</span>
-                <span class="separator">|</span>
-                <span class="puzzles-text">Puzzles</span>
-            </div>
-            <button id="settings-btn"><i class="fas fa-cog"></i></button>
+            <i class="fas fa-bars menu-icon"></i>
+            <div class="title">D | Puzzles</div>
+            <i class="fas fa-cog settings-icon"></i>
         </header>
-        <div id="landing-page">
-            <main>
-                <div class="logo-container">
-                    <img src="logo.png" alt="Beatle Logo" class="logo">
-                </div>
-                <h2>Beatle</h2>
-                <p>Find hidden paths and uncover today's musical theme lalalalalala.</p>
-                <button id="start-game">Play</button>
-            </main>
-            <footer>
-                <div class="date"></div>
-                <div class="attribution">
-                    Puzzle by <a href="https://didiermerk.github.io" target="_blank" rel="noopener noreferrer">Didier Merk</a>
-                </div>
-            </footer>
+        
+        <div class="slogan" style="display: none;">
+            <strong>Connect the notes to find the hidden songs!</strong>
         </div>
-
-        <div id="game-page" class="hidden">
-            <div class="catchphrase">
-                <p>Connect the notes to find the hidden songs!</p>
+        
+        <main>
+            <div class="game-info">
+                <img src="logo.png" alt="Beatle Logo" class="game-logo">
+                <h1>Beatle</h1>
+                <p>Find the hidden paths and attempt to uncover today's beats.</p>
+                <button id="play-button">Play</button>
             </div>
-            <main>
-                <div class="grid-container">
-                    <div class="grid"></div>
-                    <svg class="lines-overlay"></svg>
+            <div class="game-content" style="display: none;">
+                <div class="game-area">
+                    <div class="grid-container"></div>
                 </div>
-                <div class="game-info">
-                    <button id="hint-button">Hint</button>
-                    <p class="progress-text">0 of 5 songs found</p>
+                <div class="game-controls">
+                    <button id="hint-button" data-hint-state="0">Hint</button>
+                    <div class="score-counter">0 of 5 songs found</div>
                 </div>
-            </main>
+            </div>
+        </main>
+        
+        <footer>
+            <div class="footer-wrapper">
+                <div class="footer-content">
+                    <div class="date"></div>
+                    <div>Puzzle by <a href="https://didiermerk.github.io" target="_blank">Didier Merk</a></div>
+                </div>
+            </div>
+        </footer>
+
+        <div id="game-end-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="back-to-puzzle">Back to puzzle</span>
+                    <span class="close">&times;</span>
+                </div>
+                <h2 class="modal-title">Well Done!</h2>
+                <div class="modal-body">
+                    <p class="date-info">
+                        <span id="current-date"></span><br>
+                        "Escape the police"
+                    </p>
+                    <div class="result-square"></div>
+                    <p class="congratulations">
+                        Nice job finding the theme songs and Spangram. You are amazing!
+                    </p>
+                    <p class="next-puzzle-text">NEXT PUZZLE IN</p>
+                    <div id="countdown-timer"></div>
+                    <button id="share-results">Share Your Results</button>
+                </div>
+            </div>
         </div>
-    </div>
-    <div id="path-display">
-        <h2>Paths (for testing):</h2>
-        <pre id="path-list"></pre>
     </div>
 
     <script src="script.js"></script>
