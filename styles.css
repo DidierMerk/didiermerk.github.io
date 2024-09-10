@@ -525,7 +525,7 @@ svg line.permanent {
 }
 
 .date-info {
-    font-size: 1.75vh;
+    font-size: 2vh;
     color: #666;
     text-align: center;
     margin: 0 auto 2.2vh auto;
@@ -619,7 +619,7 @@ svg line.permanent {
     }
 
     .date-info {
-        font-size: 1.45vh;
+        font-size: 1.7vh;
         margin: 0 auto 1.9vh auto;
     }
     
