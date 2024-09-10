@@ -20,8 +20,10 @@ body {
 /* Container for desktop version */
 
 .mobile-container {
+    height: 100dvh; /* Dynamic viewport height */
+    height: calc(var(--vh, 1vh) * 100); /* Fallback for browsers that don't support dvh */
     width: 100%;
-    height: 100vh;
+    /* height: 100vh; */
     background-color: white;
     overflow-y: auto;
     position: relative;
