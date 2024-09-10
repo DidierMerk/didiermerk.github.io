@@ -658,4 +658,16 @@ document.addEventListener('DOMContentLoaded', function() {
     shareButton.addEventListener('click', function() {
         alert('Sharing functionality will be implemented soon!');
     });
+
+    function setVH() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    
+    // Set the value on resize and orientationchange
+    window.addEventListener('resize', setVH);
+    window.addEventListener('orientationchange', setVH);
+    
+    // Initial set
+    setVH();
 });
