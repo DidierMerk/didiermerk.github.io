@@ -452,7 +452,7 @@ svg line.permanent {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 9999999;
     left: 0;
     top: 0;
     width: 100%;
@@ -465,7 +465,7 @@ svg line.permanent {
 .modal-content {
     background-color: white;
     width: 95%;
-    max-height: 90vh;
+    max-height: 75vh;
     border-radius: 2.2vh;
     padding: 2.2vh;
     box-shadow: 0 0.2vh 1.1vh rgba(0, 0, 0, 0.1);
