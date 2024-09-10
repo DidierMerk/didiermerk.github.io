@@ -32,7 +32,7 @@ body {
 /* Header styling */
 
 header {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -44,7 +44,7 @@ header {
     align-items: center;
     padding: 0 7.5%;
     border-bottom: 0.15vh solid #e0e0e0;
-    z-index: 10; /* Ensure it stays on top of other content */
+    z-index: 10001; /* Ensure it stays on top of other content */
 }
 
 .menu-icon, .settings-icon {
