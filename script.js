@@ -414,7 +414,7 @@ document.addEventListener('DOMContentLoaded', function() {
             foundPaths++;
 
             if (foundPaths === numberOfPaths) {
-                showModal();
+                animateGridCompletion();
             }
 
             if (areAllHintsGiven()) {
@@ -494,20 +494,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const hintButton = document.getElementById('hint-button');
     let hintState = Array(numberOfPaths).fill().map(() => ({ pathHint: false, vocalHint: false }));
 
-    // Add this event listener to open the modal when the "Give Up" button is clicked
-    hintButton.addEventListener('click', function() {
-        if (hintButton.classList.contains('give-up')) {
-            // Change button to "Results" and style it
-            hintButton.textContent = 'Results';
-            hintButton.classList.remove('give-up');
-            hintButton.classList.add('results'); // New class for styling
-            showModal();  // Show modal when "Give Up" is clicked
-        } else if (hintButton.classList.contains('results')) {
-            showModal();  // Show modal when "Results" button is clicked
-        }
-    });
+    // // Add this event listener to open the modal when the "Give Up" button is clicked
+    // hintButton.addEventListener('click', function() {
+    //     if (hintButton.classList.contains('give-up')) {
+    //         // Change button to "Results" and style it
+    //         hintButton.textContent = 'Results';
+    //         hintButton.classList.remove('give-up');
+    //         hintButton.classList.add('results'); // New class for styling
+    //         showModal();  // Show modal when "Give Up" is clicked
+    //     } else if (hintButton.classList.contains('results')) {
+    //         showModal();  // Show modal when "Results" button is clicked
+    //     }
+    // });
     
-    hintButton.addEventListener('click', handleHint);
+    // hintButton.addEventListener('click', handleHint);
 
     function handleHint() {
         const undiscoveredPaths = solutionPaths.reduce((acc, path, index) => {
@@ -657,5 +657,140 @@ document.addEventListener('DOMContentLoaded', function() {
     const shareButton = document.getElementById('share-results');
     shareButton.addEventListener('click', function() {
         alert('Sharing functionality will be implemented soon!');
+    });
+
+    function animateGridCompletion() {
+        const cells = document.querySelectorAll('.grid-cell');
+        const rows = 7;
+        const cols = 6;
+        let delay = 0;
+    
+        // Diagonal pulse animation
+        for (let sum = 0; sum < rows + cols - 1; sum++) {
+            for (let i = 0; i < rows; i++) {
+                const j = sum - i;
+                if (j >= 0 && j < cols) {
+                    const index = i * cols + j;
+                    setTimeout(() => {
+                        cells[index].classList.add('pulse-animate');
+                        cells[index].addEventListener('animationend', () => {
+                            cells[index].classList.remove('pulse-animate');
+                        }, { once: true });
+                    }, delay * 30); // Changed from 50 to 30 for faster animation
+                    delay++;
+                }
+            }
+        }
+    
+        // Final pulse animation for all cells
+        setTimeout(() => {
+            cells.forEach(cell => {
+                cell.classList.add('final-pulse');
+                cell.addEventListener('animationend', () => {
+                    cell.classList.remove('final-pulse');
+                }, { once: true });
+            });
+        }, delay * 30 + 100); // Add a small delay after the diagonal animation
+    
+        // Open modal after all animations complete
+        setTimeout(showModal, delay * 30 + 600);
+    }
+
+    function createSVGOverlay() {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.style.position = 'absolute';
+        svg.style.top = '0';
+        svg.style.left = '0';
+        svg.style.width = '100%';
+        svg.style.height = '100%';
+        svg.style.pointerEvents = 'none';
+        gridContainer.appendChild(svg);
+        return svg;
+    }
+
+    function handleGiveUp() {
+        // Disable the hint button to prevent multiple clicks
+        hintButton.disabled = true;
+    
+        const undiscoveredPaths = solutionPaths.filter((_, index) => !isPathFound(index));
+        let delay = 0;
+    
+        undiscoveredPaths.forEach((path, index) => {
+            setTimeout(() => {
+                revealPath(path, index);
+            }, delay * 500); // 500ms delay between each path reveal
+            delay++;
+        });
+    
+        // Change button text and class, and show modal after all animations complete
+        setTimeout(() => {
+            hintButton.textContent = 'Results';
+            hintButton.classList.remove('give-up');
+            hintButton.classList.add('results');
+            hintButton.disabled = false;
+            showModal();
+        }, delay * 500);
+    }
+    
+    function revealPath(path, pathIndex) {
+        // Reveal cells
+        path.forEach((cellIndex) => {
+            const cell = gridContainer.children[cellIndex];
+            cell.classList.add('found', `path-${pathIndex}`, 'reveal-animate');
+            cell.classList.remove('path-hint', 'vocal-hint'); // Remove hint classes
+            cell.addEventListener('animationend', () => {
+                cell.classList.remove('reveal-animate');
+            }, { once: true });
+        });
+    
+        // Draw lines
+        for (let i = 1; i < path.length; i++) {
+            createLine(path[i-1], path[i], pathIndex);
+        }
+    }
+    
+    function createLine(startIndex, endIndex, pathIndex) {
+        const svg = document.querySelector('.grid-container svg') || createSVGOverlay();
+        const gridRect = gridContainer.getBoundingClientRect();
+    
+        const startCell = gridContainer.children[startIndex];
+        const endCell = gridContainer.children[endIndex];
+        const startRect = startCell.getBoundingClientRect();
+        const endRect = endCell.getBoundingClientRect();
+    
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', startRect.left - gridRect.left + startRect.width / 2);
+        line.setAttribute('y1', startRect.top - gridRect.top + startRect.height / 2);
+        line.setAttribute('x2', endRect.left - gridRect.left + endRect.width / 2);
+        line.setAttribute('y2', endRect.top - gridRect.top + endRect.height / 2);
+        line.setAttribute('stroke', '#aedfee');
+        line.setAttribute('stroke-width', '1.3vh');
+        line.setAttribute('stroke-linecap', 'round');
+        line.classList.add('permanent', 'reveal-animate');
+    
+        svg.appendChild(line);
+    }
+    
+    function createSVGOverlay() {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.style.position = 'absolute';
+        svg.style.top = '0';
+        svg.style.left = '0';
+        svg.style.width = '100%';
+        svg.style.height = '100%';
+        svg.style.pointerEvents = 'none';
+        gridContainer.appendChild(svg);
+        return svg;
+    }
+    
+    // Update the event listener for the hint button
+    hintButton.addEventListener('click', function() {
+        if (hintButton.classList.contains('give-up')) {
+            handleGiveUp();
+        } else if (hintButton.classList.contains('results')) {
+            showModal();
+        } else {
+            handleHint();
+        }
     });
 });
