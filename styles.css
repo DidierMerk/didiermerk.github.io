@@ -376,6 +376,15 @@ footer {
         max-height: 90vh;
         border-radius: 5vmin;
         box-shadow: 0 0 5vmin rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    header {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        right: 0;
     }
 
     .slogan {
@@ -640,4 +649,60 @@ svg line.permanent {
         font-size: 1.7vh;
         margin: 0 auto 2.7vh;
     }
+}
+
+@keyframes pulseDiagonal {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.grid-cell.pulse-animate {
+    animation: pulseDiagonal 0.3s ease-in-out;
+    z-index: 3;
+}
+
+@keyframes finalPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+.grid-cell.final-pulse {
+    animation: finalPulse 0.3s ease-in-out;
+    z-index: 3;
+}
+
+@keyframes revealLine {
+    0% {
+        opacity: 0;
+        stroke-dashoffset: 100%;
+    }
+    100% {
+        opacity: 1;
+        stroke-dashoffset: 0;
+    }
+}
+
+svg line.reveal-animate {
+    stroke-dasharray: 100%;
+    animation: revealLine 0.5s ease-out forwards;
+}
+
+.grid-cell.found::after {
+    background-color: #aedfee;
 }
