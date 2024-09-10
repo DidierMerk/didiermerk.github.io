@@ -17,6 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let foundPaths = 0;
     let solutionPaths = [];
 
+    // For the modal
+    let userGaveUp = false;
+    let hintsUsed = 0; // Track the number of hints used
+
     // Play button functionality
     const playButton = document.getElementById('play-button');
     const gameInfo = document.querySelector('.game-info');
@@ -401,7 +405,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
                 svg.appendChild(line);
             }
-
+        
             // Remove hint classes when a path is found
             path.forEach(cellIndex => {
                 const cell = gridContainer.children[cellIndex];
@@ -410,19 +414,22 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Reset hint state for the found path
             hintState[pathIndex] = { pathHint: false, vocalHint: false };
-
+        
             foundPaths++;
-
+        
             if (foundPaths === numberOfPaths) {
+                hintButton.textContent = 'Results';
+                hintButton.classList.remove('give-up');
+                hintButton.classList.add('results');
                 animateGridCompletion();
-            }
-
-            if (areAllHintsGiven()) {
+            } else if (areAllHintsGiven()) {
                 hintButton.textContent = 'Give Up';
                 hintButton.classList.add('give-up');
             } else {
                 updateHintButton();
             }
+        
+            updateScoreCounter();
         }
         
         // Mouse events
@@ -494,22 +501,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const hintButton = document.getElementById('hint-button');
     let hintState = Array(numberOfPaths).fill().map(() => ({ pathHint: false, vocalHint: false }));
 
-    // // Add this event listener to open the modal when the "Give Up" button is clicked
-    // hintButton.addEventListener('click', function() {
-    //     if (hintButton.classList.contains('give-up')) {
-    //         // Change button to "Results" and style it
-    //         hintButton.textContent = 'Results';
-    //         hintButton.classList.remove('give-up');
-    //         hintButton.classList.add('results'); // New class for styling
-    //         showModal();  // Show modal when "Give Up" is clicked
-    //     } else if (hintButton.classList.contains('results')) {
-    //         showModal();  // Show modal when "Results" button is clicked
-    //     }
-    // });
-    
-    // hintButton.addEventListener('click', handleHint);
-
     function handleHint() {
+        if (foundPaths === numberOfPaths) {
+            showModal();
+            return;
+        }
+    
         const undiscoveredPaths = solutionPaths.reduce((acc, path, index) => {
             if (!isPathFound(index)) {
                 acc.push({ path, index });
@@ -519,8 +516,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (undiscoveredPaths.length === 0) {
             console.log("All paths discovered!");
-            hintButton.textContent = 'All Found!';
-            hintButton.disabled = true;
+            hintButton.textContent = 'Results';
+            hintButton.classList.remove('give-up');
+            hintButton.classList.add('results');
+            hintButton.disabled = false;
             return;
         }
     
@@ -544,6 +543,8 @@ document.addEventListener('DOMContentLoaded', function() {
             showVocalHint(path, pathIndex);
             hintState[pathIndex].vocalHint = true;
         }
+
+        hintsUsed++; // Increment the hint counter
     
         if (areAllHintsGiven()) {
             hintButton.textContent = 'Give Up';
@@ -552,6 +553,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateHintButton();
         }
     }
+    
 
     function showPathHint(path, pathIndex) {
         // Only remove hints for cells that are not part of any previously hinted paths
@@ -604,8 +606,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function showModal() {
         const modal = document.getElementById('game-end-modal');
+        const modalTitle = document.querySelector('.modal-title');
+        const congratulationsText = document.querySelector('.congratulations');
+    
         modal.style.display = 'flex';
         
+        if (userGaveUp) {
+            // User gave up: show how many songs they found
+            modalTitle.textContent = 'Great attempt!';
+            congratulationsText.innerHTML = `You found <strong>${foundPaths}</strong> out of <strong>5</strong> songs. Will you find them all tomorrow?`;
+        } else {
+            // User found all paths: show how many hints were used
+            modalTitle.textContent = 'Well Done!';
+            congratulationsText.innerHTML = `You found all <strong>5</strong> songs and used <strong>${hintsUsed}</strong> hints. Great job!`;
+        }
+    
         // Set current date
         const currentDateElement = document.getElementById('current-date');
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -694,6 +709,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
         // Open modal after all animations complete
         setTimeout(showModal, delay * 30 + 600);
+
     }
 
     function createSVGOverlay() {
@@ -709,6 +725,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function handleGiveUp() {
+        userGaveUp = true;  // Set flag to true when the user gives up
+
         // Disable the hint button to prevent multiple clicks
         hintButton.disabled = true;
     
@@ -793,4 +811,10 @@ document.addEventListener('DOMContentLoaded', function() {
             handleHint();
         }
     });
+
+    // function resetGame() {
+    //     userGaveUp = false; // Reset user gave up flag
+    //     hintsUsed = 0; // Reset hints used counter
+    //     // Other reset logic...
+    // }
 });
