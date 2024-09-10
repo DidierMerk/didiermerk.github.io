@@ -20,6 +20,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // For the modal
     let userGaveUp = false;
     let hintsUsed = 0; // Track the number of hints used
+    let gameProgress = []; // Track the progress of the game
+
+    const progressEmojis = {
+        path0: '🟣',
+        path1: '🟠',
+        path2: '🔵',
+        path3: '🟡',
+        path4: '🟢',
+        pathHint: '💡',
+        vocalHint: '🎤',
+        giveUp: '❌'
+    };
 
     // Play button functionality
     const playButton = document.getElementById('play-button');
@@ -428,7 +440,11 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 updateHintButton();
             }
+            
+            // Add finding a path to the game progress
+            gameProgress.push(progressEmojis[`path${pathIndex}`]);
         
+            // Update the score counter
             updateScoreCounter();
         }
         
@@ -539,9 +555,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!hintState[pathIndex].pathHint) {
             showPathHint(path, pathIndex);
             hintState[pathIndex].pathHint = true;
+            gameProgress.push(progressEmojis.pathHint);
         } else {
             showVocalHint(path, pathIndex);
             hintState[pathIndex].vocalHint = true;
+            gameProgress.push(progressEmojis.vocalHint);
         }
 
         hintsUsed++; // Increment the hint counter
@@ -618,8 +636,11 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             // User found all paths: show how many hints were used
             modalTitle.textContent = 'Well Done!';
-            congratulationsText.innerHTML = `You found all <strong>5</strong> songs and used <strong>${hintsUsed}</strong> hints. Great job!`;
+            congratulationsText.innerHTML = `You found all <strong>5</strong> songs and only used <strong>${hintsUsed}</strong> hints. Great job!`;
         }
+
+        // Show the progress of the game
+        displayGameProgress();
     
         // Set current date
         const currentDateElement = document.getElementById('current-date');
@@ -628,6 +649,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Start countdown timer
         startCountdownTimer();
+
     }
     
     function closeModal() {
@@ -726,6 +748,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function handleGiveUp() {
         userGaveUp = true;  // Set flag to true when the user gives up
+        gameProgress.push(progressEmojis.giveUp); // add giving up to the game progress
 
         // Disable the hint button to prevent multiple clicks
         hintButton.disabled = true;
@@ -800,6 +823,124 @@ document.addEventListener('DOMContentLoaded', function() {
         gridContainer.appendChild(svg);
         return svg;
     }
+
+    function displayGameProgress() {
+        const resultSquare = document.querySelector('.result-square');
+        resultSquare.innerHTML = '';
+        resultSquare.style.position = 'relative';
+        resultSquare.style.width = '100%';
+        resultSquare.style.aspectRatio = '1 / 1';
+        resultSquare.style.backgroundColor = '#ffffff';
+    
+        const svgNS = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(svgNS, "svg");
+        svg.setAttribute("width", "100%");
+        svg.setAttribute("height", "100%");
+        svg.setAttribute("viewBox", "0 0 100 100");
+        svg.style.position = "absolute";
+        svg.style.top = "0";
+        svg.style.left = "0";
+    
+        const pathGroup = document.createElementNS(svgNS, "g");
+        const emojiGroup = document.createElementNS(svgNS, "g");
+    
+        const cols = 5;
+        const totalWidth = 100 - 2 * 8; // Use your original padding of 8 here
+
+        const baseUnitWidth = totalWidth / (cols + (cols - 1) * 0.4); // 0.4 is the ratio of spacing to cell size
+        const cellSize = baseUnitWidth
+        
+        const horizontalSpacing = cellSize * 0.75;
+        const horizontalPadding = (100 - (cellSize * cols + horizontalSpacing * (cols - 1))) / 2;
+        
+        const verticalSpacing = cellSize * 1.2; // Increased vertical spacing
+        
+    
+        // Calculate the number of rows based on gameProgress length
+        const rows = Math.ceil(gameProgress.length / cols);
+    
+        // Calculate total height of the path
+        const totalPathHeight = rows * cellSize + (rows - 1) * verticalSpacing;
+        
+        // Calculate vertical padding to center the path
+        const verticalPadding = (100 - totalPathHeight) / 2;
+    
+        let path = "";
+    
+        gameProgress.forEach((emoji, index) => {
+            const row = Math.floor(index / cols);
+            const col = index % cols;
+    
+            const x = (row % 2 === 0) 
+                ? (horizontalPadding + col * (cellSize + horizontalSpacing) + cellSize/2) 
+                : (horizontalPadding + (cols - 1 - col) * (cellSize + horizontalSpacing) + cellSize/2);
+            const y = verticalPadding + row * (cellSize + verticalSpacing) + cellSize/2;
+    
+            // Add line to the path
+            if (index === 0) {
+                path = `M ${x},${y} `;
+            } else {
+                path += `L ${x},${y} `;
+            }
+    
+            // Add emoji
+            const text = document.createElementNS(svgNS, "text");
+            text.setAttribute("x", x);
+            text.setAttribute("y", y);
+            text.setAttribute("text-anchor", "middle");
+            text.setAttribute("dominant-baseline", "central");
+            text.setAttribute("font-size", `${cellSize * 0.16}vh`);
+            text.textContent = emoji;
+            emojiGroup.appendChild(text);
+        });
+    
+        // Create the path element
+        const pathElement = document.createElementNS(svgNS, "path");
+        pathElement.setAttribute("d", path);
+        pathElement.setAttribute("fill", "none");
+        pathElement.setAttribute("stroke", "#aedfee");
+        pathElement.setAttribute("stroke-width", `${cellSize * 0.5}`);
+        pathElement.setAttribute("stroke-linecap", "round");
+        pathElement.setAttribute("stroke-linejoin", "round");
+    
+        // Add drop shadow
+        const filter = document.createElementNS(svgNS, "filter");
+        filter.setAttribute("id", "drop-shadow");
+        const feDropShadow = document.createElementNS(svgNS, "feDropShadow");
+        feDropShadow.setAttribute("dx", "0");
+        feDropShadow.setAttribute("dy", "1");
+        feDropShadow.setAttribute("stdDeviation", "2");
+        feDropShadow.setAttribute("flood-color", "rgba(0,0,0,0.3)");
+        filter.appendChild(feDropShadow);
+        svg.appendChild(filter);
+    
+        pathElement.setAttribute("filter", "url(#drop-shadow)");
+    
+        pathGroup.appendChild(pathElement);
+        svg.appendChild(pathGroup);
+        svg.appendChild(emojiGroup);
+        resultSquare.appendChild(svg);
+    
+        // Add pulsating animation to the last emoji
+        if (gameProgress.length > 0) {
+            const lastEmoji = emojiGroup.lastChild;
+            lastEmoji.setAttribute("class", "pulsate");
+            const style = document.createElement("style");
+            style.textContent = `
+                @keyframes pulsate {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.2); }
+                    100% { transform: scale(1); }
+                }
+                .pulsate {
+                    animation: pulsate 1s infinite;
+                    transform-box: fill-box;
+                    transform-origin: center;
+                }
+            `;
+            svg.appendChild(style);
+        }
+    }
     
     // Update the event listener for the hint button
     hintButton.addEventListener('click', function() {
@@ -812,9 +953,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // function resetGame() {
-    //     userGaveUp = false; // Reset user gave up flag
-    //     hintsUsed = 0; // Reset hints used counter
-    //     // Other reset logic...
-    // }
+    function resetGame() {
+        userGaveUp = false; // Reset user gave up flag
+        hintsUsed = 0; // Reset hints used counter
+        gameProgress = []; // Reset the progress of the game
+        // Other reset logic...
+    }
 });
