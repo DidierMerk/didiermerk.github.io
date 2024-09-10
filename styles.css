@@ -11,19 +11,17 @@
 body {
     font-family: 'Poppins', sans-serif;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Change from center to flex-start */
+    justify-content: center;
     align-items: center;
     min-height: 100vh;
     background-color: #f0f0f0;
-    padding-top: 0vh; /* Add some padding at the top */
 }
 
 /* Container for desktop version */
 
 .mobile-container {
     width: 100%;
-    height: 90vh;
+    height: 100vh;
     background-color: white;
     overflow-y: auto;
     position: relative;
