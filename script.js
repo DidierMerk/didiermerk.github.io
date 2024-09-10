@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
         playButton.addEventListener('click', function() {
             if (gameInfo) gameInfo.style.display = 'none';
             if (gameContent) gameContent.style.display = 'flex';
-            if (footer) footer.style.visibility = 'hidden';
+            // if (footer) footer.style.visibility = 'hidden';
             if (slogan) slogan.style.display = 'block';
             generateGrid();
             adjustSloganFontSize();
