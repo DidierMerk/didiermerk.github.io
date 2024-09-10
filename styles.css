@@ -66,7 +66,7 @@ header {
 .slogan {
     flex-shrink: 0;
     width: 90%;
-    margin: 10.7vh auto 0vh;
+    margin: 10.7vh auto -7.7vh;
     text-align: center;
     font-size: 1.87vh;
     white-space: nowrap;
