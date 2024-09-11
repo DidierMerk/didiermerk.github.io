@@ -20,7 +20,10 @@
                 <span class="separator">|</span>
                 <span class="puzzles-text">Puzzles</span>
             </div>
-            <i class="fas fa-cog settings-icon"></i>
+            <div class="header-icons">
+                <i class="fas fa-question-circle how-to-play-icon" id="how-to-play-header"></i>
+                <i class="fas fa-cog settings-icon" id="settings-icon"></i>
+            </div>
         </header>
 
         <!-- Nav bar -->
@@ -150,6 +153,34 @@
                 </div>
             </div>
         </div>
+
+        <div id="how-to-play-modal" class="how-to-play-modal">
+            <div class="how-to-play-modal-content">
+              <div class="how-to-play-modal-header">
+                <span class="how-to-play-close">&times;</span>
+              </div>
+              <div class="how-to-play-modal-body">
+                <h2 class="how-to-play-title">How to Play</h2>
+                <div class="how-to-play-image-container"></div>
+                <div class="how-to-play-explanation-text">
+                  <p class="explanation-title"></p>
+                  <ul class="explanation-list"></ul>
+                </div>
+                <div class="how-to-play-spacer"></div>
+              </div>
+              <div class="how-to-play-modal-footer">
+                <div class="how-to-play-page-dots">
+                  <span class="how-to-play-dot active"></span>
+                  <span class="how-to-play-dot"></span>
+                  <span class="how-to-play-dot"></span>
+                </div>
+                <div class="how-to-play-navigation-buttons">
+                  <button id="how-to-play-back-button" disabled>Back</button>
+                  <button id="how-to-play-next-button">Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
     </div>
 
     <script src="script.js"></script>
