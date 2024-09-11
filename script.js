@@ -1053,6 +1053,69 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Dark mode toggled:', darkModeToggle.checked);
     }
 
+     // Navigation menu functionality
+    const menuIcon = document.querySelector('.menu-icon');
+    const navOverlay = document.getElementById('nav-overlay');
+    const navMenu = document.getElementById('nav-menu');
+    const howToPlay = document.getElementById('how-to-play');
+
+    function openNav() {
+        navOverlay.style.display = 'block';
+        setTimeout(() => {
+            navOverlay.classList.add('open');
+            navMenu.classList.add('open');
+        }, 10); // Small delay to ensure display change has taken effect
+
+        menuIcon.classList.add('open');
+        menuIcon.classList.remove('fa-bars');
+        menuIcon.classList.add('fa-times');
+    }
+
+    function closeNav() {
+        navOverlay.classList.remove('open');
+        navMenu.classList.remove('open');
+        setTimeout(() => {
+            navOverlay.style.display = 'none';
+        }, 300); // Match this to your transition time
+
+        menuIcon.classList.remove('open');
+        menuIcon.classList.remove('fa-times');
+        menuIcon.classList.add('fa-bars');
+    }
+
+    function toggleNav() {
+        if (navMenu.classList.contains('open')) {
+            closeNav();
+        } else {
+            openNav();
+        }
+    }
+
+    menuIcon.addEventListener('click', toggleNav);
+    navOverlay.addEventListener('click', function(e) {
+        if (e.target === navOverlay) {
+            closeNav();
+        }
+    });
+
+    howToPlay.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('How to play functionality added soon');
+        closeNav();
+    });
+
+    // Prevent scrolling when nav menu is open
+    navMenu.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+
+    // Close nav menu on window resize (for responsiveness)
+    window.addEventListener('resize', function() {
+        if (navMenu.classList.contains('open')) {
+            closeNav();
+        }
+    });
+
     function resetGame() {
         userGaveUp = false; // Reset user gave up flag
         hintsUsed = 0; // Reset hints used counter
