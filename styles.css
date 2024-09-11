@@ -706,3 +706,44 @@ svg line.reveal-animate {
 .grid-cell.found::after {
     background-color: #aedfee;
 }
+
+@keyframes copyAnimation {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes returnAnimation {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.03);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.copy-animation {
+    animation: copyAnimation 0.3s ease-in-out;
+    background-color: #2ecc71 !important; /* Change to a success color */
+    transition: background-color 0.3s ease;
+}
+
+.return-animation {
+    animation: returnAnimation 0.3s ease-in-out;
+    transition: background-color 0.3s ease;
+}
