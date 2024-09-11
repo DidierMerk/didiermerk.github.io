@@ -297,37 +297,40 @@ document.addEventListener('DOMContentLoaded', function() {
         
             const gridRect = gridContainer.getBoundingClientRect();
         
-            const pathToUpdate = permanent ? solutionPaths[foundPaths - 1] : selectedPath;
-            if (!pathToUpdate) return;
-        
-            for (let i = 1; i < pathToUpdate.length; i++) {
-                const start = permanent ? 
-                    { row: Math.floor(pathToUpdate[i-1] / gridSizeCols), col: pathToUpdate[i-1] % gridSizeCols } :
-                    pathToUpdate[i-1];
-                const end = permanent ? 
-                    { row: Math.floor(pathToUpdate[i] / gridSizeCols), col: pathToUpdate[i] % gridSizeCols } :
-                    pathToUpdate[i];
-        
-                const startCell = gridContainer.children[start.row * gridSizeCols + start.col];
-                const endCell = gridContainer.children[end.row * gridSizeCols + end.col];
-                const startRect = startCell.getBoundingClientRect();
-                const endRect = endCell.getBoundingClientRect();
-        
-                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                line.setAttribute('x1', startRect.left - gridRect.left + startRect.width / 2);
-                line.setAttribute('y1', startRect.top - gridRect.top + startRect.height / 2);
-                line.setAttribute('x2', endRect.left - gridRect.left + endRect.width / 2);
-                line.setAttribute('y2', endRect.top - gridRect.top + endRect.height / 2);
-                line.setAttribute('stroke', permanent ? '#aedfee' : '#dbd8c5');
-                line.setAttribute('stroke-width', '1.3vh');
-                line.setAttribute('stroke-linecap', 'round');
-        
-                if (permanent) {
-                    line.classList.add('permanent');
+            const pathToUpdate = updateAll ? solutionPaths : [selectedPath];
+    
+            pathToUpdate.forEach((path, index) => {
+                if (path) {
+                    for (let i = 1; i < path.length; i++) {
+                        const start = updateAll ? 
+                            { row: Math.floor(path[i-1] / gridSizeCols), col: path[i-1] % gridSizeCols } :
+                            path[i-1];
+                        const end = updateAll ? 
+                            { row: Math.floor(path[i] / gridSizeCols), col: path[i] % gridSizeCols } :
+                            path[i];
+
+                        const startCell = gridContainer.children[start.row * gridSizeCols + start.col];
+                        const endCell = gridContainer.children[end.row * gridSizeCols + end.col];
+                        const startRect = startCell.getBoundingClientRect();
+                        const endRect = endCell.getBoundingClientRect();
+
+                        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                        line.setAttribute('x1', startRect.left - gridRect.left + startRect.width / 2);
+                        line.setAttribute('y1', startRect.top - gridRect.top + startRect.height / 2);
+                        line.setAttribute('x2', endRect.left - gridRect.left + endRect.width / 2);
+                        line.setAttribute('y2', endRect.top - gridRect.top + endRect.height / 2);
+                        line.setAttribute('stroke', updateAll ? '#aedfee' : '#dbd8c5');
+                        line.setAttribute('stroke-width', '1.3vh');
+                        line.setAttribute('stroke-linecap', 'round');
+
+                        if (updateAll) {
+                            line.classList.add('permanent');
+                        }
+
+                        svg.appendChild(line);
+                    }
                 }
-        
-                svg.appendChild(line);
-            }
+            });
         }
     
         function createSVGOverlay() {
@@ -1036,7 +1039,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     surveyLink.addEventListener('click', function() {
-        showMessage('Survey functionality coming soon');
+        showMessage('A survey will come soon! When Beatle is fully done, you can leave your feedback anonymously here! :)');
     });
 
     // emailLink.addEventListener('click', function() {
@@ -1097,11 +1100,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    howToPlay.addEventListener('click', function(e) {
-        e.preventDefault();
-        alert('How to play functionality added soon');
-        closeNav();
-    });
+    // How To Play
+    const howToPlayHeader = document.getElementById('how-to-play-header');
+
+    // Add event listener for the header 'How to Play' icon
+    if (howToPlayHeader) {
+        howToPlayHeader.addEventListener('click', showHowToPlay);
+    }
 
     // Prevent scrolling when nav menu is open
     navMenu.addEventListener('touchmove', function(e) {
@@ -1199,4 +1204,147 @@ document.addEventListener('DOMContentLoaded', function() {
         gameProgress = []; // Reset the progress of the game
         // Other reset logic...
     }
+
+    // HOW TO PLAY
+    const howToPlayModal = document.getElementById('how-to-play-modal');
+    const closeBtn = document.querySelector('.how-to-play-close');
+    const backButton = document.getElementById('how-to-play-back-button');
+    const nextButton = document.getElementById('how-to-play-next-button');
+    const pageDots = document.querySelectorAll('.how-to-play-dot');
+
+    let currentPage = 0;
+    const totalPages = 3;
+
+    const modalContent = [
+        {
+            image: 'path/to/image1.jpg',
+            title: 'Find theme words to fill the board.',
+            list: [
+                'Theme words stay highlighted in blue when found.',
+                'Drag or tap letters to create words. If tapping, double tap the last letter to submit.',
+                'Theme words fill the board entirely. No theme words overlap.'
+            ]
+        },
+        {
+            image: 'path/to/image2.jpg',
+            title: 'Find the "spangram."',
+            list: [
+                'The spangram describes the puzzle\'s theme and touches two opposite sides of the board. It may be two words.',
+                'The spangram highlights in yellow when found.',
+                'An example spangram with corresponding theme words: PEAR, FRUIT, BANANA, APPLE, etc.'
+            ]
+        },
+        {
+            image: 'path/to/image3.jpg',
+            title: 'Need a hint?',
+            list: [
+                'Find non-theme words to get hints.',
+                'For every 3 non-theme words you find, you earn a hint.',
+                'Hints show the letters of a theme word. If there is already an active hint on the board, a hint will show that word\'s letter order.'
+            ]
+        }
+      ];
+
+      function showHowToPlay() {
+        resetHowToPlayModal(); // Reset the modal before showing it
+        howToPlayModal.style.display = 'block';
+        setTimeout(() => {
+            howToPlayModal.classList.add('show');
+        }, 10);
+    }
+
+    // Update this part
+    howToPlay.addEventListener('click', function(e) {
+        e.preventDefault();
+        closeNav();
+        setTimeout(() => {
+            showHowToPlay();
+        }, 300); // Delay opening the modal until after the navbar closes
+    });
+
+    function resetHowToPlayModal() {
+        currentPage = 0;
+        updateModalContent();
+        
+        // Reset the back button
+        backButton.disabled = true;
+        
+        // Reset the next button
+        nextButton.textContent = 'Next';
+        nextButton.classList.remove('last-page');
+    }
+
+    // Modify the closeHowToPlay function
+    function closeHowToPlay() {
+        howToPlayModal.classList.remove('show');
+        setTimeout(() => {
+            howToPlayModal.style.display = 'none';
+            resetHowToPlayModal(); // Reset the modal when closing
+        }, 300);
+    }
+
+    function updateModalContent() {
+        const imageContainer = document.querySelector('.how-to-play-image-container');
+        const modalTitle = document.querySelector('.how-to-play-title');
+        const explanationTitle = document.querySelector('.explanation-title');
+        const explanationList = document.querySelector('.explanation-list');
+        
+        modalTitle.textContent = "How to Play";
+        imageContainer.style.backgroundImage = `url(${modalContent[currentPage].image})`;
+        explanationTitle.textContent = modalContent[currentPage].title;
+        
+        explanationList.innerHTML = '';
+        modalContent[currentPage].list.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            explanationList.appendChild(li);
+        });
+        
+        const pageDots = document.querySelectorAll('.how-to-play-dot');
+        pageDots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentPage);
+        });
+        
+        const backButton = document.getElementById('how-to-play-back-button');
+        const nextButton = document.getElementById('how-to-play-next-button');
+        backButton.disabled = currentPage === 0;
+        nextButton.textContent = currentPage === totalPages - 1 ? 'Play' : 'Next';
+        
+        // Update next button appearance
+        if (currentPage === totalPages - 1) {
+            nextButton.classList.add('last-page');
+        } else {
+            nextButton.classList.remove('last-page');
+        }
+    }
+
+    function nextPage() {
+    if (currentPage < totalPages - 1) {
+        currentPage++;
+        updateModalContent();
+    } else {
+        closeHowToPlay();
+    }
+    }
+
+    function previousPage() {
+    if (currentPage > 0) {
+        currentPage--;
+        updateModalContent();
+    }
+    }
+
+    // Event listeners
+    document.getElementById('how-to-play-header').addEventListener('click', showHowToPlay);
+    document.getElementById('how-to-play').addEventListener('click', showHowToPlay);
+    closeBtn.addEventListener('click', closeHowToPlay);
+    nextButton.addEventListener('click', nextPage);
+    backButton.addEventListener('click', previousPage);
+
+    // Close modal when clicking outside
+    window.addEventListener('click', (event) => {
+    if (event.target === howToPlayModal) {
+        closeHowToPlay();
+    }
+    });
 });
