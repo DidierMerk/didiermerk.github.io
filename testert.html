@@ -6,6 +6,7 @@
     <title>Beatle - The Musical Maze</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="icon" type="image/png" href="logo.png">
@@ -14,7 +15,11 @@
     <div class="mobile-container">
         <header>
             <i class="fas fa-bars menu-icon"></i>
-            <div class="title">D | Puzzles</div>
+            <div class="title">
+                <span class="fancy">D</span>
+                <span class="separator">|</span>
+                <span class="puzzles-text">Puzzles</span>
+            </div>
             <i class="fas fa-cog settings-icon"></i>
         </header>
         
@@ -68,6 +73,32 @@
                     <p class="next-puzzle-text">NEXT PUZZLE IN</p>
                     <div id="countdown-timer"></div>
                     <button id="share-results">Share Your Results</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="settings-overlay" class="settings-overlay">
+            <div id="settings-menu" class="settings-menu">
+                <div class="settings-header">
+                    <h2>SETTINGS</h2>
+                    <button id="close-settings" class="close-settings">&times;</button>
+                </div>
+                <div class="settings-content">
+                    <div class="settings-item">
+                        <span>Feedback</span>
+                        <span>Survey</span>
+                    </div>
+                    <div class="settings-item">
+                        <span>Report a Bug</span>
+                        <span>Email</span>
+                    </div>
+                    <div class="settings-item">
+                        <span>Dark Mode</span>
+                        <label class="switch">
+                            <input type="checkbox" id="dark-mode-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
