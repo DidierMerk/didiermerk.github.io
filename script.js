@@ -1030,7 +1030,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Survey and Email functionalities coming soon
     const surveyLink = document.getElementById('survey-link');
-    const emailLink = document.getElementById('email-link');
 
     function showMessage(message) {
         alert(message);
@@ -1040,9 +1039,9 @@ document.addEventListener('DOMContentLoaded', function() {
         showMessage('Survey functionality coming soon');
     });
 
-    emailLink.addEventListener('click', function() {
-        showMessage('Bug Reporting functionality coming soon');
-    });
+    // emailLink.addEventListener('click', function() {
+    //     showMessage('Bug Reporting functionality coming soon');
+    // });
 
     // Dark mode toggle functionality
     const darkModeToggle = document.getElementById('dark-mode-toggle');
@@ -1114,6 +1113,84 @@ document.addEventListener('DOMContentLoaded', function() {
         if (navMenu.classList.contains('open')) {
             closeNav();
         }
+    });
+
+    // Add this function to gather device information
+    function getDeviceInfo() {
+        const platform = window.innerWidth <= 600 ? 'Web (Mobile)' : 'Web (Desktop)';
+        const browser = (function() {
+            const test = function(regexp) { return regexp.test(window.navigator.userAgent); }
+            switch (true) {
+                case test(/edg/i): return "Microsoft Edge";
+                case test(/trident/i): return "Microsoft Internet Explorer";
+                case test(/firefox|fxios/i): return "Mozilla Firefox";
+                case test(/opr\//i): return "Opera";
+                case test(/ucbrowser/i): return "UC Browser";
+                case test(/samsungbrowser/i): return "Samsung Browser";
+                case test(/chrome|chromium|crios/i): return "Google Chrome";
+                case test(/safari/i): return "Apple Safari";
+                default: return "Other";
+            }
+        })();
+        const os = (function() {
+            const userAgent = window.navigator.userAgent,
+                platform = window.navigator,
+                macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+                windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+                iosPlatforms = ['iPhone', 'iPad', 'iPod'];
+
+            if (macosPlatforms.indexOf(platform) !== -1) {
+                return 'macOS';
+            } else if (iosPlatforms.indexOf(platform) !== -1) {
+                return 'iOS';
+            } else if (windowsPlatforms.indexOf(platform) !== -1) {
+                return 'Windows';
+            } else if (/Android/.test(userAgent)) {
+                return 'Android';
+            } else if (/Linux/.test(platform)) {
+                return 'Linux';
+            } else {
+                return 'Unknown OS';
+            }
+        })();
+        const screenResolution = `${window.screen.width}x${window.screen.height}`;
+        const viewportSize = `${window.innerWidth}x${window.innerHeight}`;
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const time = new Date().toLocaleString();
+
+        return {
+            platform,
+            browser,
+            os,
+            screenResolution,
+            viewportSize,
+            timezone,
+            time
+        };
+    }
+
+    // Modify the email link click event
+    const emailLink = document.getElementById('email-link');
+    emailLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        const deviceInfo = getDeviceInfo();
+        const subject = encodeURIComponent('Beatle Bug Report');
+        const body = encodeURIComponent(`[Explain your bug here. Include screenshots if you have these available.]
+
+    Best
+
+    ---
+    %%% USER SUMMARY %%%
+    Platform: ${deviceInfo.platform}
+    Browser: ${deviceInfo.browser}
+    OS: ${deviceInfo.os}
+    Screen Resolution: ${deviceInfo.screenResolution}
+    Viewport Size: ${deviceInfo.viewportSize}
+    Timezone: ${deviceInfo.timezone}
+    Time: ${deviceInfo.time}
+    ---`);
+
+        window.location.href = `mailto:test@test.com?subject=${subject}&body=${body}`;
     });
 
     function resetGame() {
