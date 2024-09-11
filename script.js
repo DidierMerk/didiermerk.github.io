@@ -949,27 +949,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function shareResults() {
         const resultEmojis = gameProgress.join(''); // Join the emoji array into a string
-        const shareText = `Beatle #127\n"Escape the Police"\n${resultEmojis}\nBeat me at https://beatle.com`; // Replace with your actual URL
+        const shareText = `Beatle #127\n"Escape The Police"\n${resultEmojis}\nBeat me at https://beatle.com`;
     
         if (window.innerWidth >= 600) {
             // Desktop version
             navigator.clipboard.writeText(shareText).then(() => {
                 const shareButton = document.getElementById('share-results');
                 const originalText = shareButton.textContent;
+                
+                // Add animation class for copying
+                shareButton.classList.add('copy-animation');
                 shareButton.textContent = 'Copied to clipboard!';
+                
                 setTimeout(() => {
+                    // Add animation class for returning to original state
+                    shareButton.classList.remove('copy-animation');
+                    shareButton.classList.add('return-animation');
                     shareButton.textContent = originalText;
+                    
+                    // Remove the return animation class after it completes
+                    setTimeout(() => {
+                        shareButton.classList.remove('return-animation');
+                    }, 300); // Match this to the animation duration
                 }, 3000);
             }).catch(err => {
                 console.error('Failed to copy text: ', err);
             });
         } else {
-            // Mobile version
+            // Mobile version (unchanged)
             if (navigator.share) {
                 navigator.share({
                     title: 'My Beatle Puzzle Results',
                     text: shareText,
-                    url: 'https://beatle.com', // Replace with your actual URL
                 }).then(() => {
                     console.log('Thanks for sharing!');
                 }).catch(console.error);
