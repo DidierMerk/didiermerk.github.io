@@ -690,12 +690,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Add functionality to the "Share your results" button (placeholder for now)
-    const shareButton = document.getElementById('share-results');
-    shareButton.addEventListener('click', function() {
-        alert('Sharing functionality will be implemented soon!');
-    });
-
     function animateGridCompletion() {
         const cells = document.querySelectorAll('.grid-cell');
         const rows = 7;
@@ -952,6 +946,46 @@ document.addEventListener('DOMContentLoaded', function() {
             handleHint();
         }
     });
+
+    function shareResults() {
+        const resultEmojis = gameProgress.join(''); // Join the emoji array into a string
+        const shareText = `Beatle #127\n"Escape the Police"\n${resultEmojis}\nBeat me at https://beatle.com`; // Replace with your actual URL
+    
+        if (window.innerWidth >= 600) {
+            // Desktop version
+            navigator.clipboard.writeText(shareText).then(() => {
+                const shareButton = document.getElementById('share-results');
+                const originalText = shareButton.textContent;
+                shareButton.textContent = 'Copied to clipboard!';
+                setTimeout(() => {
+                    shareButton.textContent = originalText;
+                }, 3000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        } else {
+            // Mobile version
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My Beatle Puzzle Results',
+                    text: shareText,
+                    url: 'https://beatle.com', // Replace with your actual URL
+                }).then(() => {
+                    console.log('Thanks for sharing!');
+                }).catch(console.error);
+            } else {
+                // Fallback for mobile browsers that don't support the Web Share API
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('Results copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                });
+            }
+        }
+    }
+
+    // Add this event listener to your existing code
+    document.getElementById('share-results').addEventListener('click', shareResults);
 
     function resetGame() {
         userGaveUp = false; // Reset user gave up flag
