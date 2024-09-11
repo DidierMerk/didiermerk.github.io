@@ -44,7 +44,7 @@ header {
     align-items: center;
     padding: 0 7.5%;
     border-bottom: 0.15vh solid #e0e0e0;
-    z-index: 10001; /* Ensure it stays on top of other content */
+    z-index: 1050; /* Ensure it stays on top of other content */
 }
 
 .menu-icon, .settings-icon {
@@ -59,6 +59,20 @@ header {
     font-size: 2.5vh;
     font-weight: 700;
     color: #333;
+}
+
+.title .fancy {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 3vh;
+}
+
+.title .separator {
+    margin: 0 0.3vh;
+}
+
+.title .puzzles-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
 }
 
 /* Slogan on game */
@@ -461,7 +475,7 @@ svg line.permanent {
 .modal {
     display: none;
     position: fixed;
-    z-index: 9999999;
+    z-index: 1100;
     left: 0;
     top: 0;
     width: 100%;
@@ -630,7 +644,7 @@ svg line.permanent {
     }
     
     .congratulations {
-        font-size: 1.7vh;
+        font-size: 1.8vh;
         margin: 0 auto 1.9vh auto;
     }
     
@@ -746,4 +760,182 @@ svg line.reveal-animate {
 .return-animation {
     animation: returnAnimation 0.3s ease-in-out;
     transition: background-color 0.3s ease;
+}
+
+/* SETTINGS MENU */
+.settings-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+.settings-overlay.show {
+    display: block;
+    opacity: 1;
+}
+
+.settings-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border-top-left-radius: 2.2vh;
+    border-top-right-radius: 2.2vh;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2001;
+    box-shadow: 0 -0.44vh 0.67vh -0.11vh rgba(0, 0, 0, 0.1), 0 -0.22vh 0.44vh -0.11vh rgba(0, 0, 0, 0.06);
+}
+
+.settings-menu.show {
+    transform: translateY(0);
+}
+
+.settings-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.2vh 2.2vh 0; /* Remove bottom padding */
+    position: relative; /* Add this */
+}
+
+.settings-header h2 {
+    margin-top: 2.2vh; /* Increase top margin to make room for the close button */
+    margin-bottom: -2vh;
+    font-size: 2.2vh;
+    font-weight: bold;
+}
+
+.close-settings {
+    position: absolute; /* Position absolutely within the header */
+    top: 1.5vh; /* Adjust as needed */
+    right: 1.5vh; /* Adjust as needed */
+    background: none;
+    border: none;
+    font-size: 2.8vh;
+    cursor: pointer;
+}
+
+.settings-content {
+    padding: 3vh;
+}
+
+.settings-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2vh 0;
+    font-size: 2vh;
+    border-bottom: 0.1vh solid #000000;
+}
+
+.settings-item > span:first-child {
+    font-weight: bold;
+}
+
+.settings-item > span:last-child {
+    font-weight: normal;
+}
+
+.settings-item:last-child {
+    border-bottom: none;
+}
+
+/* Switch styles */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 6.7vh;
+    height: 3.75vh;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 2.9vh;
+    width: 2.9vh;
+    left: 0.44vh;
+    bottom: 0.44vh;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(2.9vh);
+}
+
+.slider.round {
+    border-radius: 3.75vh;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Animation classes */
+.settings-menu.show {
+    bottom: 0;
+}
+
+.settings-overlay.show {
+    display: block;
+}
+
+@media (min-width: 600px) {
+    .settings-overlay {
+        position: absolute;
+        width: calc(90vh * (390 / 844));
+        height: 90vh;
+        max-width: 100%;
+        max-height: 90vh;
+        border-radius: 5vmin;
+        overflow: hidden;
+    }
+
+    .settings-menu {
+        position: absolute;
+        width: 100%;
+        max-height: 90vh;
+        border-radius: 2.1vh;
+        box-shadow: 0 -0.42vh 0.63vh -0.1vh rgba(0, 0, 0, 0.1), 0 -0.20vh 0.42vh -0.1vh rgba(0, 0, 0, 0.06); /* Add this line */
+    }
+
+    .settings-header h2 {
+        font-size: 2vh;
+    }
+
+    .settings-item {
+        padding: 1.62vh 0;
+        font-size: 1.8vh;
+        border-bottom: 0.09vh solid #000000;
+    }
 }
