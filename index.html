@@ -3,565 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Didier Merk</title>
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/biography.css">
-    <link rel="stylesheet" href="css/experience.css">
-    <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/publications.css">
-    <link rel="stylesheet" href="css/projects.css">
-    <link rel="stylesheet" href="css/modal.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Beatle - The Musical Maze</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="icon" type="image/png" href="images/beatlelogo.png">
 </head>
 <body>
+    <div class="mobile-container">
+        <header>
+            <i class="fas fa-bars menu-icon"></i>
+            <div class="title">
+                <span class="fancy">D</span>
+                <span class="separator">|</span>
+                <span class="puzzles-text">Puzzles</span>
+            </div>
+            <div class="header-icons">
+                <i class="fas fa-question-circle how-to-play-icon" id="how-to-play-header"></i>
+                <i class="fas fa-cog settings-icon" id="settings-icon"></i>
+            </div>
+        </header>
 
-    <!-- Desktop Header Block -->
-    <div id="header">
-        <div class="header-left">
-            <a href="#" class="name-link">Didier Merk</a>
-            <nav class="header-nav">
-                <a href="#home">Home</a>
-                <a href="#experience">Experience</a>
-                <a href="#projects">Projects</a>
-                <a href="#publications">Publications</a>
+        <!-- Nav bar -->
+        <div id="nav-overlay" class="nav-overlay">
+            <nav id="nav-menu" class="nav-menu">
+                <div class="nav-content">
+                    <div class="nav-section">
+                        <h3>About</h3>
+                        <ul>
+                            <li>
+                                <a href="https://didiermerk.github.io" target="_blank">
+                                    <img src="images/profilepic.png" alt="Profile" class="nav-icon profile-icon">
+                                    Personal Page
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/didiermerk/didiermerk.github.io" target="_blank">
+                                    <i class="fab fa-github nav-icon"></i>
+                                    Beatle Code
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" id="how-to-play">
+                                    <i class="fas fa-question-circle nav-icon"></i>
+                                    How To Play
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="nav-section">
+                        <h3>Credits</h3>
+                        <ul>
+                            <li>
+                                <a href="https://www.nytimes.com/crosswords" target="_blank">
+                                    <img src="images/NYTLogo.png" alt="NYT Logo" class="nav-icon">
+                                    New York Times Games
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.nytimes.com/games/strands" target="_blank">
+                                    <img src="images/StrandsLogo.png" alt="Strands Logo" class="nav-icon">
+                                    Strands
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </nav>
         </div>
-        <div class="header-right">
-            <div id="dark-mode-toggle-desktop" aria-label="Toggle Dark Mode">
-                <i class="fas fa-moon"></i>
-            </div>
+        
+        <div class="slogan" style="display: none;">
+            <strong>Connect the notes to find the hidden songs!</strong>
         </div>
-    </div>
-
-    <!-- Mobile Header -->
-    <div id="mobile-header">
-        <div class="mobile-header-left">
-            <div id="menu-toggle" aria-label="Toggle Menu">
-                <i class="fas fa-bars"></i>
+        
+        <main>
+            <div class="game-info">
+                <img src="images/beatlelogo.png" alt="Beatle Logo" class="game-logo">
+                <h1>Beatle</h1>
+                <p>Find the hidden paths and attempt to uncover today's beats.</p>
+                <button id="play-button">Play</button>
             </div>
-            <a href="#home" class="mobile-name-link">Didier Merk</a>
-        </div>
-        <div class="mobile-header-right">
-            <div id="dark-mode-toggle-mobile" aria-label="Toggle Dark Mode">
-                <i class="fas fa-moon"></i>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mobile Menu (hidden by default) -->
-    <div class="mobile-menu" id="mobile-menu">
-        <a href="#home">Home</a>
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#publications">Publications</a>
-    </div>
-
-    <!-- Biography Block -->
-    <div id="home" class="bio-block">
-        <div class="bio-container">
-            <div class="left-container">
-                <img src="images/avatar.jpg" alt="Profile Picture" class="avatar">
-                <h2 class="name">Didier Merk</h2>
-                <p class="role">Master Student Artificial Intelligence</p>
-                <a href="https://www.uva.nl/shared-content/programmas/en/masters/artificial-intelligence/artificial-intelligence.html" class="institution">University of Amsterdam</a>
-                <div class="socials">
-                    <a href="mailto:didier.merk@gmail.com" target="_blank" class="social-icon"><i class="fas fa-envelope"></i></a>
-                    <a href="https://twitter.com/hallometdidier" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
-                    <a href="https://scholar.google.com/citations?user=vzgjYysAAAAJ" target="_blank" class="social-icon"><i class="fas fa-graduation-cap"></i></a>
-                    <a href="https://github.com/didiermerk" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/didier-merk" target="_blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
+            <div class="game-content" style="display: none;">
+                <div class="game-area">
+                    <div class="grid-container"></div>
+                </div>
+                <div class="game-controls">
+                    <button id="hint-button" data-hint-state="0">Hint</button>
+                    <div class="score-counter">0 of 5 songs found</div>
                 </div>
             </div>
-            <div class="right-container">
-                <h1>Biography</h1>
-                <p>I am student in the final year of the Artificial Intelligence master's programme at the <a href="https://www.uva.nl/shared-content/programmas/en/masters/artificial-intelligence/artificial-intelligence.html">University of Amsterdam</a>, where I am currently writing my thesis at ING Bank's <a href="https://www.ingwb.com/en/insights/empowering-with-advanced-analytics">Wholesale Advanced Analystics</a> department. This research focusses on forecasting financial time-series data using Generative Pre-Trained Transformers.</p>
-                <p>Before my MSc, I completed a major in AI as part of the <a href="">Natural and Social Sciences</a> Bachelor's programme, also at the University of Amsterdam. I interned at international research organisation <a href="https://home.cern">CERN</a>, where I wrote my thesis on <em>Hyperparameter Optimization for Jet Tagging</em>.</p> 
-                <h2>Education</h2>
-                <ul class="education-list">
-                    <!-- Degree item-->
-                    <li>
-                        <div class="degree-container">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span class="degree">MSc in Artificial Intelligence, 2022 - 2024</span>
-                        </div>
-                        <span class="institution-list">University of Amsterdam</span>
-                    </li>
+        </main>
+        
+        <footer>
+            <div class="footer-wrapper">
+                <div class="footer-content">
+                    <div class="date"></div>
+                    <div>Puzzle by <a href="https://didiermerk.github.io" target="_blank">Didier Merk</a></div>
+                </div>
+            </div>
+        </footer>
 
-                    <!-- Degree item-->
-                    <li>
-                        <div class="degree-container">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span class="degree">BSc Major in Artificial Intelligence, 2020 - 2022</span>
-                        </div>
-                        <span class="institution-list">University of Amsterdam</span>
-                    </li>
-
-                    <!-- Degree item-->
-                    <li>
-                        <div class="degree-container">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span class="degree">BSc Natural and Social Sciences (Propaedeutic), 2015 - 2016</span>
-                        </div>
-                        <span class="institution-list">University of Amsterdam</span>
-                    </li>
-                </ul>
+        <div id="game-end-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="back-to-puzzle">Back to puzzle</span>
+                    <span class="close">&times;</span>
+                </div>
+                <h2 class="modal-title">Well Done!</h2>
+                <div class="modal-body">
+                    <p class="date-info">
+                        <span id="current-date"></span><br>
+                        "Escape the police"
+                    </p>
+                    <div class="result-square"></div>
+                    <p class="congratulations">
+                        Nice job finding the theme songs and Spangram. You are amazing!
+                    </p>
+                    <p class="next-puzzle-text">NEXT PUZZLE IN</p>
+                    <div id="countdown-timer"></div>
+                    <button id="share-results">Share Your Results</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Experience Block -->
-    <div id="experience" class="experience-block">
-        <div class="experience-container">
-            <div class="experience-left-container">
-                <h1>Experience</h1>
-            </div>
-            <div class="experience-right-container">
-                <!-- Experience Item -->
-                <div class="experience-item">
-                    <div class="timeline-dot"></div>
-                    <div class="experience-box">
-                        <div class="experience-header">
-                            <img src="images/inglogo.png" alt="Company Logo" class="experience-company-logo">
-                            <div class="experience-details">
-                                <h2 class="experience-role">Machine Learning Intern</h2>
-                                <p class="experience-company-name">
-                                    <a href="https://www.ingwb.com/en/insights/empowering-with-advanced-analytics" target="_blank">ING Bank</a>
-                                </p>
-                                <p class="experience-date-location">Jan 2024 – Oct 2024 · Amsterdam, Netherlands</p>
-                            </div>
-                        </div>
-                        <p class="experience-description">Researched few-shot learning for image classification at FiveAI`s Oxford research group, which has close ties to the Torr Vision Group at Oxford University. The work I did together with Luca Bertinetto resulted in a contributed talk at the NeurIPS 2020 Meta Learning workshop, and a NeurIPS 2021 paper.</p>
+        <div id="settings-overlay" class="settings-overlay">
+            <div id="settings-menu" class="settings-menu">
+                <div class="settings-header">
+                    <h2>SETTINGS</h2>
+                    <button id="close-settings" class="close-settings">&times;</button>
+                </div>
+                <div class="settings-content">
+                    <div class="settings-item">
+                        <span>Feedback</span>
+                        <span id="survey-link">Survey</span>
                     </div>
-                </div>
-
-                <!-- Experience Item -->
-                <div class="experience-item">
-                    <div class="timeline-dot"></div>
-                    <div class="experience-box">
-                        <div class="experience-header">
-                            <img src="images/uvalogo.png" alt="Company Logo" class="experience-company-logo">
-                            <div class="experience-details">
-                                <h2 class="experience-role">Graduate Teaching Assistant · Game Theory</h2>
-                                <p class="experience-company-name">
-                                    <a href="https://studiegids.uva.nl/xmlpages/page/2023-2024-en/search-course/course/109561" target="_blank">University of Amsterdam</a>
-                                </p>
-                                <p class="experience-date-location">Mar 2024 – Jun 2024 · Amsterdam, Netherlands</p>
-                            </div>
-                        </div>
-                        <p class="experience-description">In the academic year of 2023-2024 I worked as a graduate teaching assistant for the master's course Game Theory, taught by Prof.<a href="https://staff.fnwi.uva.nl/u.endriss" target="_blank" class="experience-link"> Ulle Endriss</a>. As a teaching assistant (or <em>tutorial lecturer</em>) I co-led a tutorial group, during which we helped students with exercises and went deeper into the course material. This introductory course focuses on the mathematical properties of so-called <em>games</em> and how to analyse strategic interactions between rational agents.</p>
-                        <div class="publication-links">
-                            <a href="https://studiegids.uva.nl/xmlpages/page/2023-2024-en/search-course/course/109561" target="_blank">Course Guide</a>
-                        </div>
+                    <div class="settings-item">
+                        <span>Report a Bug</span>
+                        <span id="email-link">Email</span>
                     </div>
-                </div>
-
-                <!-- Experience Item -->
-                <div class="experience-item">
-                    <div class="timeline-dot"></div>
-                    <div class="experience-box">
-                        <div class="experience-header">
-                            <img src="images/cernlogo.png" alt="Company Logo" class="experience-company-logo">
-                            <div class="experience-details">
-                                <h2 class="experience-role">Research Intern</h2>
-                                <p class="experience-company-name">
-                                    <a href="https://home.cern/" target="_blank">CERN</a>
-                                </p>
-                                <p class="experience-date-location">Mar 2022 – Jul 2022 · Geneva, Switzerland</p>
-                            </div>
-                        </div>
-                        <p class="experience-description">At the Large Hadron Collider in Geneva, Switzerland, protons are being accelerated and made to collide at speeds close to the speed of light; resulting into particle sprays known as jets. Determining which fundamental particle a jet originated from is known as <em>jet tagging</em>. During this thesis research, I attempt to increase performance of the state-of-the-art <em>Particle Transformer</em> model, used to classify jets for the CMS experiment. This is done by using a centralized machine learning platform launched by CERN in 2021, to perform a hyperparameter optimization study.</p>
-                        <div class="publication-links">
-                            <a href="files/BSc_Thesis_DidierMerk.pdf" target="_blank">Thesis</a>
-                            <a href="https://github.com/DidierMerk/BachelorThesis" target="_blank">Code</a>
-                        </div>
+                    <div class="settings-item">
+                        <span>Dark Mode</span>
+                        <label class="switch">
+                            <input type="checkbox" id="dark-mode-toggle">
+                            <span class="slider round"></span>
+                        </label>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Projects Block -->
-    <div id="projects" class="projects-block">
-        <div class="projects-container">
-            <div class="projects-left-container">
-                <h1>Projects</h1>
-            </div>
-            <div class="projects-right-container">
-
-                <!-- Project Item -->
-                <div class="project-item">
-                    <a href="https://github.com/DidierMerk/grounded-diffusers" target="_blank" class="project-item-link">
-                        <div class="project-details">
-                            <!-- Project Details -->
-                            <div class="project-title">
-                                <span>Improving the grounding of AI generated images</span>
-                            </div>
-                            <p class="project-description">Visual grounding can be described as the task of understanding a natural language query and finding the target object(s) in an image described in that query. In this paper, written for the Computer Vision 2 project, my teammates and I improve an existing approach to ground the generations of a text-to-image diffusion model, which simultaneously generates an image and a segmentation mask for the target objects described in a text prompt.</p>
-                            <!-- Project Buttons -->
-                            <div class="project-buttons">
-                                <a href="files/GroundedDiffusers.pdf" target="_blank" class="project-button">Paper</a>
-                                <a href="files/GroundingPoster.pdf" target="_blank" class="project-button">Poster</a>
-                                <a href="https://github.com/DidierMerk/grounded-diffusers" target="_blank" class="project-button">Code</a>
-                            </div>
-                        </div>
-                        <img src="images/segmentation.png" alt="Project Image Showing Segmentation" class="project-image">
-                    </a>
+        <div id="how-to-play-modal" class="how-to-play-modal">
+            <div class="how-to-play-modal-content">
+              <div class="how-to-play-modal-header">
+                <span class="how-to-play-close">&times;</span>
+              </div>
+              <div class="how-to-play-modal-body">
+                <h2 class="how-to-play-title">How to Play</h2>
+                <div class="how-to-play-image-container"></div>
+                <div class="how-to-play-explanation-text">
+                  <p class="explanation-title"></p>
+                  <ul class="explanation-list"></ul>
                 </div>
-
-                <!-- Project Item -->
-                <a href="https://project2.com" target="_blank" class="project-item-link">
-                    <div class="project-item">
-                        <div class="project-details">
-                            <div class="project-title">
-                                <span>Research Team co-lead at EUFS</span>
-                            </div>
-                            <p class="project-description">While doing my AI MSc at the University of Edinburgh, I was part of the autonomous driving team at Edinburgh University Forumula Student, where I co-led the research team. We implemented a deep ConvNet to drive the car autonomously in ROS simulation using supervised learning.</p>
-                        </div>
-                        <img src="images/project1.gif" alt="Project Image" class="project-image">
-                    </div>
-                </a>
-
-                <!-- Add more project items as needed -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Publications Block -->
-    <div id="publications" class="publications-block">
-        <div class="publications-container">
-            <div class="publications-left-container">
-                <h1>Publications</h1>
-            </div>
-            <div class="publications-right-container">
-                <!-- Publication Item -->
-                <div class="publication-item">
-                    <div class="publication-box">
-                        <p class="publication-authors"><b>Didier Merk</b>, Tsatsral Mendsuren, Denny Smit, Boaz Beukers</p>
-                        <p class="publication-details">July 2023 &middot; Accepted as poster at <em>NeurIPS 2023</em></p>
-                        <p class="publication-title">
-                            <a href="https://mametchiii.github.io/lassi-reproducibility/" target="_blank">[Re] Latent Space Smoothing For Individually Fair Representations</a>
-                        </p>
-                        <p class="publication-description">Fairness has become an increasingly more important topic within the AI community. Using recent advances in generative modelling and deep learning, researchers at DeepMind have proposed a novel representation learning method called LASSI. This model ensures that similar individuals are treated similarly, known as individual fairness. In this paper we aim to verify the original claims and extend the research by performing additional experiments to validate the robustness of LASSI.</p>
-                        <!-- Buttons below the publication description -->
-                        <div class="publication-links">
-                            <a href="https://openreview.net/pdf?id=J-Lgb7Vc0wX" target="_blank">PDF</a>
-                            <a href="https://mametchiii.github.io/lassi-reproducibility/" target="_blank">Website</a>
-                            <a href="#" class="cite-button" data-bibtex="LASSI">Cite</a>
-                            <a href="https://github.com/Mametchiii/lassi-reproducibility" target="_blank">Code</a>
-                        </div>
-                    </div>
+                <div class="how-to-play-spacer"></div>
+              </div>
+              <div class="how-to-play-modal-footer">
+                <div class="how-to-play-page-dots">
+                  <span class="how-to-play-dot active"></span>
+                  <span class="how-to-play-dot"></span>
+                  <span class="how-to-play-dot"></span>
                 </div>
-                <!-- End of Publication Item-->
-
-                <!-- Add more publication items as needed -->
+                <div class="how-to-play-navigation-buttons">
+                  <button id="how-to-play-back-button" disabled>Back</button>
+                  <button id="how-to-play-next-button">Next</button>
+                </div>
+              </div>
             </div>
-        </div>
+          </div>
     </div>
 
-    <!-- Footer Block -->
-    <div id="footer">
-        <p>&copy; 2024 Didier Merk. Site design based on older Wowchemy template. Contact for info.</p>
-    </div>
-
-    <!-- Cite Modal -->
-    <div id="modal-container"></div>
-
-    <!-- JavaScript -->
-    <script>
-        // Function to update the active navigation link based on the current scroll position
-        function updateActiveLink() {
-            const sections = document.querySelectorAll('div[id]');
-            const navLinksDesktop = document.querySelectorAll('.header-nav a');
-            const navLinksMobile = document.querySelectorAll('.mobile-menu a');
-            const headerHeight = document.getElementById('header').offsetHeight; // Get the height of the fixed header
-            
-            let foundActiveSection = false;
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - headerHeight;
-                const sectionBottom = sectionTop + section.offsetHeight;
-
-                if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionBottom) {
-                    const currentSectionId = section.getAttribute('id');
-                    setActiveLink(currentSectionId, navLinksDesktop, navLinksMobile);
-                    foundActiveSection = true;
-                }
-            });
-
-            // If no section is active, default to the first navigation link
-            if (!foundActiveSection) {
-                setActiveLink(navLinksDesktop[0].getAttribute('href').substring(1), navLinksDesktop, navLinksMobile);
-            }
-        }
-
-        function setActiveLink(sectionId, navLinksDesktop, navLinksMobile) {
-            navLinksDesktop.forEach(link => {
-                link.classList.toggle('active', link.getAttribute('href').substring(1) === sectionId);
-            });
-
-            navLinksMobile.forEach(link => {
-                link.classList.toggle('active', link.getAttribute('href').substring(1) === sectionId);
-            });
-        }
-
-        // Ensure the first section is highlighted on page load
-        window.addEventListener('load', updateActiveLink);
-
-        // Update active link on scroll
-        document.addEventListener('scroll', updateActiveLink);
-
-        // Update active link on window resize
-        window.addEventListener('resize', updateActiveLink);
-    
-        // Toggle the mobile menu
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileHeader = document.getElementById('mobile-header'); // Get the mobile header element
-    
-        menuToggle.addEventListener('click', function() {
-            // Toggle the 'open' class to add/remove sliding effect
-            mobileMenu.classList.toggle('open');
-    
-            // Toggle the 'no-shadow' class to remove/add box-shadow from/to mobile header
-            mobileHeader.classList.toggle('no-shadow');
-        });
-    
-        // Close the mobile menu when a link is clicked and restore the box-shadow
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenu.classList.remove('open'); // Collapse the menu
-                mobileHeader.classList.remove('no-shadow'); // Restore the box-shadow
-            });
-        });
-    
-        // Script to dynamically adjust the height of the timeline lines
-        function adjustTimelineLines() {
-            const items = document.querySelectorAll('.experience-item');
-    
-            items.forEach((item, index) => {
-                const dot = item.querySelector('.timeline-dot');
-                if (dot && index < items.length - 1) {
-                    const nextItem = items[index + 1];
-                    const nextDot = nextItem.querySelector('.timeline-dot');
-    
-                    // Calculate the positions of the dots
-                    const dotRect = dot.getBoundingClientRect();
-                    const nextDotRect = nextDot.getBoundingClientRect();
-    
-                    const dotBottom = dotRect.bottom + window.scrollY;
-                    const nextDotTop = nextDotRect.top + window.scrollY;
-    
-                    // Calculate the height of the line
-                    const height = nextDotTop - dotBottom;
-                    dot.style.setProperty('--line-height', `${height}px`);
-                }
-            });
-        }
-    
-        window.addEventListener('resize', adjustTimelineLines);
-        window.addEventListener('load', adjustTimelineLines);
-        window.addEventListener('scroll', adjustTimelineLines);
-    
-        // Dark Mode 
-        const darkModeToggleDesktop = document.getElementById('dark-mode-toggle-desktop');
-        const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
-        const body = document.body;
-    
-        function toggleDarkMode() {
-            body.classList.toggle('dark-mode');
-    
-            // Toggle the icon between moon and sun
-            const iconDesktop = darkModeToggleDesktop.querySelector('i');
-            const iconMobile = darkModeToggleMobile.querySelector('i');
-    
-            if (body.classList.contains('dark-mode')) {
-                iconDesktop.classList.remove('fa-moon');
-                iconDesktop.classList.add('fa-sun');
-                iconMobile.classList.remove('fa-moon');
-                iconMobile.classList.add('fa-sun');
-                localStorage.setItem('darkMode', 'enabled');
-            } else {
-                iconDesktop.classList.remove('fa-sun');
-                iconDesktop.classList.add('fa-moon');
-                iconMobile.classList.remove('fa-sun');
-                iconMobile.classList.add('fa-moon');
-                localStorage.setItem('darkMode', 'disabled');
-            }
-        }
-    
-        darkModeToggleDesktop.addEventListener('click', toggleDarkMode);
-        darkModeToggleMobile.addEventListener('click', toggleDarkMode);
-    
-        // Optional: Apply the user's preference on page load
-        window.addEventListener('load', function() {
-            if (localStorage.getItem('darkMode') === 'enabled') {
-                body.classList.add('dark-mode');
-                darkModeToggleDesktop.querySelector('i').classList.remove('fa-moon');
-                darkModeToggleDesktop.querySelector('i').classList.add('fa-sun');
-                darkModeToggleMobile.querySelector('i').classList.remove('fa-moon');
-                darkModeToggleMobile.querySelector('i').classList.add('fa-sun');
-            }
-        });
-    
-        // Function to remove the fragment identifier from the URL
-        function removeHashFromUrl() {
-            history.replaceState(null, null, ' ');
-        }
-    
-        // Function to scroll to header links
-        document.querySelectorAll('.header-nav a, .mobile-menu a').forEach(link => {
-            link.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent default anchor click behavior
-                const targetId = this.getAttribute('href'); // Get the target ID (e.g., #home)
-                const targetElement = document.querySelector(targetId); // Find the target element
-    
-                // Calculate the offset position from the top of the page
-                const offsetPosition = targetElement.offsetTop - 65; // Change 100 to whatever offset you need
-    
-                // Smooth scroll to the offset position
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-    
-                // Remove the hash from the URL
-                setTimeout(removeHashFromUrl, 0);
-            });
-        });
-    
-        // Also apply the same to the mobile menu links
-        document.querySelectorAll('.mobile-menu a').forEach(link => {
-            link.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent default anchor click behavior
-                const targetId = this.getAttribute('href'); // Get the target ID (e.g., #home)
-                const targetElement = document.querySelector(targetId); // Find the target element
-    
-                // Smooth scroll to the target element
-                targetElement.scrollIntoView({
-                    behavior: 'smooth'
-                });
-    
-                // Remove the hash from the URL
-                setTimeout(removeHashFromUrl, 0);
-            });
-        });
-
-        // Function to fetch BibTeX data from the modals folder
-        async function fetchBibtexData(filename) {
-            try {
-                const response = await fetch(`modals/${filename}.bib`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const bibtexData = await response.text();
-                return bibtexData; // Return the BibTeX content as a string
-            } catch (error) {
-                console.error('There was a problem with the fetch operation:', error);
-                return ''; // Return an empty string if there was an error
-            }
-        }
-
-        // Attach event listeners to all "Cite" buttons
-        document.querySelectorAll('.cite-button').forEach((citeButton) => {
-            citeButton.addEventListener('click', async function (event) { // Use async to allow fetching
-                event.preventDefault(); // Prevent default link behavior
-                const bibtexFilename = this.getAttribute('data-bibtex'); // Get the filename (without .bib)
-                const bibtexData = await fetchBibtexData(bibtexFilename); // Fetch the BibTeX data
-                const modalId = `modal-${bibtexFilename}`; // Generate a unique modal ID based on filename
-                openModal(bibtexData, modalId); // Pass the fetched BibTeX data and modal ID to openModal
-            });
-        });
-
-        // Function to open the modal with dynamic BibTeX content
-        function openModal(bibtexData, modalId) {
-            // Check if the modal already exists, if not, create it
-            let modal = document.getElementById(modalId);
-            if (!modal) {
-                const modalContainer = document.getElementById('modal-container');
-                modalContainer.insertAdjacentHTML('beforeend', `
-                    <div id="${modalId}" class="modal">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h2>Cite</h2>
-                                <span class="close-modal">&times;</span>
-                            </div>
-                            <pre class="bibtex-code">${bibtexData}</pre> <!-- Use class instead of ID -->
-                            <div class="modal-buttons">
-                                <button class="copy-bibtex">
-                                    <i class="fas fa-copy"></i> Copy
-                                </button>
-                                <button class="download-bibtex">
-                                    <i class="fas fa-download"></i> Download
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `);
-                modal = document.getElementById(modalId);
-            }
-
-            // Show the modal
-            modal.style.display = "block";
-            document.body.classList.add('modal-open');
-            setTimeout(() => {
-                modal.classList.add('show');
-                modal.querySelector('.modal-content').classList.add('show');
-            }, 10);
-
-            // Attach event listeners for close and copy buttons
-            const closeButton = modal.querySelector('.close-modal');
-            closeButton.onclick = () => closeModal(modal);
-
-            // Close modal if clicking outside of modal content
-            window.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    closeModal(modal);
-                }
-            });
-
-            const copyButton = modal.querySelector('.copy-bibtex');
-            copyButton.addEventListener('click', () => copyBibtex(modalId));
-
-            const downloadButton = modal.querySelector('.download-bibtex');
-            downloadButton.addEventListener('click', () => downloadBibtex(modalId));
-        }
-
-        // Function to close the modal
-        function closeModal(modal) {
-            modal.querySelector('.modal-content').classList.remove('show');
-            modal.classList.remove('show');
-            document.body.classList.remove('modal-open');
-            setTimeout(() => {
-                modal.style.display = "none";
-            }, 700); // Match this delay with the duration of your animation
-        }
-
-        // Function to copy BibTeX code to clipboard
-        function copyBibtex(modalId) {
-            const bibtexCode = document.querySelector(`#${modalId} .bibtex-code`).textContent;
-            navigator.clipboard.writeText(bibtexCode).then(() => {
-                const copyButton = document.querySelector(`#${modalId} .copy-bibtex`);
-                copyButton.classList.add('copied');
-                setTimeout(() => {
-                    copyButton.classList.remove('copied');
-                }, 1500);
-            }).catch((error) => {
-                console.error("Failed to copy text: " + error);
-            });
-        }
-
-        // Function to download BibTeX as a file
-        function downloadBibtex(modalId) {
-            const bibtexCode = document.querySelector(`#${modalId} .bibtex-code`).textContent;
-            const blob = new Blob([bibtexCode], { type: 'text/plain' });
-            const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = `${modalId}.bib`;
-            link.click();
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
