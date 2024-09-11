@@ -1028,6 +1028,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 300); // This should match the transition duration in CSS
     }
 
+    // Survey and Email functionalities coming soon
+    const surveyLink = document.getElementById('survey-link');
+    const emailLink = document.getElementById('email-link');
+
+    function showMessage(message) {
+        alert(message);
+    }
+
+    surveyLink.addEventListener('click', function() {
+        showMessage('Survey functionality coming soon');
+    });
+
+    emailLink.addEventListener('click', function() {
+        showMessage('Bug Reporting functionality coming soon');
+    });
+
     // Dark mode toggle functionality
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     darkModeToggle.addEventListener('change', toggleDarkMode);
