@@ -998,6 +998,45 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add this event listener to your existing code
     document.getElementById('share-results').addEventListener('click', shareResults);
 
+    // Settings menu functionality
+    const settingsIcon = document.querySelector('.settings-icon');
+    const settingsOverlay = document.getElementById('settings-overlay');
+    const settingsMenu = document.getElementById('settings-menu');
+    const closeSettings = document.getElementById('close-settings');
+
+    settingsIcon.addEventListener('click', openSettingsMenu);
+    closeSettings.addEventListener('click', closeSettingsMenu);
+    settingsOverlay.addEventListener('click', (e) => {
+        if (e.target === settingsOverlay) {
+            closeSettingsMenu();
+        }
+    });
+
+    function openSettingsMenu() {
+        settingsOverlay.classList.add('show');
+        // Small delay to ensure overlay is visible before menu slides up
+        setTimeout(() => {
+            settingsMenu.classList.add('show');
+        }, 50);
+    }
+    
+    function closeSettingsMenu() {
+        settingsMenu.classList.remove('show');
+        // Wait for the sliding animation to finish before hiding the overlay
+        setTimeout(() => {
+            settingsOverlay.classList.remove('show');
+        }, 300); // This should match the transition duration in CSS
+    }
+
+    // Dark mode toggle functionality
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    darkModeToggle.addEventListener('change', toggleDarkMode);
+
+    function toggleDarkMode() {
+        // You can implement dark mode logic here
+        console.log('Dark mode toggled:', darkModeToggle.checked);
+    }
+
     function resetGame() {
         userGaveUp = false; // Reset user gave up flag
         hintsUsed = 0; // Reset hints used counter
