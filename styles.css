@@ -849,6 +849,10 @@ svg line.reveal-animate {
     border-bottom: none;
 }
 
+#survey-link, #email-link {
+    cursor: pointer;
+}
+
 /* Switch styles */
 .switch {
     position: relative;
