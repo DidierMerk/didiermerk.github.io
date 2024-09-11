@@ -943,3 +943,119 @@ input:checked + .slider:before {
         border-bottom: 0.09vh solid #000000;
     }
 }
+
+/* Navigation Bar */
+
+/* Navigation Overlay */
+.nav-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+.nav-overlay.open {
+    opacity: 1;
+}
+
+/* Navigation Menu */
+.nav-menu {
+    position: fixed;
+    top: 7.7vh; /* Adjust this value to match your header height */
+    left: -80%;
+    width: 80%;
+    height: calc(100% - 7.7vh); /* Subtract header height */
+    background-color: #fff;
+    overflow-y: auto;
+    transition: left 0.3s ease-out;
+    z-index: 1001;
+    box-shadow: 0.24vh 0 0.58vh rgba(0, 0, 0, 0.1);
+}
+
+.nav-menu.open {
+    left: 0;
+}
+
+.nav-content {
+    padding: 2.4vh;
+}
+
+.nav-section {
+    margin-bottom: 3vh;
+}
+
+.nav-section h3 {
+    font-size: 1.95vh;
+    font-weight: bold;
+    margin-bottom: 1.25vh;
+    color: #333;
+}
+
+.nav-section ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-section li {
+    margin-bottom: 1.82vh;
+}
+
+.nav-section a {
+    display: flex;
+    align-items: center;
+    color: #333;
+    text-decoration: none;
+    font-size: 1.71vh;
+}
+
+.nav-icon {
+    width: 2.4vh;
+    height: 2.4vh;
+    margin-right: 1.81vh;
+    object-fit: cover;
+}
+
+.nav-icon.profile-icon {
+    border-radius: 50%;
+}
+
+/* Menu Icon */
+.menu-icon {
+    transition: transform 0.3s ease;
+}
+
+.menu-icon.open {
+    transform: rotate(90deg);
+}
+
+@media (min-width: 600px) {
+    .nav-overlay {
+        position: absolute;
+        width: calc(90vh * (390 / 844));
+        height: 90vh;
+        max-width: 100vw;
+        max-height: 90vh;
+        border-radius: 5vmin;
+        overflow: hidden;
+    }
+
+    .nav-menu {
+        position: absolute;
+        top: 7.7vh; /* Adjust this value to match your header height */
+        left: -80%;
+        width: 80%;
+        height: calc(100% - 7.7vh); /* Subtract header height */
+        max-width: calc(90vh * (390 / 844));
+    }
+
+    .nav-menu.open {
+        left: 0;
+    }
+}
