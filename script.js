@@ -297,40 +297,37 @@ document.addEventListener('DOMContentLoaded', function() {
         
             const gridRect = gridContainer.getBoundingClientRect();
         
-            const pathToUpdate = updateAll ? solutionPaths : [selectedPath];
-    
-            pathToUpdate.forEach((path, index) => {
-                if (path) {
-                    for (let i = 1; i < path.length; i++) {
-                        const start = updateAll ? 
-                            { row: Math.floor(path[i-1] / gridSizeCols), col: path[i-1] % gridSizeCols } :
-                            path[i-1];
-                        const end = updateAll ? 
-                            { row: Math.floor(path[i] / gridSizeCols), col: path[i] % gridSizeCols } :
-                            path[i];
-
-                        const startCell = gridContainer.children[start.row * gridSizeCols + start.col];
-                        const endCell = gridContainer.children[end.row * gridSizeCols + end.col];
-                        const startRect = startCell.getBoundingClientRect();
-                        const endRect = endCell.getBoundingClientRect();
-
-                        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                        line.setAttribute('x1', startRect.left - gridRect.left + startRect.width / 2);
-                        line.setAttribute('y1', startRect.top - gridRect.top + startRect.height / 2);
-                        line.setAttribute('x2', endRect.left - gridRect.left + endRect.width / 2);
-                        line.setAttribute('y2', endRect.top - gridRect.top + endRect.height / 2);
-                        line.setAttribute('stroke', updateAll ? '#aedfee' : '#dbd8c5');
-                        line.setAttribute('stroke-width', '1.3vh');
-                        line.setAttribute('stroke-linecap', 'round');
-
-                        if (updateAll) {
-                            line.classList.add('permanent');
-                        }
-
-                        svg.appendChild(line);
-                    }
+            const pathToUpdate = permanent ? solutionPaths[foundPaths - 1] : selectedPath;
+            if (!pathToUpdate) return;
+        
+            for (let i = 1; i < pathToUpdate.length; i++) {
+                const start = permanent ? 
+                    { row: Math.floor(pathToUpdate[i-1] / gridSizeCols), col: pathToUpdate[i-1] % gridSizeCols } :
+                    pathToUpdate[i-1];
+                const end = permanent ? 
+                    { row: Math.floor(pathToUpdate[i] / gridSizeCols), col: pathToUpdate[i] % gridSizeCols } :
+                    pathToUpdate[i];
+        
+                const startCell = gridContainer.children[start.row * gridSizeCols + start.col];
+                const endCell = gridContainer.children[end.row * gridSizeCols + end.col];
+                const startRect = startCell.getBoundingClientRect();
+                const endRect = endCell.getBoundingClientRect();
+        
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', startRect.left - gridRect.left + startRect.width / 2);
+                line.setAttribute('y1', startRect.top - gridRect.top + startRect.height / 2);
+                line.setAttribute('x2', endRect.left - gridRect.left + endRect.width / 2);
+                line.setAttribute('y2', endRect.top - gridRect.top + endRect.height / 2);
+                line.setAttribute('stroke', permanent ? '#aedfee' : '#dbd8c5');
+                line.setAttribute('stroke-width', '1.3vh');
+                line.setAttribute('stroke-linecap', 'round');
+        
+                if (permanent) {
+                    line.classList.add('permanent');
                 }
-            });
+        
+                svg.appendChild(line);
+            }
         }
     
         function createSVGOverlay() {
@@ -1335,7 +1332,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Event listeners
-    document.getElementById('how-to-play-header').addEventListener('click', showHowToPlay);
+    document.getElementById('how-to-play-header').addEventListener('click', function(e) {
+        if (navMenu.classList.contains('open')) {
+            closeNav();
+            setTimeout(() => {
+                showHowToPlay();
+            }, 300); // Delay opening the modal if navbar is opened
+        } else {
+            showHowToPlay();
+        }    
+    });
+
     document.getElementById('how-to-play').addEventListener('click', showHowToPlay);
     closeBtn.addEventListener('click', closeHowToPlay);
     nextButton.addEventListener('click', nextPage);
