@@ -1152,10 +1152,22 @@ input:checked + .slider:before {
 
 .how-to-play-modal-body {
     flex-grow: 1;
-    overflow-y: auto;
-    padding: 0 10%; /* This creates the 80% width for content */
+    overflow: hidden;
+    padding: 0;
+}
+
+.how-to-play-pages-container {
     display: flex;
-    flex-direction: column;
+    transition: transform 0.3s ease-out;
+    width: 300%; /* 100% for each page */
+    height: 100%;
+}
+
+.how-to-play-page {
+    flex: 0 0 33.3333%; /* Each page takes up 1/3 of the container */
+    padding: 0 3%;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
 .how-to-play-title {
