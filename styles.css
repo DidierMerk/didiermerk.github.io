@@ -1009,7 +1009,7 @@ input:checked + .slider:before {
 }
 
 .nav-content {
-    padding: 2.4vh;
+    padding: 2.5vh;
 }
 
 .nav-section {
@@ -1017,9 +1017,9 @@ input:checked + .slider:before {
 }
 
 .nav-section h3 {
-    font-size: 1.95vh;
+    font-size: 2.2vh;
     font-weight: bold;
-    margin-bottom: 1.25vh;
+    margin-bottom: 1.35vh;
     color: #333;
 }
 
@@ -1030,7 +1030,7 @@ input:checked + .slider:before {
 }
 
 .nav-section li {
-    margin-bottom: 1.82vh;
+    margin-bottom: 1.85vh;
 }
 
 .nav-section a {
@@ -1038,12 +1038,12 @@ input:checked + .slider:before {
     align-items: center;
     color: #333;
     text-decoration: none;
-    font-size: 1.71vh;
+    font-size: 1.8vh;
 }
 
 .nav-icon {
-    width: 2.4vh;
-    height: 2.4vh;
+    width: 2.6vh;
+    height: 2.6vh;
     margin-right: 1.81vh;
     display: flex;
     justify-content: center;
@@ -1051,11 +1051,11 @@ input:checked + .slider:before {
 }
 
 .nav-icon.fab {
-    font-size: 2.4vh; /* Match the size of image icons */
+    font-size: 2.6vh; /* Match the size of image icons */
 }
 
 .nav-icon.fas {
-    font-size: 2.4vh; /* Match the size of image icons */
+    font-size: 2.6vh; /* Match the size of image icons */
 }
 
 .nav-icon.profile-icon {
