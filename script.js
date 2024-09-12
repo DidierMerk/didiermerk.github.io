@@ -1004,7 +1004,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const settingsMenu = document.getElementById('settings-menu');
     const closeSettings = document.getElementById('close-settings');
 
-    settingsIcon.addEventListener('click', openSettingsMenu);
+    
+    // Opening the settings menu 
+    settingsIcon.addEventListener('click', function(e) {
+        if (navMenu.classList.contains('open')) {
+            closeNav(); // and possibly closing the nav menu
+            openSettingsMenu();
+        } else {
+            openSettingsMenu();
+        }    
+    });
+
     closeSettings.addEventListener('click', closeSettingsMenu);
     settingsOverlay.addEventListener('click', (e) => {
         if (e.target === settingsOverlay) {
@@ -1038,10 +1048,6 @@ document.addEventListener('DOMContentLoaded', function() {
     surveyLink.addEventListener('click', function() {
         showMessage('A survey will come soon! When Beatle is fully done, you can leave your feedback anonymously here! :)');
     });
-
-    // emailLink.addEventListener('click', function() {
-    //     showMessage('Bug Reporting functionality coming soon');
-    // });
 
     // Dark mode toggle functionality
     const darkModeToggle = document.getElementById('dark-mode-toggle');
@@ -1208,106 +1214,47 @@ document.addEventListener('DOMContentLoaded', function() {
     const backButton = document.getElementById('how-to-play-back-button');
     const nextButton = document.getElementById('how-to-play-next-button');
     const pageDots = document.querySelectorAll('.how-to-play-dot');
+    const pagesContainer = document.querySelector('.how-to-play-pages-container');
 
     let currentPage = 0;
     const totalPages = 3;
+    let startX, moveX;
+    let isDragging = false;
 
-    const modalContent = [
-        {
-            image: 'path/to/image1.jpg',
-            title: 'Find theme words to fill the board.',
-            list: [
-                'Theme words stay highlighted in blue when found.',
-                'Drag or tap letters to create words. If tapping, double tap the last letter to submit.',
-                'Theme words fill the board entirely. No theme words overlap.'
-            ]
-        },
-        {
-            image: 'path/to/image2.jpg',
-            title: 'Find the "spangram."',
-            list: [
-                'The spangram describes the puzzle\'s theme and touches two opposite sides of the board. It may be two words.',
-                'The spangram highlights in yellow when found.',
-                'An example spangram with corresponding theme words: PEAR, FRUIT, BANANA, APPLE, etc.'
-            ]
-        },
-        {
-            image: 'path/to/image3.jpg',
-            title: 'Need a hint?',
-            list: [
-                'Find non-theme words to get hints.',
-                'For every 3 non-theme words you find, you earn a hint.',
-                'Hints show the letters of a theme word. If there is already an active hint on the board, a hint will show that word\'s letter order.'
-            ]
-        }
-      ];
-
-      function showHowToPlay() {
-        resetHowToPlayModal(); // Reset the modal before showing it
+    function showHowToPlay() {
+        resetHowToPlayModal();
         howToPlayModal.style.display = 'block';
         setTimeout(() => {
             howToPlayModal.classList.add('show');
         }, 10);
     }
 
-    // Update this part
-    howToPlay.addEventListener('click', function(e) {
-        e.preventDefault();
-        closeNav();
-        setTimeout(() => {
-            showHowToPlay();
-        }, 300); // Delay opening the modal until after the navbar closes
-    });
-
-    function resetHowToPlayModal() {
-        currentPage = 0;
-        updateModalContent();
-        
-        // Reset the back button
-        backButton.disabled = true;
-        
-        // Reset the next button
-        nextButton.textContent = 'Next';
-        nextButton.classList.remove('last-page');
-    }
-
-    // Modify the closeHowToPlay function
     function closeHowToPlay() {
         howToPlayModal.classList.remove('show');
         setTimeout(() => {
             howToPlayModal.style.display = 'none';
-            resetHowToPlayModal(); // Reset the modal when closing
+            resetHowToPlayModal();
         }, 300);
     }
 
+    function resetHowToPlayModal() {
+        currentPage = 0;
+        updateModalContent();
+        backButton.disabled = true;
+        nextButton.textContent = 'Next';
+        nextButton.classList.remove('last-page');
+    }
+
     function updateModalContent() {
-        const imageContainer = document.querySelector('.how-to-play-image-container');
-        const modalTitle = document.querySelector('.how-to-play-title');
-        const explanationTitle = document.querySelector('.explanation-title');
-        const explanationList = document.querySelector('.explanation-list');
+        pagesContainer.style.transform = `translateX(-${currentPage * 33.333}%)`;
         
-        modalTitle.textContent = "How to Play";
-        imageContainer.style.backgroundImage = `url(${modalContent[currentPage].image})`;
-        explanationTitle.textContent = modalContent[currentPage].title;
-        
-        explanationList.innerHTML = '';
-        modalContent[currentPage].list.forEach(item => {
-            const li = document.createElement('li');
-            li.textContent = item;
-            explanationList.appendChild(li);
-        });
-        
-        const pageDots = document.querySelectorAll('.how-to-play-dot');
         pageDots.forEach((dot, index) => {
             dot.classList.toggle('active', index === currentPage);
         });
         
-        const backButton = document.getElementById('how-to-play-back-button');
-        const nextButton = document.getElementById('how-to-play-next-button');
         backButton.disabled = currentPage === 0;
         nextButton.textContent = currentPage === totalPages - 1 ? 'Play' : 'Next';
         
-        // Update next button appearance
         if (currentPage === totalPages - 1) {
             nextButton.classList.add('last-page');
         } else {
@@ -1316,19 +1263,51 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function nextPage() {
-    if (currentPage < totalPages - 1) {
-        currentPage++;
-        updateModalContent();
-    } else {
-        closeHowToPlay();
-    }
+        if (currentPage < totalPages - 1) {
+            currentPage++;
+            updateModalContent();
+        } else {
+            closeHowToPlay();
+        }
     }
 
     function previousPage() {
-    if (currentPage > 0) {
-        currentPage--;
-        updateModalContent();
+        if (currentPage > 0) {
+            currentPage--;
+            updateModalContent();
+        }
     }
+
+    // Touch event handlers
+    function handleTouchStart(e) {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+    }
+
+    function handleTouchMove(e) {
+        if (!isDragging) return;
+        moveX = e.touches[0].clientX;
+        const diff = startX - moveX;
+        const translateX = -currentPage * 33.333 - (diff / pagesContainer.offsetWidth) * 100;
+        pagesContainer.style.transform = `translateX(${translateX}%)`;
+    }
+
+    function handleTouchEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+        const diff = startX - moveX;
+        const threshold = pagesContainer.offsetWidth / 4;
+        if (Math.abs(diff) > threshold) {
+            if (diff > 0 && currentPage < totalPages - 1) {
+                nextPage();
+            } else if (diff < 0 && currentPage > 0) {
+                previousPage();
+            } else {
+                updateModalContent(); // Reset to current page
+            }
+        } else {
+            updateModalContent(); // Reset to current page
+        }
     }
 
     // Event listeners
@@ -1343,15 +1322,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }    
     });
 
-    document.getElementById('how-to-play').addEventListener('click', showHowToPlay);
+    document.getElementById('how-to-play').addEventListener('click', function(e) {
+        e.preventDefault();
+        closeNav();
+        setTimeout(() => {
+            showHowToPlay();
+        }, 300);
+    });
     closeBtn.addEventListener('click', closeHowToPlay);
     nextButton.addEventListener('click', nextPage);
     backButton.addEventListener('click', previousPage);
 
+    pagesContainer.addEventListener('touchstart', handleTouchStart);
+    pagesContainer.addEventListener('touchmove', handleTouchMove);
+    pagesContainer.addEventListener('touchend', handleTouchEnd);
+
     // Close modal when clicking outside
     window.addEventListener('click', (event) => {
-    if (event.target === howToPlayModal) {
-        closeHowToPlay();
-    }
+        if (event.target === howToPlayModal) {
+            closeHowToPlay();
+        }
     });
 });
