@@ -842,12 +842,13 @@ svg line.reveal-animate {
 
 .close-settings {
     position: absolute; /* Position absolutely within the header */
-    top: 1.5vh; /* Adjust as needed */
-    right: 1.5vh; /* Adjust as needed */
+    top: 1.4vh; /* Adjust as needed */
+    right: 2vh; /* Adjust as needed */
     background: none;
     border: none;
     font-size: 2.8vh;
     cursor: pointer;
+    color: #000000;
 }
 
 .settings-content {
@@ -1140,7 +1141,7 @@ input:checked + .slider:before {
 
 .how-to-play-close {
     position: absolute;
-    right: 1.2vh;
+    right: 2vh;
     top: 3vh;
     transform: translateY(-50%);
     font-size: 2.8vh;
