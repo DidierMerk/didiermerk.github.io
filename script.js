@@ -219,10 +219,24 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', adjustGridLayout);
 
     function addTouchDragFunctionality() {
+        let selectedPath = [];
         let isSelecting = false;
         let isDragging = false;
-        let selectedPath = [];
+        let startX = 0;
+        let startY = 0;
+        const dragThreshold = 5; // Minimum movement in pixels to consider as a drag
         let svg = null;
+    
+        const gridCells = Array.from(gridContainer.querySelectorAll('.grid-cell'));
+    
+        function getCellCoords(cell) {
+            const index = Array.prototype.indexOf.call(gridContainer.children, cell);
+            if (index === -1) {
+                console.error('Cell not found in gridContainer.children');
+                return null;
+            }
+            return { row: Math.floor(index / gridSizeCols), col: index % gridSizeCols };
+        }
     
         function isAdjacent(cell1, cell2) {
             const rowDiff = Math.abs(cell1.row - cell2.row);
@@ -230,55 +244,12 @@ document.addEventListener('DOMContentLoaded', function() {
             return (rowDiff <= 1 && colDiff <= 1) && !(rowDiff === 0 && colDiff === 0);
         }
     
-        function getCellCoords(cell) {
-            const index = Array.from(gridContainer.children).indexOf(cell);
-            return { col: index % 6, row: Math.floor(index / 6) };
-        }
-    
-        function handleDrag(cell) {
-            if (cell.classList.contains('found')) return;
-            const newCell = getCellCoords(cell);
-            if (selectedPath.length === 0 || isAdjacent(selectedPath[selectedPath.length - 1], newCell)) {
-                const existingIndex = selectedPath.findIndex(c => c.row === newCell.row && c.col === newCell.col);
-                if (existingIndex !== -1) {
-                    selectedPath = selectedPath.slice(0, existingIndex + 1);
-                } else {
-                    selectedPath.push(newCell);
-                }
-                updateCellSelection();
-                updateLines();
-            }
-        }
-    
-        function handleClick(cell) {
-            if (cell.classList.contains('found')) return;
-
-            const newCell = getCellCoords(cell);
-            if (selectedPath.length === 0) {
-                selectedPath = [newCell];
-            } else if (selectedPath.length === 1 && selectedPath[0].row === newCell.row && selectedPath[0].col === newCell.col) {
-                selectedPath = []; // Deselect if clicking on the only selected cell
-            } else {
-                const lastCell = selectedPath[selectedPath.length - 1];
-                const existingIndex = selectedPath.findIndex(c => c.row === newCell.row && c.col === newCell.col);
-                if (existingIndex !== -1) {
-                    selectedPath = selectedPath.slice(0, existingIndex + 1);
-                } else if (isAdjacent(lastCell, newCell)) {
-                    selectedPath.push(newCell);
-                } else {
-                    selectedPath = [newCell]; // Start new path if not adjacent
-                }
-            }
-            updateCellSelection();
-            updateLines();
-        }
-    
         function updateCellSelection() {
-            const cells = gridContainer.querySelectorAll('.grid-cell');
-            cells.forEach((cell, index) => {
-                const col = index % 6;
-                const row = Math.floor(index / 6);
-                if (selectedPath.some(c => c.row === row && c.col === col)) {
+            gridCells.forEach((cell, index) => {
+                const row = Math.floor(index / gridSizeCols);
+                const col = index % gridSizeCols;
+                const isSelected = selectedPath.some(c => c.row === row && c.col === col);
+                if (isSelected) {
                     cell.classList.add('selected');
                 } else {
                     cell.classList.remove('selected');
@@ -286,46 +257,37 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     
-        function updateLines(permanent = false) {
+        function updateLines() {
             if (!svg) {
                 svg = createSVGOverlay();
             }
-            if (!permanent) {
-                // Remove only temporary lines
-                svg.querySelectorAll('line:not(.permanent)').forEach(line => line.remove());
-            }
-        
+            // Remove existing lines
+            svg.querySelectorAll('line.temp-line').forEach(line => line.remove());
+    
             const gridRect = gridContainer.getBoundingClientRect();
-        
-            const pathToUpdate = permanent ? solutionPaths[foundPaths - 1] : selectedPath;
-            if (!pathToUpdate) return;
-        
-            for (let i = 1; i < pathToUpdate.length; i++) {
-                const start = permanent ? 
-                    { row: Math.floor(pathToUpdate[i-1] / gridSizeCols), col: pathToUpdate[i-1] % gridSizeCols } :
-                    pathToUpdate[i-1];
-                const end = permanent ? 
-                    { row: Math.floor(pathToUpdate[i] / gridSizeCols), col: pathToUpdate[i] % gridSizeCols } :
-                    pathToUpdate[i];
-        
-                const startCell = gridContainer.children[start.row * gridSizeCols + start.col];
-                const endCell = gridContainer.children[end.row * gridSizeCols + end.col];
+    
+            for (let i = 1; i < selectedPath.length; i++) {
+                const start = selectedPath[i - 1];
+                const end = selectedPath[i];
+    
+                const startIndex = start.row * gridSizeCols + start.col;
+                const endIndex = end.row * gridSizeCols + end.col;
+    
+                const startCell = gridCells[startIndex];
+                const endCell = gridCells[endIndex];
                 const startRect = startCell.getBoundingClientRect();
                 const endRect = endCell.getBoundingClientRect();
-        
+    
                 const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
                 line.setAttribute('x1', startRect.left - gridRect.left + startRect.width / 2);
                 line.setAttribute('y1', startRect.top - gridRect.top + startRect.height / 2);
                 line.setAttribute('x2', endRect.left - gridRect.left + endRect.width / 2);
                 line.setAttribute('y2', endRect.top - gridRect.top + endRect.height / 2);
-                line.setAttribute('stroke', permanent ? '#aedfee' : '#dbd8c5');
+                line.setAttribute('stroke', '#dbd8c5');
                 line.setAttribute('stroke-width', '1.3vh');
                 line.setAttribute('stroke-linecap', 'round');
-        
-                if (permanent) {
-                    line.classList.add('permanent');
-                }
-        
+                line.classList.add('temp-line');
+    
                 svg.appendChild(line);
             }
         }
@@ -345,43 +307,147 @@ document.addEventListener('DOMContentLoaded', function() {
         function handleStart(e) {
             isSelecting = true;
             isDragging = false;
-            const cell = e.target.closest('.grid-cell');
-            if (cell) {
-                handleDrag(cell);
-            }
+    
+            const point = getEventPoint(e);
+            startX = point.x;
+            startY = point.y;
         }
     
         function handleMove(e) {
             if (!isSelecting) return;
-            isDragging = true;
-            
-            let cell;
-            if (e.type.startsWith('mouse')) {
-                cell = e.target.closest('.grid-cell');
-            } else if (e.type.startsWith('touch')) {
-                const touch = e.touches[0];
-                cell = document.elementFromPoint(touch.clientX, touch.clientY);
+    
+            const point = getEventPoint(e);
+            const dx = point.x - startX;
+            const dy = point.y - startY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+    
+            if (!isDragging && distance >= dragThreshold) {
+                isDragging = true;
             }
     
-            if (cell && cell.classList.contains('grid-cell')) {
-                handleDrag(cell);
+            if (isDragging) {
+                let cell;
+                if (e.type.startsWith('touch')) {
+                    const touch = e.touches[0];
+                    cell = document.elementFromPoint(touch.clientX, touch.clientY);
+                } else if (e.type.startsWith('mouse')) {
+                    cell = document.elementFromPoint(e.clientX, e.clientY);
+                }
+    
+                if (cell && cell.classList.contains('grid-cell')) {
+                    handleCellSelection(cell);
+                }
             }
         }
     
-        function handleEnd() {
-            if (isDragging) {
+        function handleEnd(e) {
+            if (e.type.startsWith('touch')) {
+                if (!isDragging) {
+                    // This was a tap, not a drag
+                    const touch = e.changedTouches[0];
+                    const cell = document.elementFromPoint(touch.clientX, touch.clientY);
+                    if (cell && cell.classList.contains('grid-cell')) {
+                        const coords = getCellCoords(cell);
+                        if (selectedPath.length > 0) {
+                            const lastCell = selectedPath[selectedPath.length - 1];
+                            if (coords.row === lastCell.row && coords.col === lastCell.col && selectedPath.length > 1) {
+                                // Tapped the last cell of a path with more than one cell
+                                handleCellSelection(cell, true); // isClick = true
+                            } else {
+                                // Start or continue building the path
+                                handleCellSelection(cell);
+                            }
+                        } else {
+                            // Start a new path
+                            handleCellSelection(cell);
+                        }
+                    }
+                } else {
+                    // Dragging ended, check the path
+                    checkSelectedPath();
+                }
+            } else if (isDragging) {
+                // Mouse dragging ended
+                checkSelectedPath();
+            }
+            isSelecting = false;
+            isDragging = false;
+        }
+    
+        function handleClick(e) {
+            const cell = e.target.closest('.grid-cell');
+            if (cell) {
+                handleCellSelection(cell, true); // Pass 'true' to indicate click
+            }
+            // Reset selection state after handling the click
+            isSelecting = false;
+            isDragging = false;
+            isClick = true;
+        }
+    
+        function handleCellSelection(cell, isClick = false) {
+            if (cell.classList.contains('found')) return;
+        
+            const coords = getCellCoords(cell);
+        
+            if (selectedPath.length === 0) {
+                // Start a new path
+                selectedPath.push(coords);
+            } else {
+                const lastCell = selectedPath[selectedPath.length - 1];
+        
+                if (coords.row === lastCell.row && coords.col === lastCell.col) {
+                    // Clicked on the last selected cell
+                    if (isClick && selectedPath.length > 1) {
+                        checkSelectedPath();
+                    }
+                } else if (selectedPath.some(c => c.row === coords.row && c.col === coords.col)) {
+                    // Cell is already in the path
+                    const existingIndex = selectedPath.findIndex(c => c.row === coords.row && c.col === coords.col);
+                    if (existingIndex !== selectedPath.length - 1) {
+                        selectedPath = selectedPath.slice(0, existingIndex + 1);
+                    } else {
+                        if (isClick && selectedPath.length > 1) {
+                            checkSelectedPath();
+                        }
+                    }
+                } else if (isAdjacent(lastCell, coords)) {
+                    // Cell is adjacent to the last cell
+                    selectedPath.push(coords);
+                } else {
+                    // Cell is not adjacent, start a new path
+                    selectedPath = [coords];
+                }
+            }
+        
+            updateCellSelection();
+            updateLines();
+        }        
+    
+        function checkSelectedPath() {
+            if (selectedPath.length > 0) {
+                const selectedIndices = selectedPath.map(cell => cell.row * gridSizeCols + cell.col);
                 const pathIndex = checkPath(selectedPath);
                 if (pathIndex !== -1 && !isPathFound(pathIndex)) {
+                    console.log("Path checked and correct!")
                     markPathAsFound(pathIndex);
-                    // foundPaths++;
                     updateScoreCounter();
                 }
+                console.log("Path checked but wrong!")
                 selectedPath = [];
                 updateCellSelection();
                 updateLines();
             }
-            isSelecting = false;
-            isDragging = false;
+            console.log("Path checked but wrong!")
+        }
+    
+        function getEventPoint(e) {
+            if (e.type.startsWith('mouse')) {
+                return { x: e.clientX, y: e.clientY };
+            } else if (e.type.startsWith('touch')) {
+                const touch = e.touches[0] || e.changedTouches[0];
+                return { x: touch.clientX, y: touch.clientY };
+            }
         }
 
         function markPathAsFound(pathIndex) {
@@ -447,7 +513,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update the score counter
             updateScoreCounter();
         }
-        
+    
         // Mouse events
         gridContainer.addEventListener('mousedown', handleStart);
         document.addEventListener('mousemove', handleMove);
@@ -458,20 +524,14 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('touchmove', handleMove, { passive: false });
         document.addEventListener('touchend', handleEnd);
     
-        // Click event for non-drag selection
-        gridContainer.addEventListener('click', (e) => {
-            if (!isDragging) {
-                const cell = e.target.closest('.grid-cell');
-                if (cell) {
-                    handleClick(cell);
-                }
-            }
-        });
+        // Click event
+        gridContainer.addEventListener('click', handleClick);
     
         // Prevent default touch behavior to avoid scrolling
         gridContainer.addEventListener('touchstart', (e) => e.preventDefault());
         gridContainer.addEventListener('touchmove', (e) => e.preventDefault());
-    }
+    }            
+              
     
     // Function to adjust slogan font size
     function adjustSloganFontSize() {
