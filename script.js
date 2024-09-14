@@ -1284,6 +1284,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function showHowToPlay() {
         resetHowToPlayModal();
         howToPlayModal.style.display = 'block';
+        document.body.classList.add('no-scroll');
         setTimeout(() => {
             howToPlayModal.classList.add('show');
         }, 10);
@@ -1293,6 +1294,7 @@ document.addEventListener('DOMContentLoaded', function() {
         howToPlayModal.classList.remove('show');
         setTimeout(() => {
             howToPlayModal.style.display = 'none';
+            document.body.classList.remove('no-scroll');
             resetHowToPlayModal();
         }, 300);
     }
@@ -1346,6 +1348,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function handleTouchMove(e) {
         if (!isDragging) return;
+        e.preventDefault(); // Add this line to prevent default scrolling behavior
         moveX = e.touches[0].clientX;
         const diff = startX - moveX;
         const translateX = -currentPage * 33.333 - (diff / pagesContainer.offsetWidth) * 100;
@@ -1356,7 +1359,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isDragging) return;
         isDragging = false;
         const diff = startX - moveX;
-        const threshold = pagesContainer.offsetWidth / 4;
+        const threshold = pagesContainer.offsetWidth / 20; // Reduced threshold from /4 to /10
         if (Math.abs(diff) > threshold) {
             if (diff > 0 && currentPage < totalPages - 1) {
                 nextPage();
@@ -1393,8 +1396,8 @@ document.addEventListener('DOMContentLoaded', function() {
     nextButton.addEventListener('click', nextPage);
     backButton.addEventListener('click', previousPage);
 
-    pagesContainer.addEventListener('touchstart', handleTouchStart);
-    pagesContainer.addEventListener('touchmove', handleTouchMove);
+    pagesContainer.addEventListener('touchstart', handleTouchStart, { passive: false });
+    pagesContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
     pagesContainer.addEventListener('touchend', handleTouchEnd);
 
     // Close modal when clicking outside
