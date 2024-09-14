@@ -17,6 +17,10 @@ body {
     background-color: #f0f0f0;
 }
 
+body.no-scroll {
+    overflow: hidden;
+}
+
 /* Container for desktop version */
 
 .mobile-container {
@@ -1109,6 +1113,8 @@ input:checked + .slider:before {
     height: 100%;
     background-color: rgba(255, 255, 255, 0.5);
     overflow-y: auto;
+    touch-action: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 .how-to-play-modal-content {
