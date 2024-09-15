@@ -22,6 +22,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let hintsUsed = 0; // Track the number of hints used
     let gameProgress = []; // Track the progress of the game
 
+    // For animations
+    let lastPulsateTimeout = null;
+    let isAnimating = false;
+
+    // For hint system
+    let hintsRemaining = 0;
+    let hintsAtLastRefill = 0;
+
     const progressEmojis = {
         path0: '🟣',
         path1: '🟠',
@@ -249,46 +257,82 @@ document.addEventListener('DOMContentLoaded', function() {
                 const row = Math.floor(index / gridSizeCols);
                 const col = index % gridSizeCols;
                 const isSelected = selectedPath.some(c => c.row === row && c.col === col);
+        
+                // Remove 'last-selected' class from all cells
+                cell.classList.remove('last-selected');
+        
                 if (isSelected) {
-                    cell.classList.add('selected');
+                    if (!cell.classList.contains('selected')) {
+                        cell.classList.add('selected', 'bounce');
+                        // Listen for the end of the animation to replace 'bounce' with 'bounced'
+                        cell.addEventListener('animationend', function handler() {
+                            cell.classList.remove('bounce');
+                            cell.classList.add('bounced');
+                            cell.removeEventListener('animationend', handler);
+                        });
+                    }
                 } else {
-                    cell.classList.remove('selected');
+                    cell.classList.remove('selected', 'bounced');
                 }
             });
-        }
+        
+            // Clear previous timeout for pulsate effect
+            if (lastPulsateTimeout) {
+                clearTimeout(lastPulsateTimeout);
+                lastPulsateTimeout = null;
+            }
+        
+            // Set a timeout to add 'last-selected' class to the last cell after 1 second
+            if (selectedPath.length > 0) {
+                const lastCellCoords = selectedPath[selectedPath.length - 1];
+                const lastCellIndex = lastCellCoords.row * gridSizeCols + lastCellCoords.col;
+                const lastCell = gridCells[lastCellIndex];
+        
+                lastPulsateTimeout = setTimeout(() => {
+                    lastCell.classList.add('last-selected');
+                }, 400);
+            }
+        }        
     
         function updateLines() {
             if (!svg) {
                 svg = createSVGOverlay();
             }
-            // Remove existing lines
-            svg.querySelectorAll('line.temp-line').forEach(line => line.remove());
-    
-            const gridRect = gridContainer.getBoundingClientRect();
-    
-            for (let i = 1; i < selectedPath.length; i++) {
-                const start = selectedPath[i - 1];
-                const end = selectedPath[i];
-    
-                const startIndex = start.row * gridSizeCols + start.col;
-                const endIndex = end.row * gridSizeCols + end.col;
-    
-                const startCell = gridCells[startIndex];
-                const endCell = gridCells[endIndex];
-                const startRect = startCell.getBoundingClientRect();
-                const endRect = endCell.getBoundingClientRect();
-    
-                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                line.setAttribute('x1', startRect.left - gridRect.left + startRect.width / 2);
-                line.setAttribute('y1', startRect.top - gridRect.top + startRect.height / 2);
-                line.setAttribute('x2', endRect.left - gridRect.left + endRect.width / 2);
-                line.setAttribute('y2', endRect.top - gridRect.top + endRect.height / 2);
-                line.setAttribute('stroke', '#dbd8c5');
-                line.setAttribute('stroke-width', '1.3vh');
-                line.setAttribute('stroke-linecap', 'round');
-                line.classList.add('temp-line');
-    
-                svg.appendChild(line);
+        
+            // Remove existing lines only if not animating
+            if (!isAnimating) {
+                svg.querySelectorAll('line.temp-line').forEach(line => line.remove());
+            }
+        
+            // Draw new lines for the current selected path
+            if (selectedPath.length > 1) {
+                const gridRect = gridContainer.getBoundingClientRect();
+        
+                for (let i = 1; i < selectedPath.length; i++) {
+                    const start = selectedPath[i - 1];
+                    const end = selectedPath[i];
+        
+                    const startIndex = start.row * gridSizeCols + start.col;
+                    const endIndex = end.row * gridSizeCols + end.col;
+        
+                    const startCell = gridCells[startIndex];
+                    const endCell = gridCells[endIndex];
+                    const startRect = startCell.getBoundingClientRect();
+                    const endRect = endCell.getBoundingClientRect();
+        
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.setAttribute('x1', startRect.left - gridRect.left + startRect.width / 2);
+                    line.setAttribute('y1', startRect.top - gridRect.top + startRect.height / 2);
+                    line.setAttribute('x2', endRect.left - gridRect.left + endRect.width / 2);
+                    line.setAttribute('y2', endRect.top - gridRect.top + endRect.height / 2);
+                    line.setAttribute('stroke', '#dbd8c5');
+                    line.setAttribute('stroke-width', '1.3vh');
+                    line.setAttribute('stroke-linecap', 'round');
+                    line.classList.add('temp-line');
+                    line.style.opacity = '1'; // Ensure the line starts fully opaque
+        
+                    svg.appendChild(line);
+                }
             }
         }
     
@@ -386,7 +430,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         function handleCellSelection(cell, isClick = false) {
-            if (cell.classList.contains('found')) return;
+            if (isAnimating || cell.classList.contains('found')) return;
         
             const coords = getCellCoords(cell);
         
@@ -400,6 +444,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Clicked on the last selected cell
                     if (isClick && selectedPath.length > 1) {
                         checkSelectedPath();
+                        // Exit the function to prevent calling updateCellSelection() and updateLines()
+                        return;
                     }
                 } else if (selectedPath.some(c => c.row === coords.row && c.col === coords.col)) {
                     // Cell is already in the path
@@ -409,14 +455,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else {
                         if (isClick && selectedPath.length > 1) {
                             checkSelectedPath();
+                            // Exit the function to prevent calling updateCellSelection() and updateLines()
+                            return;
                         }
                     }
                 } else if (isAdjacent(lastCell, coords)) {
                     // Cell is adjacent to the last cell
                     selectedPath.push(coords);
                 } else {
-                    // Cell is not adjacent, start a new path
-                    selectedPath = [coords];
+                    // Cell is not adjacent
+                    if (isClick) {
+                        // For clicking/tapping, start a new path
+                        selectedPath = [coords];
+                    } else {
+                        // For touch-dragging, ignore the cell
+                        // Do nothing
+                    }
                 }
             }
         
@@ -429,17 +483,54 @@ document.addEventListener('DOMContentLoaded', function() {
                 const selectedIndices = selectedPath.map(cell => cell.row * gridSizeCols + cell.col);
                 const pathIndex = checkPath(selectedPath);
                 if (pathIndex !== -1 && !isPathFound(pathIndex)) {
-                    console.log("Path checked and correct!")
+                    console.log("Path checked and correct!");
                     markPathAsFound(pathIndex);
                     updateScoreCounter();
+                    selectedPath = [];
+                    updateCellSelection();
+                    updateLines();
+                } else {
+                    console.log("Path checked but wrong!");
+                    // Trigger the shake animation
+                    shakeSelectedCells();
                 }
-                console.log("Path checked but wrong!")
-                selectedPath = [];
-                updateCellSelection();
-                updateLines();
             }
-            console.log("Path checked but wrong!")
         }
+
+        function shakeSelectedCells() {
+            isAnimating = true; // Disable user interactions during animation
+            const gridCells = Array.from(gridContainer.querySelectorAll('.grid-cell'));
+            const selectedCellElements = selectedPath.map(coords => {
+                const index = coords.row * gridSizeCols + coords.col;
+                return gridCells[index];
+            });
+        
+            // Get the temp lines (SVG lines) corresponding to the selected path
+            const svg = gridContainer.querySelector('svg');
+            const tempLines = Array.from(svg.querySelectorAll('.temp-line'));
+        
+            let animationsCompleted = 0;
+        
+            selectedCellElements.forEach(cell => {
+                cell.classList.add('shake');
+                cell.addEventListener('animationend', function handler() {
+                    cell.classList.remove('shake', 'selected', 'bounced');
+                    cell.removeEventListener('animationend', handler);
+                    animationsCompleted++;
+                    if (animationsCompleted === selectedCellElements.length) {
+                        // All animations are complete
+        
+                        // Remove the lines immediately
+                        tempLines.forEach(line => line.remove());
+        
+                        // Clear the selected path and update cell selection
+                        selectedPath = [];
+                        updateCellSelection();
+                        isAnimating = false; // Re-enable user interactions
+                    }
+                });
+            });
+        }        
     
         function getEventPoint(e) {
             if (e.type.startsWith('mouse')) {
@@ -506,6 +597,11 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 updateHintButton();
             }
+            
+            // Update hintsRemaining and hintsAtLastRefill before calling updateHintButton()
+            hintsRemaining += 2;
+            hintsAtLastRefill = hintsRemaining;
+            updateHintButton();
             
             // Add finding a path to the game progress
             gameProgress.push(progressEmojis[`path${pathIndex}`]);
@@ -578,6 +674,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let hintState = Array(numberOfPaths).fill().map(() => ({ pathHint: false, vocalHint: false }));
 
     function handleHint() {
+        if (hintsRemaining <= 0) {
+            alert("No hints available");
+            return;
+        }
+    
+        hintsRemaining--;
+        updateHintButton();
+
         if (foundPaths === numberOfPaths) {
             showModal();
             return;
@@ -655,19 +759,50 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateHintButton() {
-        const undiscoveredPaths = solutionPaths.filter((_, index) => !isPathFound(index));
-        
-        if (undiscoveredPaths.length === 0) {
-            hintButton.textContent = 'All Found!';
-            hintButton.disabled = true;
-        } else if (areAllHintsGiven()) {
+        // Remove state-specific classes
+        hintButton.classList.remove('give-up', 'disabled', 'results');
+    
+        // Remove inline background styles
+        hintButton.style.background = '';
+    
+        // Check if the user has given up
+        if (userGaveUp) {
+            hintButton.textContent = 'Results';
+            hintButton.classList.add('results');
+            return; // Exit the function to prevent further changes
+        }
+    
+        // Check if all paths are found
+        if (foundPaths >= numberOfPaths) {
+            hintButton.textContent = 'Results';
+            hintButton.classList.add('results');
+            return; // Exit the function
+        }
+    
+        // Check if all hints are given and no hints remaining
+        if (hintsRemaining === 0 && areAllHintsGiven()) {
             hintButton.textContent = 'Give Up';
             hintButton.classList.add('give-up');
-        } else {
-            hintButton.textContent = 'Hint';
-            hintButton.classList.remove('give-up');
+            return; // Exit the function
         }
-    }
+    
+        // Check if no hints are remaining but some hints are still available
+        if (hintsRemaining === 0) {
+            hintButton.textContent = 'No Hints';
+            hintButton.classList.add('disabled');
+            return; // Exit the function
+        }
+    
+        // Hints are available
+        hintButton.textContent = `Hint (${hintsRemaining})`;
+    
+        // Apply background gradient
+        let percentage = (hintsAtLastRefill > 0)
+            ? (hintsRemaining / hintsAtLastRefill) * 100
+            : 0;
+        percentage = Math.max(0, Math.min(percentage, 100));
+        hintButton.style.background = `linear-gradient(to right, #3498db ${percentage}%, #ccc ${percentage}%)`;
+    }    
 
     function areAllHintsGiven() {
         return solutionPaths.every((_, index) => 
@@ -803,7 +938,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleGiveUp() {
         userGaveUp = true;  // Set flag to true when the user gives up
         gameProgress.push(progressEmojis.giveUp); // add giving up to the game progress
-
+    
         // Disable the hint button to prevent multiple clicks
         hintButton.disabled = true;
     
@@ -817,15 +952,14 @@ document.addEventListener('DOMContentLoaded', function() {
             delay++;
         });
     
-        // Change button text and class, and show modal after all animations complete
+        // After revealing paths, update the button
         setTimeout(() => {
-            hintButton.textContent = 'Results';
-            hintButton.classList.remove('give-up');
-            hintButton.classList.add('results');
             hintButton.disabled = false;
+            updateHintButton(); // Update the button state
             showModal();
         }, delay * 500);
     }
+    
     
     function revealPath(path, pathIndex) {
         // Reveal cells
@@ -1002,6 +1136,8 @@ document.addEventListener('DOMContentLoaded', function() {
             handleGiveUp();
         } else if (hintButton.classList.contains('results')) {
             showModal();
+        } else if (hintsRemaining === 0) {
+            alert("You have no hints left.");
         } else {
             handleHint();
         }
