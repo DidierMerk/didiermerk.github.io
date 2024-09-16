@@ -672,7 +672,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function handleHint() {
         if (hintsRemaining <= 0) {
-            alert("No hints available");
+            showNeedHintModal();
             return;
         }
     
@@ -1139,7 +1139,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (hintButton.classList.contains('results')) {
             showModal();
         } else if (hintsRemaining === 0) {
-            alert("You have no hints left.");
+            showNeedHintModal();
         } else {
             handleHint();
         }
@@ -1542,6 +1542,51 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('click', (event) => {
         if (event.target === howToPlayModal) {
             closeHowToPlay();
+        }
+    });
+
+    // Need a Hint Modal functionality
+    const needHintClose = document.querySelector('.need-hint-close');
+    const needHintGiveUp = document.getElementById('need-hint-give-up');
+    const needHintOkay = document.getElementById('need-hint-okay');
+
+    function showNeedHintModal() {
+        const needHintModal = document.getElementById('need-hint-modal');
+        const needHintModalContent = needHintModal.querySelector('.need-hint-modal-content');
+        
+        needHintModal.style.display = 'flex';
+        
+        // Trigger reflow to ensure the transition works
+        void needHintModal.offsetWidth;
+        
+        needHintModal.classList.add('show');
+        needHintModalContent.style.animation = 'hintModalZoomIn 0.3s ease-out forwards';
+    }
+    
+    function closeNeedHintModal() {
+        const needHintModal = document.getElementById('need-hint-modal');
+        const needHintModalContent = needHintModal.querySelector('.need-hint-modal-content');
+        
+        needHintModal.classList.remove('show');
+        needHintModalContent.style.animation = 'hintModalZoomOut 0.3s ease-out forwards';
+        
+        // Wait for the animation to complete before hiding the modal
+        setTimeout(() => {
+            needHintModal.style.display = 'none';
+        }, 300);
+    }
+
+    needHintClose.addEventListener('click', closeNeedHintModal);
+    needHintOkay.addEventListener('click', closeNeedHintModal);
+    needHintGiveUp.addEventListener('click', function() {
+        closeNeedHintModal();
+        handleGiveUp();
+    });
+
+    // Close modal if user clicks outside the content
+    document.getElementById('need-hint-modal').addEventListener('click', function(event) {
+        if (event.target === this) {
+            closeNeedHintModal();
         }
     });
 });
