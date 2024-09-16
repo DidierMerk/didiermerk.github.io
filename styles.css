@@ -462,6 +462,12 @@ footer {
     .score-counter {
         font-size: 1.8vh;
     }
+
+    #hint-button {
+        padding: 0.7vh 3.5vh;
+        font-size: 1.7vh;
+        border-radius: 4.5vh;
+    }
 }
 
 .grid-cell.found {
@@ -498,12 +504,14 @@ svg line.permanent {
 
 #hint-button.disabled {
     background: #ccc;
+    background-image: none;
     cursor: pointer;
 }
 
 /* Give up button styles */
 #hint-button.give-up {
     background: #e74c3c;
+    background-image: none;
 }
 
 #hint-button.give-up:hover {
@@ -512,6 +520,7 @@ svg line.permanent {
 
 #hint-button.results {
     background: #27ae60; /* Green color */
+    background-image: none;
     cursor: pointer;
 }
 
@@ -1188,7 +1197,7 @@ input:checked + .slider:before {
 
 .how-to-play-pages-container {
     display: flex;
-    transition: transform 0.3s ease-out;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     width: 300%; /* 100% for each page */
     height: 100%;
 }
@@ -1395,4 +1404,34 @@ input:checked + .slider:before {
 
 .grid-cell.shake::after {
     animation: shakeEffect 0.6s;
+}
+
+/* Hint button to Give Up button animation */
+
+/* Ensure the hint button has transition effects */
+#hint-button {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Pulse animation keyframes */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Apply the pulse animation when the button changes to 'give-up' */
+#hint-button.give-up {
+    animation: pulse 0.5s;
+}
+
+/* Optional: Change the text color smoothly */
+#hint-button {
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
