@@ -586,29 +586,26 @@ document.addEventListener('DOMContentLoaded', function() {
         
             foundPaths++;
         
-            if (foundPaths === numberOfPaths) {
-                hintButton.textContent = 'Results';
-                hintButton.classList.remove('give-up');
-                hintButton.classList.add('results');
-                animateGridCompletion();
-            } else if (areAllHintsGiven()) {
-                hintButton.textContent = 'Give Up';
-                hintButton.classList.add('give-up');
-            } else {
-                updateHintButton();
-            }
-            
-            // Update hintsRemaining and hintsAtLastRefill before calling updateHintButton()
+            // Update hintsRemaining and hintsAtLastRefill
             hintsRemaining += 2;
             hintsAtLastRefill = hintsRemaining;
-            updateHintButton();
-            
+        
             // Add finding a path to the game progress
             gameProgress.push(progressEmojis[`path${pathIndex}`]);
         
             // Update the score counter
             updateScoreCounter();
-        }
+        
+            // Now, update the hint button
+            if (foundPaths === numberOfPaths) {
+                hintButton.textContent = 'Results';
+                hintButton.classList.remove('give-up');
+                hintButton.classList.add('results');
+                animateGridCompletion();
+            } else {
+                updateHintButton();
+            }
+        }        
     
         // Mouse events
         gridContainer.addEventListener('mousedown', handleStart);
@@ -708,6 +705,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
         if (!nextHintPath) {
             if (!hintButton.classList.contains('results')) {
+                hintButton.style.background = '';
+                hintButton.style.backgroundColor = '';
                 hintButton.textContent = 'Give Up';
                 hintButton.classList.add('give-up');
             }
@@ -729,6 +728,8 @@ document.addEventListener('DOMContentLoaded', function() {
         hintsUsed++; // Increment the hint counter
     
         if (areAllHintsGiven()) {
+            hintButton.style.background = '';
+            hintButton.style.backgroundColor = '';
             hintButton.textContent = 'Give Up';
             hintButton.classList.add('give-up');
         } else {
@@ -764,6 +765,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
         // Remove inline background styles
         hintButton.style.background = '';
+        hintButton.style.backgroundColor = '';
     
         // Check if the user has given up
         if (userGaveUp) {
@@ -779,8 +781,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return; // Exit the function
         }
     
-        // Check if all hints are given and no hints remaining
-        if (hintsRemaining === 0 && areAllHintsGiven()) {
+        // Check if all hints are given for remaining paths
+        if (areAllHintsGiven()) {
             hintButton.textContent = 'Give Up';
             hintButton.classList.add('give-up');
             return; // Exit the function
@@ -802,7 +804,7 @@ document.addEventListener('DOMContentLoaded', function() {
             : 0;
         percentage = Math.max(0, Math.min(percentage, 100));
         hintButton.style.background = `linear-gradient(to right, #3498db ${percentage}%, #ccc ${percentage}%)`;
-    }    
+    }        
 
     function areAllHintsGiven() {
         return solutionPaths.every((_, index) => 
