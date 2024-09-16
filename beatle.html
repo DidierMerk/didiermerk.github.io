@@ -166,27 +166,29 @@
                             <h2 class="how-to-play-title">How to Play</h2>
                             <div class="how-to-play-image-container"></div>
                             <div class="how-to-play-explanation-text">
-                                <h3 class="explanation-title">Find song paths to fill the board.</h3>
+                                <h3 class="explanation-title">Listen to the sounds.</h3>
                                 <ul class="explanation-list">
-                                    <li>Song paths stay highlighted in when found.</li>
-                                    <li>Drag or tap notes to create paths. If tapping, double tap the last note to submit.</li>
-                                    <li>The song paths fill the board entirely. No song paths overlap.</li>
+                                    <li>Each music note contains a 1 second fragment of a famous piece of music.</li>
+                                    <li>Hold a music note to listen to the selected fragment.</li>
+                                    <li>Release or tap the last cell in your path to play all the selected notes.</li>
                                 </ul>
                             </div>
                         </div>
+
                         <!-- Page 2 -->
                         <div class="how-to-play-page">
                             <h2 class="how-to-play-title">How to Play</h2>
                             <div class="how-to-play-image-container"></div>
                             <div class="how-to-play-explanation-text">
-                                <h3 class="explanation-title">Find the "spangram."</h3>
+                                <h3 class="explanation-title">Find song paths to fill the board.</h3>
                                 <ul class="explanation-list">
-                                    <li>The spangram describes the puzzle's theme and touches two opposite sides of the board. It may be two words.</li>
-                                    <li>The spangram highlights in yellow when found.</li>
-                                    <li>An example spangram with corresponding theme words: PEAR, FRUIT, BANANA, APPLE, etc.</li>
+                                    <li>Song paths stay highlighted in blue when found.</li>
+                                    <li>Drag or tap notes to create paths. If tapping, double tap the last note to submit.</li>
+                                    <li>The five song paths fill the board entirely. No song paths overlap.</li>
                                 </ul>
                             </div>
                         </div>
+                        
                         <!-- Page 3 -->
                         <div class="how-to-play-page">
                             <h2 class="how-to-play-title">How to Play</h2>
@@ -194,9 +196,9 @@
                             <div class="how-to-play-explanation-text">
                                 <h3 class="explanation-title">Need a hint?</h3>
                                 <ul class="explanation-list">
-                                    <li>There are two types of hints available.</li>
-                                    <li>For every path you find, you earn a hint.</li>
-                                    <li>A path hint 💡 shows the notes of a song. If there is already an activate path hint, the vocal hint 🎤 will enable vocals in the song path.</li>
+                                    <li>For every path you find, you earn a path hint and a vocal hint.</li>
+                                    <li>A path hint 💡 shows the music notes corresponding to a single path.</li>
+                                    <li>A vocal hint 🎤 will enable the vocals in a song path.</li>
                                 </ul>
                             </div>
                         </div>
@@ -211,6 +213,26 @@
                     <div class="how-to-play-navigation-buttons">
                         <button id="how-to-play-back-button" disabled>Back</button>
                         <button id="how-to-play-next-button">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="need-hint-modal" class="need-hint-modal">
+            <div class="need-hint-modal-content">
+                <div class="need-hint-modal-header">
+                    <span class="need-hint-close">&times;</span>
+                </div>
+                <div class="need-hint-modal-body">
+                    <h2 class="need-hint-title">Need a hint?</h2>
+                    <div class="need-hint-visual"></div>
+                    <p class="need-hint-subtitle">You currently have no hints.</p>
+                    <ul class="need-hint-list">
+                        <li>Connecting the right notes earns you hints that will help you find the song paths.</li>
+                    </ul>
+                    <div class="need-hint-buttons">
+                        <button id="need-hint-give-up" class="need-hint-button">Give Up</button>
+                        <button id="need-hint-okay" class="need-hint-button">Okay</button>
                     </div>
                 </div>
             </div>
