@@ -491,6 +491,10 @@ svg line.permanent {
     border-width: 0.35vh;
 }
 
+.grid-cell.selected.path-hint {
+    border: none;
+}
+
 /* Dashed border colors for each path */
 .grid-cell.path-hint.path-0 { border-color: #DA70D6; }
 .grid-cell.path-hint.path-1 { border-color: #FF7F50; }
@@ -1451,6 +1455,7 @@ input:checked + .slider:before {
     align-items: center;
     opacity: 0;
     transition: opacity 0.3s ease-out;
+    touch-action: none; /* Prevent touch events from scrolling the background */
 }
 
 .need-hint-modal.show {
@@ -1464,35 +1469,35 @@ input:checked + .slider:before {
     border-radius: 2.2vh;
     box-shadow: 0 0.2vh 1.1vh rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    transform: translateY(-8vh);
+    transform: translateY(-3vh);
     opacity: 0;
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
 
 .need-hint-modal.show .need-hint-modal-content {
-    transform: translateY(-8vh) scale(1);
+    transform: translateY(-3vh) scale(1);
     opacity: 1;
 }
 
 @keyframes hintModalZoomIn {
     from { 
         opacity: 0;
-        transform: translateY(-8vh) scale(0.95);
+        transform: translateY(-3vh) scale(0.95);
     }
     to { 
         opacity: 1;
-        transform: translateY(-8vh) scale(1);
+        transform: translateY(-3vh) scale(1);
     }
 }
 
 @keyframes hintModalZoomOut {
     from { 
         opacity: 1;
-        transform: translateY(-8vh) scale(1);
+        transform: translateY(-3vh) scale(1);
     }
     to { 
         opacity: 0;
-        transform: translateY(-8vh) scale(0.95);
+        transform: translateY(-3vh) scale(0.95);
     }
 }
 
@@ -1593,11 +1598,11 @@ input:checked + .slider:before {
 
     .need-hint-modal-content {
         width: 90%;
-        transform: translateY(-6vh)
+        transform: translateY(-2vh)
     }
 
     .need-hint-modal.show .need-hint-modal-content {
-        transform: translateY(-6vh);
+        transform: translateY(-2vh);
     }
 
     .need-hint-title {
