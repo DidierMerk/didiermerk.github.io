@@ -327,6 +327,10 @@ footer {
     border-style: none;
 }
 
+.grid-cell.currently-playing::before {
+    color: #AEDFEE !important;
+}
+
 .grid-cell.bounce::after {
     animation: bounceEffect 0.3s ease-out forwards;
     animation-fill-mode: forwards;
