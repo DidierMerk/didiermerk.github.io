@@ -30,14 +30,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let hintsRemaining = 0;
     let hintsAtLastRefill = 0;
 
-    // For audio
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const audioBuffers = {}; // Keyed by audioSrc
-
+    // For the audio
+    let selectedPath = [];
+    let isLongPressActive = false;
+    let wasLongPressTriggered = false;
     let audioQueue = [];
     let isPlayingAudio = false;
-    let audioStartTime = 0;
-    let scheduledAudioNodes = [];
+    let isPlayingPathAudio = false;
+    let audioQueueCallback = null;
 
     const progressEmojis = {
         path0: '🟣',
@@ -57,11 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const footer = document.querySelector('footer');
     const slogan = document.querySelector('.slogan');
     const gridContainer = document.querySelector('.grid-container');
-
-    // Pre load the audio
-    preloadAudioBuffers(function() {
-        console.log('All audio files have been preloaded.');
-    });
 
     function addNoteSelectionFunctionality() {
         //  empty for now
@@ -93,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
         hintState = Array(numberOfPaths).fill().map(() => ({ pathHint: false, vocalHint: false }));
         updateHintButton();
     
+        // *** Add the following code to assign data attributes ***
         // Assign data attributes to the cells
         for (let pathIndex = 0; pathIndex < solutionPaths.length; pathIndex++) {
             const path = solutionPaths[pathIndex];
@@ -104,170 +100,128 @@ document.addEventListener('DOMContentLoaded', function() {
                 cell.dataset.version = 'instr'; // Default to instrumental version
             }
         }
+    
+        // Add long press event listeners to the cells
+        addLongPressEventListeners();
+    }   
+
+    function addLongPressEventListeners() {
+        const cells = gridContainer.querySelectorAll('.grid-cell');
+        cells.forEach(cell => {
+            let pressTimer;
+            let moved = false;
+    
+            function handlePressStart(e) {
+                isLongPressActive = false;
+                wasLongPressTriggered = false;
+                moved = false;
+                pressTimer = setTimeout(() => {
+                    isLongPressActive = true;
+                    wasLongPressTriggered = true;
+                    playCellAudio(cell, true); // Pass true for isLongPress
+                }, 500); // 0.5 seconds
+    
+                // Add move event listeners
+                document.addEventListener('mousemove', handleMove);
+                document.addEventListener('touchmove', handleMove);
+            }
+
+            function handleMove(e) {
+                // Movement detected, cancel long press
+                clearTimeout(pressTimer);
+                moved = true;
+                // Remove move event listeners
+                document.removeEventListener('mousemove', handleMove);
+                document.removeEventListener('touchmove', handleMove);
+            }
+
+            function handlePressEnd(e) {
+                clearTimeout(pressTimer);
+                isLongPressActive = false;
+                // Remove move event listeners
+                document.removeEventListener('mousemove', handleMove);
+                document.removeEventListener('touchmove', handleMove);
+
+                if (wasLongPressTriggered) {
+                    // If long press was triggered, prevent cell selection
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                }
+            }
+
+            cell.addEventListener('mousedown', handlePressStart);
+            cell.addEventListener('mouseup', handlePressEnd);
+            cell.addEventListener('mouseleave', handlePressEnd);
+            cell.addEventListener('touchstart', handlePressStart);
+            cell.addEventListener('touchend', handlePressEnd);
+            cell.addEventListener('touchcancel', handlePressEnd);
+        });
     }
 
-    function addToAudioQueue(cell) {
+
+    function playCellAudio(cell, isLongPress = false) {
         const track = cell.dataset.track;
         const fragment = cell.dataset.fragment;
         const version = cell.dataset.version;
         const audioSrc = `tracks/track${track}/track${track}_${version}_${fragment}.mp3`;
+        
+        const cellCoords = getCellCoords(cell); // Get the cell's coordinates
     
-        audioQueue.push({ audioSrc, cell });
+        audioQueue.push({
+            audioSrc: audioSrc,
+            cellCoords: cellCoords,
+            isLongPress: isLongPress
+        });
     
         if (!isPlayingAudio) {
             playAudioQueue();
-        } else {
-            // Schedule the new audio fragment to play after the current queue
-            scheduleNextInQueue();
         }
-    }
+    }    
     
 
     function playAudioQueue() {
         if (audioQueue.length === 0) {
             isPlayingAudio = false;
-            audioStartTime = 0;
-            scheduledAudioNodes = [];
             return;
         }
     
         isPlayingAudio = true;
-        audioStartTime = audioContext.currentTime;
-        scheduledAudioNodes = [];
+        const audioItem = audioQueue.shift();
+        const { audioSrc, cellCoords, isLongPress } = audioItem;
     
-        // Schedule all audio fragments in the queue
-        let currentTime = audioStartTime;
-        audioQueue.forEach((item, index) => {
-            const { audioSrc, cell } = item;
-            const audioBuffer = audioBuffers[audioSrc];
+        // Check if the cell is still selected or it's a long-press
+        const cellStillSelected = selectedPath.some(c => c.row === cellCoords.row && c.col === cellCoords.col);
     
-            if (audioBuffer) {
-                const source = audioContext.createBufferSource();
-                source.buffer = audioBuffer;
-                source.connect(audioContext.destination);
+        if (cellStillSelected || isLongPress) {
+            const cellIndex = cellCoords.row * gridSizeCols + cellCoords.col;
+            const cell = gridContainer.children[cellIndex];
     
-                // Indicate the cell is currently playing
-                const startTime = currentTime;
-                const duration = audioBuffer.duration;
+            // Add the 'playing' class to the cell
+            cell.classList.add('playing');
     
-                source.start(startTime);
+            const audio = new Audio(audioSrc);
     
-                // Schedule visual indication
-                scheduleCellPlaying(cell, startTime, duration);
+            audio.addEventListener('ended', () => {
+                // Remove the 'playing' class when the audio ends
+                cell.classList.remove('playing');
     
-                scheduledAudioNodes.push(source);
+                isPlayingAudio = false;
+                playAudioQueue();
+            });
     
-                // Increment current time by the duration of the audio buffer
-                currentTime += duration;
-            } else {
-                console.error('Audio buffer not found for:', audioSrc);
-            }
-        });
-    
-        // Clear the queue after scheduling
-        audioQueue = [];
-    
-        // Schedule a function to set isPlayingAudio to false after all audio has played
-        const totalDuration = currentTime - audioStartTime;
-        setTimeout(() => {
+            audio.play();
+        } else {
+            // Cell is no longer selected and it's not a long press, skip this audio
             isPlayingAudio = false;
-        }, totalDuration * 1000); // Convert to milliseconds
+            playAudioQueue(); // Proceed to next audio in the queue
+        }
     }
-
-    function scheduleCellPlaying(cell, startTime, duration) {
-        // Schedule the cell to change color when its audio starts
-        setTimeout(() => {
-            cell.classList.add('currently-playing');
-        }, (startTime - audioContext.currentTime) * 1000);
-    
-        // Schedule the cell to revert color when its audio ends
-        setTimeout(() => {
-            cell.classList.remove('currently-playing');
-        }, (startTime + duration - audioContext.currentTime) * 1000);
-    }
+          
 
     function clearAudioQueue() {
         audioQueue = [];
         isPlayingAudio = false;
-        audioStartTime = 0;
-    
-        // Stop any scheduled audio
-        scheduledAudioNodes.forEach(node => {
-            try {
-                node.stop();
-            } catch (e) {
-                console.error('Error stopping audio node:', e);
-            }
-        });
-        scheduledAudioNodes = [];
-    
-        // Remove any 'currently-playing' classes from cells
-        const cells = gridContainer.querySelectorAll('.grid-cell');
-        cells.forEach(cell => {
-            cell.classList.remove('currently-playing');
-        });
-    }
-    
-
-    function trimAudioQueue(length) {
-        // Since we've already scheduled the audio, we need to stop the extra ones
-        const extraNodes = scheduledAudioNodes.slice(length);
-        extraNodes.forEach(node => {
-            try {
-                node.stop();
-            } catch (e) {
-                console.error('Error stopping audio node:', e);
-            }
-        });
-        scheduledAudioNodes = scheduledAudioNodes.slice(0, length);
-    
-        // Adjust the audio queue accordingly
-        audioQueue = audioQueue.slice(0, length);
-    }
-    
-
-    // Getting rid of buffers
-    function preloadAudioBuffers(callback) {
-        const allAudioSrcs = [];
-    
-        // Collect all possible audio sources
-        for (let track = 1; track <= 5; track++) {
-            for (let version of ['instr', 'vocal']) {
-                for (let fragment = 1; fragment <= 15; fragment++) { // Assuming maximum of 15 fragments per track
-                    const audioSrc = `tracks/track${track}/track${track}_${version}_${fragment}.mp3`;
-                    allAudioSrcs.push(audioSrc);
-                }
-            }
-        }
-    
-        let loadedCount = 0;
-        const totalToLoad = allAudioSrcs.length;
-    
-        allAudioSrcs.forEach(src => {
-            fetch(src)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.arrayBuffer();
-                })
-                .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
-                .then(audioBuffer => {
-                    audioBuffers[src] = audioBuffer;
-                    loadedCount++;
-                    if (loadedCount === totalToLoad) {
-                        if (callback) callback();
-                    }
-                })
-                .catch(error => {
-                    console.error('Error loading audio file:', src, error);
-                    loadedCount++;
-                    if (loadedCount === totalToLoad) {
-                        if (callback) callback();
-                    }
-                });
-        });
-    }
+    }    
 
     function checkPath(selectedPath) {
         const selectedIndices = selectedPath.map(cell => cell.row * gridSizeCols + cell.col);
@@ -415,34 +369,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Adjust grid layout on window resize
     window.addEventListener('resize', adjustGridLayout);
 
+    function getCellCoords(cell) {
+        const index = Array.prototype.indexOf.call(gridContainer.children, cell);
+        if (index === -1) {
+            console.error('Cell not found in gridContainer.children');
+            return null;
+        }
+        return { row: Math.floor(index / gridSizeCols), col: index % gridSizeCols };
+    }
+
     function addTouchDragFunctionality() {
-        let selectedPath = [];
         let isSelecting = false;
         let isDragging = false;
         let startX = 0;
         let startY = 0;
         const dragThreshold = 5; // Minimum movement in pixels to consider as a drag
         let svg = null;
-
-        // Ensure audio context is resumed on user interaction
-        ['mousedown', 'touchstart'].forEach(event => {
-            window.addEventListener(event, () => {
-                if (audioContext.state === 'suspended') {
-                    audioContext.resume();
-                }
-            }, { once: true });
-        });
     
         const gridCells = Array.from(gridContainer.querySelectorAll('.grid-cell'));
-    
-        function getCellCoords(cell) {
-            const index = Array.prototype.indexOf.call(gridContainer.children, cell);
-            if (index === -1) {
-                console.error('Cell not found in gridContainer.children');
-                return null;
-            }
-            return { row: Math.floor(index / gridSizeCols), col: index % gridSizeCols };
-        }
     
         function isAdjacent(cell1, cell2) {
             const rowDiff = Math.abs(cell1.row - cell2.row);
@@ -547,6 +491,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         function handleStart(e) {
+            if (isLongPressActive || wasLongPressTriggered) return; // Do not start selection if long press is active or just occurred
+    
             isSelecting = true;
             isDragging = false;
     
@@ -556,7 +502,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         function handleMove(e) {
-            if (!isSelecting) return;
+            if (!isSelecting || isLongPressActive) return;
     
             const point = getEventPoint(e);
             const dx = point.x - startX;
@@ -583,6 +529,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         function handleEnd(e) {
+            if (isLongPressActive || wasLongPressTriggered) return; 
+
             if (e.type.startsWith('touch')) {
                 if (!isDragging) {
                     // This was a tap, not a drag
@@ -628,64 +576,82 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         function handleCellSelection(cell, isClick = false) {
-            if (isAnimating || cell.classList.contains('found')) return;
-    
+            if (isAnimating || cell.classList.contains('found') || isLongPressActive || wasLongPressTriggered) return;
+        
             const coords = getCellCoords(cell);
-    
+
+            console.log("Piemol1")
+        
             if (selectedPath.length === 0) {
                 // Start a new path
                 selectedPath.push(coords);
-                // Play audio fragment for the first cell
-                clearAudioQueue();
-                addToAudioQueue(cell);
+                playCellAudio(cell); // Play audio fragment
             } else {
                 const lastCell = selectedPath[selectedPath.length - 1];
-    
+
+                console.log("Piemol2")
+        
                 if (coords.row === lastCell.row && coords.col === lastCell.col) {
+                    console.log("Piemol5")
                     // Clicked on the last selected cell
-                    if (isClick && selectedPath.length > 1) {
-                        checkSelectedPath();
-                        // Exit the function to prevent calling updateCellSelection() and updateLines()
+                    if (isClick) {
+                        if (selectedPath.length > 1) {
+                            // If path length is more than 1, check the path
+                            checkSelectedPath();
+                        } else {
+                            // De-select the only selected cell
+                            selectedPath = [];
+                            updateCellSelection();
+                            updateLines();
+                        }
                         return;
                     }
                 } else if (selectedPath.some(c => c.row === coords.row && c.col === coords.col)) {
+                    console.log("Piemol3")
                     // Cell is already in the path
                     const existingIndex = selectedPath.findIndex(c => c.row === coords.row && c.col === coords.col);
                     if (existingIndex !== selectedPath.length - 1) {
                         selectedPath = selectedPath.slice(0, existingIndex + 1);
-                        // Adjust the audio queue accordingly
-                        trimAudioQueue(selectedPath.length);
+                        playCellAudio(cell); // Play audio fragment
                     } else {
-                        if (isClick && selectedPath.length > 1) {
-                            checkSelectedPath();
-                            // Exit the function to prevent calling updateCellSelection() and updateLines()
+                        if (isClick) {
+                            if (selectedPath.length > 1) {
+                                checkSelectedPath();
+                            } else {
+                                // De-select the only selected cell
+                                selectedPath = [];
+                                updateCellSelection();
+                                updateLines();
+                            }
                             return;
                         }
                     }
                 } else if (isAdjacent(lastCell, coords)) {
+                    console.log("Piemol4")
                     // Cell is adjacent to the last cell
                     selectedPath.push(coords);
-                    // Play audio fragment for the new cell
-                    addToAudioQueue(cell);
+                    playCellAudio(cell); // Play audio fragment
                 } else {
+                    console.log("Piemol69")
                     // Cell is not adjacent
                     if (isClick) {
-                        // For clicking/tapping, start a new path
-                        selectedPath = [coords];
-                        // Clear the audio queue and start a new one
-                        clearAudioQueue();
-                        addToAudioQueue(cell);
+                        console.log("Piemol")
+                        // Clear the current selection
+                        selectedPath = [];
+                        updateCellSelection();
+                        updateLines();
+                        // Do not select the new cell
                     } else {
-                        // For touch-dragging, ignore the cell
-                        // Do nothing
+                        // For dragging, ignore non-adjacent cells
                     }
+                    return;
                 }
             }
-    
+        
             updateCellSelection();
             updateLines();
-        }        
-    
+        }
+        
         function checkSelectedPath() {
             if (selectedPath.length > 0) {
                 const selectedIndices = selectedPath.map(cell => cell.row * gridSizeCols + cell.col);
@@ -693,29 +659,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (pathIndex !== -1 && !isPathFound(pathIndex)) {
                     console.log("Path checked and correct!");
                     markPathAsFound(pathIndex);
+                    updateScoreCounter();
                     selectedPath = [];
                     updateCellSelection();
                     updateLines();
-                    clearAudioQueue(); // Clear audio queue when path is correct
                 } else {
                     console.log("Path checked but wrong!");
-                    // Trigger the shake animation
                     shakeSelectedCells();
-                    clearAudioQueue(); // Clear audio queue when path is incorrect
                 }
             }
         }
+        
 
         function shakeSelectedCells() {
             isAnimating = true; // Disable user interactions during animation
+
+            // Clear audio queue
+            audioQueue = [];
+            isPlayingAudio = false;
+            audioQueueCallback = null;
+
             const gridCells = Array.from(gridContainer.querySelectorAll('.grid-cell'));
             const selectedCellElements = selectedPath.map(coords => {
                 const index = coords.row * gridSizeCols + coords.col;
                 return gridCells[index];
             });
-        
-            // Clear the audio queue
-            clearAudioQueue();        
         
             // Get the temp lines (SVG lines) corresponding to the selected path
             const svg = gridContainer.querySelector('svg');
@@ -754,6 +722,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function markPathAsFound(pathIndex) {
+            // Clear audio queue
+            audioQueue = [];
+            isPlayingAudio = false;
+
             const path = solutionPaths[pathIndex];
             path.forEach(cellIndex => {
                 const cell = gridContainer.children[cellIndex];
@@ -1058,7 +1030,7 @@ document.addEventListener('DOMContentLoaded', function() {
             cell.classList.add('vocal-hint');
             cell.dataset.version = 'vocal'; // Change to vocal version
         });
-    }
+    }    
 
     function updateHintButton() {
         // Remove state-specific classes
