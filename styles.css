@@ -327,10 +327,6 @@ footer {
     border-style: none;
 }
 
-.grid-cell.currently-playing::before {
-    color: #AEDFEE !important;
-}
-
 .grid-cell.bounce::after {
     animation: bounceEffect 0.3s ease-out forwards;
     animation-fill-mode: forwards;
@@ -477,6 +473,16 @@ footer {
 
 .grid-cell.found {
     pointer-events: none;
+}
+
+.grid-cell.playing::before,
+.grid-cell.playing.found::before,
+.grid-cell.playing.found.path-0::before,
+.grid-cell.playing.found.path-1::before,
+.grid-cell.playing.found.path-2::before,
+.grid-cell.playing.found.path-3::before,
+.grid-cell.playing.found.path-4::before {
+    color: greenyellow;
 }
 
 .grid-cell.found::after {
