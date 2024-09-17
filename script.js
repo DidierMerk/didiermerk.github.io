@@ -30,6 +30,15 @@ document.addEventListener('DOMContentLoaded', function() {
     let hintsRemaining = 0;
     let hintsAtLastRefill = 0;
 
+    // For audio
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const audioBuffers = {}; // Keyed by audioSrc
+
+    let audioQueue = [];
+    let isPlayingAudio = false;
+    let audioStartTime = 0;
+    let scheduledAudioNodes = [];
+
     const progressEmojis = {
         path0: '🟣',
         path1: '🟠',
@@ -48,6 +57,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const footer = document.querySelector('footer');
     const slogan = document.querySelector('.slogan');
     const gridContainer = document.querySelector('.grid-container');
+
+    // Pre load the audio
+    preloadAudioBuffers(function() {
+        console.log('All audio files have been preloaded.');
+    });
 
     function addNoteSelectionFunctionality() {
         //  empty for now
@@ -74,10 +88,185 @@ document.addEventListener('DOMContentLoaded', function() {
         addTouchDragFunctionality();
         displayPaths();
         updateScoreCounter();
-
+    
         // Reset hint state
         hintState = Array(numberOfPaths).fill().map(() => ({ pathHint: false, vocalHint: false }));
         updateHintButton();
+    
+        // Assign data attributes to the cells
+        for (let pathIndex = 0; pathIndex < solutionPaths.length; pathIndex++) {
+            const path = solutionPaths[pathIndex];
+            for (let fragmentIndex = 0; fragmentIndex < path.length; fragmentIndex++) {
+                const cellIndex = path[fragmentIndex];
+                const cell = gridContainer.children[cellIndex];
+                cell.dataset.track = pathIndex + 1; // Tracks are track1 to track5
+                cell.dataset.fragment = fragmentIndex + 1; // Fragment numbers start from 1
+                cell.dataset.version = 'instr'; // Default to instrumental version
+            }
+        }
+    }
+
+    function addToAudioQueue(cell) {
+        const track = cell.dataset.track;
+        const fragment = cell.dataset.fragment;
+        const version = cell.dataset.version;
+        const audioSrc = `tracks/track${track}/track${track}_${version}_${fragment}.mp3`;
+    
+        audioQueue.push({ audioSrc, cell });
+    
+        if (!isPlayingAudio) {
+            playAudioQueue();
+        } else {
+            // Schedule the new audio fragment to play after the current queue
+            scheduleNextInQueue();
+        }
+    }
+    
+
+    function playAudioQueue() {
+        if (audioQueue.length === 0) {
+            isPlayingAudio = false;
+            audioStartTime = 0;
+            scheduledAudioNodes = [];
+            return;
+        }
+    
+        isPlayingAudio = true;
+        audioStartTime = audioContext.currentTime;
+        scheduledAudioNodes = [];
+    
+        // Schedule all audio fragments in the queue
+        let currentTime = audioStartTime;
+        audioQueue.forEach((item, index) => {
+            const { audioSrc, cell } = item;
+            const audioBuffer = audioBuffers[audioSrc];
+    
+            if (audioBuffer) {
+                const source = audioContext.createBufferSource();
+                source.buffer = audioBuffer;
+                source.connect(audioContext.destination);
+    
+                // Indicate the cell is currently playing
+                const startTime = currentTime;
+                const duration = audioBuffer.duration;
+    
+                source.start(startTime);
+    
+                // Schedule visual indication
+                scheduleCellPlaying(cell, startTime, duration);
+    
+                scheduledAudioNodes.push(source);
+    
+                // Increment current time by the duration of the audio buffer
+                currentTime += duration;
+            } else {
+                console.error('Audio buffer not found for:', audioSrc);
+            }
+        });
+    
+        // Clear the queue after scheduling
+        audioQueue = [];
+    
+        // Schedule a function to set isPlayingAudio to false after all audio has played
+        const totalDuration = currentTime - audioStartTime;
+        setTimeout(() => {
+            isPlayingAudio = false;
+        }, totalDuration * 1000); // Convert to milliseconds
+    }
+
+    function scheduleCellPlaying(cell, startTime, duration) {
+        // Schedule the cell to change color when its audio starts
+        setTimeout(() => {
+            cell.classList.add('currently-playing');
+        }, (startTime - audioContext.currentTime) * 1000);
+    
+        // Schedule the cell to revert color when its audio ends
+        setTimeout(() => {
+            cell.classList.remove('currently-playing');
+        }, (startTime + duration - audioContext.currentTime) * 1000);
+    }
+
+    function clearAudioQueue() {
+        audioQueue = [];
+        isPlayingAudio = false;
+        audioStartTime = 0;
+    
+        // Stop any scheduled audio
+        scheduledAudioNodes.forEach(node => {
+            try {
+                node.stop();
+            } catch (e) {
+                console.error('Error stopping audio node:', e);
+            }
+        });
+        scheduledAudioNodes = [];
+    
+        // Remove any 'currently-playing' classes from cells
+        const cells = gridContainer.querySelectorAll('.grid-cell');
+        cells.forEach(cell => {
+            cell.classList.remove('currently-playing');
+        });
+    }
+    
+
+    function trimAudioQueue(length) {
+        // Since we've already scheduled the audio, we need to stop the extra ones
+        const extraNodes = scheduledAudioNodes.slice(length);
+        extraNodes.forEach(node => {
+            try {
+                node.stop();
+            } catch (e) {
+                console.error('Error stopping audio node:', e);
+            }
+        });
+        scheduledAudioNodes = scheduledAudioNodes.slice(0, length);
+    
+        // Adjust the audio queue accordingly
+        audioQueue = audioQueue.slice(0, length);
+    }
+    
+
+    // Getting rid of buffers
+    function preloadAudioBuffers(callback) {
+        const allAudioSrcs = [];
+    
+        // Collect all possible audio sources
+        for (let track = 1; track <= 5; track++) {
+            for (let version of ['instr', 'vocal']) {
+                for (let fragment = 1; fragment <= 15; fragment++) { // Assuming maximum of 15 fragments per track
+                    const audioSrc = `tracks/track${track}/track${track}_${version}_${fragment}.mp3`;
+                    allAudioSrcs.push(audioSrc);
+                }
+            }
+        }
+    
+        let loadedCount = 0;
+        const totalToLoad = allAudioSrcs.length;
+    
+        allAudioSrcs.forEach(src => {
+            fetch(src)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.arrayBuffer();
+                })
+                .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
+                .then(audioBuffer => {
+                    audioBuffers[src] = audioBuffer;
+                    loadedCount++;
+                    if (loadedCount === totalToLoad) {
+                        if (callback) callback();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading audio file:', src, error);
+                    loadedCount++;
+                    if (loadedCount === totalToLoad) {
+                        if (callback) callback();
+                    }
+                });
+        });
     }
 
     function checkPath(selectedPath) {
@@ -234,6 +423,15 @@ document.addEventListener('DOMContentLoaded', function() {
         let startY = 0;
         const dragThreshold = 5; // Minimum movement in pixels to consider as a drag
         let svg = null;
+
+        // Ensure audio context is resumed on user interaction
+        ['mousedown', 'touchstart'].forEach(event => {
+            window.addEventListener(event, () => {
+                if (audioContext.state === 'suspended') {
+                    audioContext.resume();
+                }
+            }, { once: true });
+        });
     
         const gridCells = Array.from(gridContainer.querySelectorAll('.grid-cell'));
     
@@ -431,15 +629,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
         function handleCellSelection(cell, isClick = false) {
             if (isAnimating || cell.classList.contains('found')) return;
-        
+    
             const coords = getCellCoords(cell);
-        
+    
             if (selectedPath.length === 0) {
                 // Start a new path
                 selectedPath.push(coords);
+                // Play audio fragment for the first cell
+                clearAudioQueue();
+                addToAudioQueue(cell);
             } else {
                 const lastCell = selectedPath[selectedPath.length - 1];
-        
+    
                 if (coords.row === lastCell.row && coords.col === lastCell.col) {
                     // Clicked on the last selected cell
                     if (isClick && selectedPath.length > 1) {
@@ -452,6 +653,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     const existingIndex = selectedPath.findIndex(c => c.row === coords.row && c.col === coords.col);
                     if (existingIndex !== selectedPath.length - 1) {
                         selectedPath = selectedPath.slice(0, existingIndex + 1);
+                        // Adjust the audio queue accordingly
+                        trimAudioQueue(selectedPath.length);
                     } else {
                         if (isClick && selectedPath.length > 1) {
                             checkSelectedPath();
@@ -462,18 +665,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else if (isAdjacent(lastCell, coords)) {
                     // Cell is adjacent to the last cell
                     selectedPath.push(coords);
+                    // Play audio fragment for the new cell
+                    addToAudioQueue(cell);
                 } else {
                     // Cell is not adjacent
                     if (isClick) {
                         // For clicking/tapping, start a new path
                         selectedPath = [coords];
+                        // Clear the audio queue and start a new one
+                        clearAudioQueue();
+                        addToAudioQueue(cell);
                     } else {
                         // For touch-dragging, ignore the cell
                         // Do nothing
                     }
                 }
             }
-        
+    
             updateCellSelection();
             updateLines();
         }        
@@ -485,14 +693,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (pathIndex !== -1 && !isPathFound(pathIndex)) {
                     console.log("Path checked and correct!");
                     markPathAsFound(pathIndex);
-                    updateScoreCounter();
                     selectedPath = [];
                     updateCellSelection();
                     updateLines();
+                    clearAudioQueue(); // Clear audio queue when path is correct
                 } else {
                     console.log("Path checked but wrong!");
                     // Trigger the shake animation
                     shakeSelectedCells();
+                    clearAudioQueue(); // Clear audio queue when path is incorrect
                 }
             }
         }
@@ -504,6 +713,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const index = coords.row * gridSizeCols + coords.col;
                 return gridCells[index];
             });
+        
+            // Clear the audio queue
+            clearAudioQueue();        
         
             // Get the temp lines (SVG lines) corresponding to the selected path
             const svg = gridContainer.querySelector('svg');
@@ -844,6 +1056,7 @@ document.addEventListener('DOMContentLoaded', function() {
         path.forEach(cellIndex => {
             const cell = gridContainer.children[cellIndex];
             cell.classList.add('vocal-hint');
+            cell.dataset.version = 'vocal'; // Change to vocal version
         });
     }
 
