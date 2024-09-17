@@ -605,7 +605,95 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 updateHintButton();
             }
-        }        
+        }
+
+        // Redrawing the lines
+        window.addEventListener('resize', function() {
+            adjustGridLayout();
+            redrawAllLines();
+        });
+
+        function redrawAllLines() {
+            let svg = gridContainer.querySelector('svg');
+            if (!svg) {
+                svg = createSVGOverlay();
+            }
+        
+            // Remove all existing lines
+            while (svg.firstChild) {
+                svg.removeChild(svg.firstChild);
+            }
+        
+            // Redraw permanent lines for found paths
+            solutionPaths.forEach((path, index) => {
+                if (isPathFound(index)) {
+                    drawPathLines(path, 'permanent');
+                }
+            });
+        
+            // Redraw temporary lines for the selected path
+            if (selectedPath.length > 1) {
+                drawSelectedPathLines();
+            }
+        }
+
+        function drawPathLines(path, lineClass) {
+            const svg = gridContainer.querySelector('svg');
+            const gridRect = gridContainer.getBoundingClientRect();
+            for (let i = 1; i < path.length; i++) {
+                const startIndex = path[i - 1];
+                const endIndex = path[i];
+        
+                const startCell = gridContainer.children[startIndex];
+                const endCell = gridContainer.children[endIndex];
+                const startRect = startCell.getBoundingClientRect();
+                const endRect = endCell.getBoundingClientRect();
+        
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', startRect.left - gridRect.left + startRect.width / 2);
+                line.setAttribute('y1', startRect.top - gridRect.top + startRect.height / 2);
+                line.setAttribute('x2', endRect.left - gridRect.left + endRect.width / 2);
+                line.setAttribute('y2', endRect.top - gridRect.top + endRect.height / 2);
+                line.setAttribute('stroke', '#aedfee');
+                line.setAttribute('stroke-width', '1.3vh');
+                line.setAttribute('stroke-linecap', 'round');
+                line.classList.add(lineClass);
+        
+                svg.appendChild(line);
+            }
+        }
+        
+        function drawSelectedPathLines() {
+            const svg = gridContainer.querySelector('svg');
+            const gridRect = gridContainer.getBoundingClientRect();
+        
+            for (let i = 1; i < selectedPath.length; i++) {
+                const start = selectedPath[i - 1];
+                const end = selectedPath[i];
+        
+                const startIndex = start.row * gridSizeCols + start.col;
+                const endIndex = end.row * gridSizeCols + end.col;
+        
+                const startCell = gridContainer.children[startIndex];
+                const endCell = gridContainer.children[endIndex];
+                const startRect = startCell.getBoundingClientRect();
+                const endRect = endCell.getBoundingClientRect();
+        
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', startRect.left - gridRect.left + startRect.width / 2);
+                line.setAttribute('y1', startRect.top - gridRect.top + startRect.height / 2);
+                line.setAttribute('x2', endRect.left - gridRect.left + endRect.width / 2);
+                line.setAttribute('y2', endRect.top - gridRect.top + endRect.height / 2);
+                line.setAttribute('stroke', '#dbd8c5');
+                line.setAttribute('stroke-width', '1.3vh');
+                line.setAttribute('stroke-linecap', 'round');
+                line.classList.add('temp-line');
+        
+                svg.appendChild(line);
+            }
+        }
+
+        // End of redrawing the lines
     
         // Mouse events
         gridContainer.addEventListener('mousedown', handleStart);
@@ -1589,4 +1677,6 @@ document.addEventListener('DOMContentLoaded', function() {
             closeNeedHintModal();
         }
     });
+
+        
 });
