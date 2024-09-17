@@ -125,38 +125,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.addEventListener('mousemove', handleMove);
                 document.addEventListener('touchmove', handleMove);
             }
-
-            function handleMove(e) {
-                // Movement detected, cancel long press
-                clearTimeout(pressTimer);
-                moved = true;
-                // Remove move event listeners
-                document.removeEventListener('mousemove', handleMove);
-                document.removeEventListener('touchmove', handleMove);
-            }
-
+    
             function handlePressEnd(e) {
                 clearTimeout(pressTimer);
+                if (!wasLongPressTriggered && !moved) {
+                    handleCellSelection(cell, true);
+                }
                 isLongPressActive = false;
+                wasLongPressTriggered = false;
                 // Remove move event listeners
                 document.removeEventListener('mousemove', handleMove);
                 document.removeEventListener('touchmove', handleMove);
-
-                if (wasLongPressTriggered) {
-                    // If long press was triggered, prevent cell selection
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-                }
             }
-
+    
+            function handleMove(e) {
+                moved = true;
+                clearTimeout(pressTimer);
+                isLongPressActive = false;
+                wasLongPressTriggered = false;
+                // Remove move event listeners
+                document.removeEventListener('mousemove', handleMove);
+                document.removeEventListener('touchmove', handleMove);
+            }
+    
             cell.addEventListener('mousedown', handlePressStart);
-            cell.addEventListener('mouseup', handlePressEnd);
-            cell.addEventListener('mouseleave', handlePressEnd);
             cell.addEventListener('touchstart', handlePressStart);
+    
+            cell.addEventListener('mouseup', handlePressEnd);
             cell.addEventListener('touchend', handlePressEnd);
             cell.addEventListener('touchcancel', handlePressEnd);
         });
     }
+    
 
 
     function playCellAudio(cell, isLongPress = false) {
