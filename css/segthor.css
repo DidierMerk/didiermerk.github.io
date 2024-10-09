@@ -1,0 +1,55 @@
+/* SEGTHOR Block Styles */
+.segthor-block {
+    font-family: 'Montserrat', sans-serif;
+    width: 85%;
+    margin: 0 auto;
+    margin-top: 10vh; /* This matches the header height */
+    padding: 40px 0px;
+    background-color: #ffffff;
+}
+
+.segthor-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 80px;
+}
+
+.segthor-container h1 {
+    font-size: 2.2em;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+/* Dark Mode SEGTHOR Styles */
+body.dark-mode .segthor-block {
+    background-color: #272935;
+}
+
+body.dark-mode .segthor-container h1 {
+    color: #ffffff;
+}
+
+/* Mobile Layout */
+@media only screen and (max-width: 992px) {
+    .segthor-block {
+        padding-top: 70px; /* Increased padding for mobile */
+        width: 93%;
+        margin-top: 50px; /* This matches the mobile header height */
+    }
+
+    .segthor-container h1 {
+        font-size: 1.9em;
+    }
+}
+
+/* Mobile Layout for screens below 680px */
+@media only screen and (max-width: 680px) {
+    .segthor-block {
+        padding-top: 60px; /* Slightly reduced padding for very small screens */
+    }
+
+    .segthor-container h1 {
+        font-size: 1.6em;
+    }
+}

@@ -1,0 +1,184 @@
+/* Additional Preprocessing Extended Block Styles */
+.segthor-additional-preprocess-extended {
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.segthor-additional-preprocess-extended-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 0%; /* 0% gap between columns */
+}
+
+.segthor-additional-preprocess-extended-column {
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.segthor-additional-preprocess-extended-column-text {
+    flex: 0 0 44%; /* 40% - 1% to account for gaps */
+}
+
+.segthor-additional-preprocess-extended-column-visual {
+    flex: 0 0 27%; /* 30% - 1% to account for gaps */
+}
+
+.segthor-additional-preprocess-extended-column p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    line-height: 1.6;
+    color: #555;
+    margin: 0 0 1em 0; /* Adds space between paragraphs */
+}
+
+.segthor-additional-preprocess-extended-column p:last-child {
+    margin-bottom: 0; /* Removes margin from last paragraph */
+}
+
+.segthor-additional-preprocess-extended-placeholder {
+    width: 100%;
+    padding-top: 100%; /* Creates a square aspect ratio */
+    background-color: #e0e0e0;
+    border-radius: 5px;
+}
+
+/* Dark Mode Styles */
+body.dark-mode .segthor-additional-preprocess-extended-column p {
+    color: #e0e0e0;
+}
+
+body.dark-mode .segthor-additional-preprocess-extended-placeholder {
+    background-color: #444;
+}
+
+/* Mobile Layout */
+@media only screen and (max-width: 768px) {
+    .segthor-additional-preprocess-extended-container {
+        flex-direction: column;
+        gap: 20px; /* Increase gap for mobile layout */
+    }
+
+    .segthor-additional-preprocess-extended-column {
+        flex: 1 1 100%;
+    }
+}
+
+/* Slider styles */
+
+/* Image Comparison Slider Styles */
+.image-comparison-slider {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%; /* Maintain square aspect ratio */
+    overflow: hidden;
+}
+
+.image-comparison-slider img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-before {
+    clip-path: inset(0 50% 0 0);
+}
+
+.slider-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 40px;
+    transform: translateX(-50%);
+    cursor: ew-resize;
+}
+
+.slider-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background-color: white;
+    transform: translateX(-50%);
+}
+
+.slider-handle::before,
+.slider-handle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 6px solid white;
+    transform: translateY(-50%);
+}
+
+.slider-handle::before {
+    left: 50%;
+    transform: translateX(-100%) translateY(-50%);
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+}
+
+.slider-handle::after {
+    right: 50%;
+    transform: translateX(100%) translateY(-50%);
+    border-right-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+}
+
+/* Add these styles to your existing CSS */
+
+.image-comparison-slider {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%; /* Maintain square aspect ratio */
+    overflow: hidden;
+}
+
+.image-label {
+    position: absolute;
+    color: white;
+    font-family: monospace;
+    font-size: 12px;
+    z-index: 10;
+    padding: 0px;
+}
+
+.top-right {
+    top: 2px;
+    right: 3px;
+    text-align: right;
+}
+
+.top-left {
+    top: 2px;
+    left: 3px;
+    text-align: left;
+}
+
+.bottom-left {
+    bottom: 2px;
+    left: 3px;
+}
+
+.bottom-right {
+    bottom: 2px;
+    right: 3px;
+}
+
+/* Ensure the labels are visible in both light and dark modes */
+body.dark-mode .image-label {
+    color: white;
+}
+
