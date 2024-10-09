@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEGTHOR - Didier Merk</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/segthor.css">
+    <link rel="stylesheet" href="css/segthor-intro.css">
+    <link rel="stylesheet" href="css/segthor-preprocess.css">
+    <link rel="stylesheet" href="css/segthor-additional-preprocessing.css">
+    <link rel="stylesheet" href="css/segthor-applied-preprocess.css">
+    <link rel="stylesheet" href="css/model-training.css">
+    <link rel="stylesheet" href="css/segthor-pipeline.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/2.1.0/chartjs-plugin-annotation.min.js"></script>
+</head>
+<body>
+    <div id="header">
+        <div class="header-left">
+            <a href="index.html" class="name-link">Didier Merk</a>
+            <nav class="header-nav">
+                <a href="index.html#home">Home</a>
+                <a href="index.html#experience">Experience</a>
+                <a href="index.html#projects">Projects</a>
+                <a href="index.html#publications">Publications</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div id="dark-mode-toggle-desktop" aria-label="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </div>
+        </div>
+    </div>
+
+    <div id="mobile-header">
+        <div class="mobile-header-left">
+            <div id="menu-toggle" aria-label="Toggle Menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <a href="index.html" class="mobile-name-link">Didier Merk</a>
+        </div>
+        <div class="mobile-header-right">
+            <div id="dark-mode-toggle-mobile" aria-label="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </div>
+        </div>
+    </div>
+
+    <div id="mobile-menu" class="mobile-menu">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#experience">Experience</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#publications">Publications</a>
+    </div>
+
+    <div role="main">
+        <div id="segthor" class="segthor-block">
+            <div class="segthor-container">
+                <!-- Existing intro block -->
+                <div class="segthor-intro-block">
+                    <div class="segthor-main-title">SegTHOR Challenge</div>
+                    <p><em>Raoul Ritter, Lisa van Ommen, Pepijn de Reus, Didier Merk</em></p>
+                    <hr class="divider">
+
+                    <h2>Medical Imaging Segmentation</h2>
+                    <div class="segthor-intro-content">
+                        <div class="segthor-intro-image-container">
+                            <img src="images/GT27.gif" alt="SegTHOR Challenge GIF">
+                        </div>
+                        <div class="segthor-intro-text-container">
+                            <p>The SegTHOR challenge is a prominent benchmark in medical imaging,
+                            focused on the complex task of segmenting four thoracic organs at risk
+                            in CT scans: The <span style="color:#7daa7d"><strong>esophagus</strong></span>, 
+                            <span style="color:#f0d591"><strong>heart</strong></span>, 
+                            <span style="color:#af7964"><strong>trachea</strong></span> and 
+                            <span style="color:#6eb7d0"><strong>aorta</strong></span>.
+                            </p>
+
+                            <p>Accurate organ segmentation is critical in fields like radiotherapy and
+                            diagnostic imaging, where precision directly impacts patient outcomes. 
+                            This challenge encourages participants to explore advanced machine
+                            learning models and techniques to push the boundaries of segmentation
+                            performance.</p>
+                    
+                            <p>In this short overview, we'll walk through the methods our team
+                            applied, using models such as ENet, VM-UNet, and SAM2, and how each
+                            technique, <strong>from data preprocessing to post-processing</strong>, shaped our
+                            results. Instead of a deep technical dive, this summary aims to provide
+                            a more interactive experience, allowing you to see firsthand how these
+                            methods impacted our segmentation results.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- New preprocessing block -->
+                <div class="segthor-preprocess-block">
+                    <h2>Computed Tomography (CT) Scans</h2>
+                
+                    <div class="segthor-preprocess-content">
+                        <div class="segthor-preprocess-text">
+                            <p>The SegTHOR dataset consists of 60 Computed Tomography (CT) scans. CT-scans provide detailed cross-sectional images of the body by combining multiple X-rays taken from different angles. Each CT scan is represented as a series of <strong>2D slices</strong>, which can be converted into NumPy arrays. These arrays, representing tissue densities, can serve as input for a neural network for example.</p>
+
+                            <p>In addition, the four thoracic organs of interest in these 60 CT-scans were manually annotated by an experienced radiotherapist. These annotations served as the <em>ground truths</em> of our project. The goal of this challenge is to train a model that is able to segment organs as closely to these ground truths as possible.</p>
+                            
+                            <!-- <h3 class="paragraph-title">Misaligned Heart Segmentation</h3> -->
+                            
+                            <p>A unique aspect of this challenge was that the <strong>ground truth segmentations for the heart were intentionally misaligned</strong>. In most segmentation challenges, the ground truths accurately represent the organs, but here we had to correct the provided data.</p>
+                            
+                            <p>Our solution focused on <strong>Patient 27</strong>, whose CT-scan is pictured on the right. This patient was the only case where both the real and transformed ground truths were available. By comparing these two, we identified the affine transformation (translation, scaling, and rotation) that had been applied. Using this, we reversed the transformation for all other patients, ensuring our model was trained on corrected data.</p>
+                        </div>
+                
+                        <div class="ct-scan-slider">
+                            <div class="slider-container">
+                                <img id="ct-scan-image" src="images/CT27/0000.png" alt="CT Scan Slice">
+                                <img id="overlay-image" src="images/GT27_correct/0000.png" alt="Overlay Image" style="display: none;">
+                                <div id="patient27-image-label">Patient_27<br>Axial</div>
+                                <div id="slider-info">0 / 211</div>
+                                <div id="legend" style="display: none;">
+                                    <div class="legend-title">Segmentations:</div>
+                                    <div><span style="color: #7daa7d;">■</span> Esophagus</div>
+                                    <div><span style="color: #f0d591;">■</span> Heart</div>
+                                    <div><span style="color: #af7964;">■</span> Trachea</div>
+                                    <div><span style="color: #6eb7d0;">■</span> Aorta</div>
+                                </div>
+                            </div>
+                            <input type="range" id="ct-scan-slider" min="0" max="211" value="0">
+                            <div class="ground-truth-overlay">
+                                <p><strong>Ground Truth Overlay:</strong></p>
+                                <div class="button-group">
+                                    <button class="active" data-overlay="off">Off</button>
+                                    <button data-overlay="wrong">Wrong</button>
+                                    <button data-overlay="corrected">Corrected</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- Additional Preprocessing Block -->
+                <div class="segthor-additional-preprocess-block">
+                    <h2>Additional Preprocessing</h2>
+                    <div class="preprocessing-steps-container">
+                        <div class="preprocessing-step">
+                            <h3>1. Voxel Clipping</h3>
+                            <p class="step-intro">This technique limits extreme voxel intensities by setting them to a threshold, reducing noise and focusing the analysis on important image details.</p>
+                            <div class="visualization-placeholder">
+                                <canvas id="voxelClippingChart"></canvas>
+                            </div>
+                            <div class="voxel-clipping-slider-container">
+                                <input type="range" id="leftSlider" class="voxel-clipping-slider" min="-1500" max="1500" value="-1500">
+                                <input type="range" id="rightSlider" class="voxel-clipping-slider" min="-1500" max="1500" value="1500">
+                                <div class="slider-track"></div>
+                            </div>
+                            <div class="step-description">
+                                <!-- <h4 class="step-subtitle">In our research:</h4> -->
+                                <ul>
+                                    <li>CT-scan voxel intensities are measured in Hounsfield Units (HU).</li>
+                                    <li>Values below -1000HU (air) or above 1000HU (bone) likely represent noise.</li>
+                                    <li>We <em>clipped</em> values outside this range to enhance focus on meaningful structures.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Rescaling -->
+                        <div class="preprocessing-step">
+                            <h3>2. Image Rescaling</h3>
+                            <p class="step-intro">Rescaling adjusts voxel dimensions to ensure uniform spacing across scans, making the images consistent for accurate analysis.</p>
+                            
+                            <div class="segthor-rescaling-visualization">
+                                <div class="segthor-rescaling-ct-wrapper">
+                                    <div class="segthor-rescaling-title">Original</div>
+                                    <div class="segthor-rescaling-image-container">
+                                        <img src="images/Segthor/Preprocessing/Patient1_0093_Pre.png" alt="CT Scan 1x1x2.5" class="segthor-rescaling-ct-image">
+                                        <div class="segthor-rescaling-grid-overlay segthor-rescaling-grid-overlay-10x10"></div>
+                                    </div>
+                                    <div class="segthor-rescaling-ct-caption">1 x 1 x 2.0mm</div>
+                                </div>
+                                <div class="segthor-rescaling-ct-wrapper">
+                                    <div class="segthor-rescaling-title">Rescaled</div>
+                                    <div class="segthor-rescaling-image-container">
+                                        <img src="images/Segthor/Preprocessing/Patient1_0093_Processed.png" alt="CT Scan 1x1x2.0" class="segthor-rescaling-ct-image">
+                                        <div class="segthor-rescaling-grid-overlay segthor-rescaling-grid-overlay-7x10"></div>
+                                    </div>
+                                    <div class="segthor-rescaling-ct-caption">1 x 1 x 2.5mm</div>
+                                </div>
+                            </div>
+
+                            <div class="step-description">
+                                <ul>
+                                    <li>We rescaled all scans to ensure each voxel represents a standardized size of <b>0.977mm x 0.977mm x 2.5mm</b>.</li>
+                                    <li>This standardization improves consistency, allowing for better analysis and comparison across images.</li>
+                                </ul>
+                            </div>
+                            
+                        </div>
+
+                        <!-- Intensity Normalization -->
+                        <div class="preprocessing-step">
+                            <h3>3. Intensity Normalization</h3>
+                            <p class="step-intro">Intensity normalization standardizes voxel values across slices and patients, reducing variability from different scanners for improved model consistency.</p>
+                            <div class="visualization-placeholder">
+                                <canvas id="intensityDistributionChart"></canvas>
+                            </div>
+
+                            <div class="normalize-button-container">
+                                <button id="normalizeButton" class="normalize-button">Compute Z-scores</button>
+                            </div>
+                            
+                            <div class="step-description">
+                                <ul>
+                                    <li>We computed the z-score for each voxel: <strong>z = (x - μ) / σ</strong>, where:
+                                        <ul>
+                                            <li><strong>x</strong> is the voxel intensity</li>
+                                            <li><strong>μ</strong> is the slice mean intensity</li>
+                                            <li><strong>σ</strong> is the intensity standard deviation</li>
+                                        </ul>
+                                    </li>
+                                    <li>This enhances contrast, making CT scan details easier to visualize across different slices.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="segthor-additional-preprocess-extended">
+                        <div class="segthor-additional-preprocess-extended-container">
+                            <div class="segthor-additional-preprocess-extended-column segthor-additional-preprocess-extended-column-text">
+                                <p>We first corrected the heart segmentation misalignment to ensure reliable training data. Then, we applied voxel clipping to focus on key details, rescaling to standardize dimensions, and intensity normalization to harmonize scan values across slices and patients.</p>
+                                <p>The visualizations on the right show these improvements; on the left is the corrected heart segmentation, while the images on the right highlight cleaner, more consistent scans after preprocessing. These adjustments improved the accuracy of our segmentation results.</p>
+                            </div>
+
+                            <div class="segthor-additional-preprocess-extended-column segthor-additional-preprocess-extended-column-visual">
+                                <div class="image-comparison-slider">
+                                    <img src="images/Segthor/Preprocessing/P01_GT.gif" alt="After Preprocessing" class="image-after">
+                                    <img src="images/Segthor/Preprocessing/P01_GT_corr.gif" alt="Before Preprocessing" class="image-before">
+                                    <div class="slider-handle">
+                                        <div class="slider-line"></div>
+                                    </div>
+                                    <div class="image-label top-left">Patient_01<br>3D-view</div>
+                                    <div class="image-label bottom-left">Input</div>
+                                    <div class="image-label bottom-right">Transformed</div>
+                                </div>
+                            </div>
+
+                            <div class="segthor-additional-preprocess-extended-column segthor-additional-preprocess-extended-column-visual">
+                                <div class="segthor-additional-preprocess-extended-column segthor-additional-preprocess-extended-column-visual">
+                                    <div class="image-comparison-slider">
+                                        <img src="images/Segthor/Preprocessing/Patient4_0066_Processed.png" alt="After Preprocessing" class="image-after">
+                                        <img src="images/Segthor/Preprocessing/Patient4_0066_Pre.png" alt="Before Preprocessing" class="image-before">
+                                        <div class="slider-handle">
+                                            <div class="slider-line"></div>
+                                        </div>
+                                        <div class="image-label top-left">Patient_04<br>Slice 0066</div>
+                                        <div class="image-label bottom-left">Input</div>
+                                        <div class="image-label bottom-right">Processed</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Model Training block -->
+                <div class="segthor-model-training-block">
+                    <h2>Model Training and Inference</h2>
+                    <div class="segthor-model-training-content">
+                        <div class="segthor-model-training-image-container">
+                            <div class="training-visualization-container">
+                                <div class="training-visualization-wrapper">
+                                  <img src="images/Segthor/Training/Patient_01_0129_CT.png" alt="CT Scan" class="training-base-image">
+                                  <img src="images/Segthor/Training/Patient_01_0129_GT.png" alt="Ground Truth" class="training-overlay-image">
+                                  <img src="images/Segthor/Training/result_png/iter000_Patient_01_0129.png" alt="Training Progress" class="training-progress-image">
+                                  <div class="training-image-label">Patient_01<br>Slice 0129</div>
+                                  <div class="training-epoch-info">Epoch: 1 / 20</div>
+                                  <div class="training-legend">
+                                    <div class="legend-title">Segmentations:</div>
+                                    <div><span style="color: #7daa7d;">■</span> Esophagus</div>
+                                    <div><span style="color: #f0d591;">■</span> Heart</div>
+                                    <div><span style="color: #af7964;">■</span> Trachea</div>
+                                    <div><span style="color: #6eb7d0;">■</span> Aorta</div>
+                                  </div>
+                                </div>
+                                <input type="range" min="0" max="19" value="0" class="training-progress-slider" id="trainingProgressSlider">
+                            </div>
+                        </div>
+                        
+                        <div class="segthor-model-training-text-container">
+                            <p>
+                                To accurately segment organs from CT scans, you can "train" a deep learning model. In training, the model learns patterns from labeled data (in this case the professionally labeled CT scans), and once trained, it can make predictions on new, unseen data. For the SegTHOR challenge, we used three models: <span style="color:#6eb7d0;"><strong>ENet</strong></span> as the baseline, along with <span style="color:#d66e45;"><strong>VM-UNet</strong></span> and <span style="color:#7daa7d;"><strong>SAM2</strong></span>, which are state-of-the-art in medical image segmentation.
+                            </p>
+                            <p>
+                                To get the best out of these models, we applied different configurations for each one. We experimented with <strong>data augmentation</strong> (rotating, flipping, and scaling CT scans), <strong>tuning hyperparameters</strong> like learning rate, and using <strong>post-processing</strong> to smoothen and fill the output. These techniques led to 24 different trained models in total, and the full details can be found in our paper.
+                            </p>
+                            <p>
+                                On the left, you can see the visual progress for Patient 2, where the model improves its segmentation with each training epoch. This shows how the models learned to find the best weights under specific settings, refining their performance step by step.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Interactive Pipeline Block -->
+                <div class="segthor-pipeline-block">
+                    <h2>SegTHOR Pipeline</h2>
+                    <div class="pipeline-container">
+                        <div class="pipeline-column" id="column1" data-model="">
+                            <div class="pipeline-step">
+                                <div class="add-model-button" onclick="openModal(1)">
+                                    <i class="fas fa-plus-circle"></i>
+                                    <span class="add-model-text"><strong>Add Model</strong></span>
+                                </div>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-step">
+                                <div class="option" data-option="augmentation">
+                                    <span>Data Augmentation</span>
+                                </div>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-step">
+                                <div class="option" data-option="hyperparameter">
+                                    <span>Hyperparameter Tuning</span>
+                                </div>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-step">
+                                <div class="option" data-option="postprocessing">
+                                    <span>Post-Processing</span>
+                                </div>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-step train-button">
+                                <span>Train</span>
+                            </div>
+                        </div>
+                
+                        <div class="pipeline-column" id="column2" data-model="">
+                            <div class="pipeline-step">
+                                <div class="add-model-button" onclick="openModal(2)">
+                                    <i class="fas fa-plus-circle"></i>
+                                    <span class="add-model-text"><strong>Add Model</strong></span>
+                                </div>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-step">
+                                <div class="option" data-option="augmentation">
+                                    <span>Data Augmentation</span>
+                                </div>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-step">
+                                <div class="option" data-option="hyperparameter">
+                                    <span>Hyperparameter Tuning</span>
+                                </div>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-step">
+                                <div class="option" data-option="postprocessing">
+                                    <span>Post-Processing</span>
+                                </div>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-step train-button">
+                                <span>Train</span>
+                            </div>
+                        </div>
+                
+                        <div class="pipeline-column" id="column3" data-model="">
+                            <div class="pipeline-step">
+                                <div class="add-model-button" onclick="openModal(3)">
+                                    <i class="fas fa-plus-circle"></i>
+                                    <span class="add-model-text"><strong>Add Model</strong></span>
+                                </div>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-step">
+                                <div class="option" data-option="augmentation">
+                                    <span>Data Augmentation</span>
+                                </div>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-step">
+                                <div class="option" data-option="hyperparameter">
+                                    <span>Hyperparameter Tuning</span>
+                                </div>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-step">
+                                <div class="option" data-option="postprocessing">
+                                    <span>Post-Processing</span>
+                                </div>
+                            </div>
+                            <div class="pipeline-connector"></div>
+                            <div class="pipeline-step train-button">
+                                <span>Train</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Select a model modal -->
+                <div id="modelModal" class="modal">
+                    <div class="modal-content">
+                        <div class="model-selection">
+                            <div class="model-card" data-model="enet">
+                                <h3>ENet (Baseline)</h3>
+                                <div class="model-image-container">
+                                    <img src="images/enet.png" alt="ENet Model" class="model-image">
+                                </div>
+                                <ul>
+                                    <li>Lightweight architecture optimized for efficient segmentation tasks.</li>
+                                    <li>Exceptionally fast inference time, ideal for real-time processing.</li>
+                                    <li>Balanced trade-off between accuracy and computational efficiency, making it suitable for resource-constrained environments.</li>
+                                </ul>
+                                <button class="select-model-btn" data-model="enet">Select</button>
+                            </div>
+                            <div class="model-card" data-model="vmunet">
+                                <h3>VM-UNet</h3>
+                                <div class="model-image-container">
+                                    <img src="images/vmunet.png" alt="VM-UNet Model" class="model-image">
+                                </div>
+                                <ul>
+                                    <li>Enhanced U-Net architecture with improved feature extraction capabilities.</li>
+                                    <li>Optimized for higher accuracy in complex medical image segmentation tasks.</li>
+                                    <li>Incorporates advanced techniques to handle intricate anatomical structures and variations.</li>
+                                </ul>
+                                <button class="select-model-btn" data-model="vmunet">Select</button>
+                            </div>
+                            <div class="model-card" data-model="sam2">
+                                <h3>SAM2</h3>
+                                <div class="model-image-container">
+                                    <img src="images/sam2.png" alt="SAM2 Model" class="model-image">
+                                </div>
+                                <ul>
+                                    <li>Utilizes an advanced self-attention mechanism for context-aware segmentation.</li>
+                                    <li>Demonstrates excellent performance across various medical imaging datasets and modalities.</li>
+                                    <li>Highly robust to input variations, ensuring consistent results across diverse patient data.</li>
+                                </ul>
+                                <button class="select-model-btn" data-model="sam2">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer">
+        © 2024 Didier Merk. Site design based on older Wowchemy template. Contact for info.
+    </div>
+
+    <script src="js/segthor-pipeline.js" defer></script>
+    <script src="js/ct-scan-slider.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+    <script src="js/segthor-additional-preprocessing.js"></script>
+    <script src="js/show-preprocess.js"></script>
+    <script src="js/segthor-training-progress.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
