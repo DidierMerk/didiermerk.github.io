@@ -23,12 +23,47 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // Elements data (Dutch name + symbol)
     const elementsData = [
-      { name: "waterstof", symbol: "H" },
-      { name: "helium", symbol: "He" },
-      { name: "koolstof", symbol: "C" },
-      { name: "zuurstof", symbol: "O" },
+      // -- Metalen --
+      { name: "aluminium", symbol: "Al" },
+      { name: "barium", symbol: "Ba" },
+      { name: "calcium", symbol: "Ca" },
+      { name: "chroom", symbol: "Cr" },
+      { name: "goud", symbol: "Au" },
+      { name: "kalium", symbol: "K" },
+      { name: "kobalt", symbol: "Co" },
+      { name: "koper", symbol: "Cu" },
+      { name: "kwik", symbol: "Hg" },
+      { name: "lood", symbol: "Pb" },
+      { name: "magnesium", symbol: "Mg" },
+      { name: "mangaan", symbol: "Mn" },
       { name: "natrium", symbol: "Na" },
-    ];
+      { name: "nikkel", symbol: "Ni" },
+      { name: "platina", symbol: "Pt" },
+      { name: "radium", symbol: "Ra" },
+      { name: "tin", symbol: "Sn" },
+      { name: "titaan", symbol: "Ti" },
+      { name: "uraan", symbol: "U" },
+      { name: "wolfraam", symbol: "W" },
+      { name: "ijzer", symbol: "Fe" },
+      { name: "zilver", symbol: "Ag" },
+      { name: "zink", symbol: "Zn" },
+    
+      // -- Niet-metalen --
+      { name: "argon", symbol: "Ar" },
+      { name: "broom", symbol: "Br" },
+      { name: "chloor", symbol: "Cl" },
+      { name: "fluor", symbol: "F" },
+      { name: "fosfor", symbol: "P" },
+      { name: "helium", symbol: "He" },
+      { name: "jood", symbol: "I" },
+      { name: "koolstof", symbol: "C" },
+      { name: "neon", symbol: "Ne" },
+      { name: "silicium", symbol: "Si" },
+      { name: "stikstof", symbol: "N" },
+      { name: "waterstof", symbol: "H" },
+      { name: "zuurstof", symbol: "O" },
+      { name: "zwavel", symbol: "S" }
+    ];    
   
     // Build questionQueue
     let questionQueue = [];

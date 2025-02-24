@@ -25,14 +25,48 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // Data: each with name + type: "metaal" or "niet"
     const metalsData = [
-      { name: "ijzer", type: "metaal" },
+      // -- Metalen --
+      { name: "aluminium", type: "metaal" },
+      { name: "barium", type: "metaal" },
+      { name: "calcium", type: "metaal" },
+      { name: "chroom", type: "metaal" },
       { name: "goud", type: "metaal" },
+      { name: "kalium", type: "metaal" },
+      { name: "kobalt", type: "metaal" },
+      { name: "koper", type: "metaal" },
+      { name: "kwik", type: "metaal" },
+      { name: "lood", type: "metaal" },
+      { name: "magnesium", type: "metaal" },
+      { name: "mangaan", type: "metaal" },
+      { name: "natrium", type: "metaal" },
+      { name: "nikkel", type: "metaal" },
+      { name: "platina", type: "metaal" },
+      { name: "radium", type: "metaal" },
+      { name: "tin", type: "metaal" },
+      { name: "titaan", type: "metaal" },
+      { name: "uraan", type: "metaal" },
+      { name: "wolfraam", type: "metaal" },
+      { name: "ijzer", type: "metaal" },
+      { name: "zilver", type: "metaal" },
       { name: "zink", type: "metaal" },
+    
+      // -- Niet-metalen --
+      { name: "argon", type: "niet" },
+      { name: "broom", type: "niet" },
+      { name: "chloor", type: "niet" },
+      { name: "fluor", type: "niet" },
+      { name: "fosfor", type: "niet" },
       { name: "helium", type: "niet" },
-      { name: "zuurstof", type: "niet" },
+      { name: "jood", type: "niet" },
       { name: "koolstof", type: "niet" },
-      // ... add more if desired
+      { name: "neon", type: "niet" },
+      { name: "silicium", type: "niet" },
+      { name: "stikstof", type: "niet" },
+      { name: "waterstof", type: "niet" },
+      { name: "zuurstof", type: "niet" },
+      { name: "zwavel", type: "niet" }
     ];
+    
   
     // Build question queue
     const questionQueue = metalsData.map(el => ({
