@@ -1,0 +1,325 @@
+/* css/leer-elementen.css */
+
+/* ===== RESET ===== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: #000;
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ===== BACKGROUND & STAR ANIMATION ===== */
+.background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -2;
+}
+.stars {
+  width: 100%;
+  height: 100%;
+  background: url('https://raw.githubusercontent.com/lstoregraphics/lstore-graphics.github.io/master/bg_stars.png') repeat;
+  animation: moveStars 120s linear infinite;
+}
+.twinkling {
+  width: 100%;
+  height: 100%;
+  background: url('https://raw.githubusercontent.com/lstoregraphics/lstore-graphics.github.io/master/bg_twinkle.png') repeat;
+  animation: moveTwinkling 200s linear infinite;
+  position: relative;
+  opacity: 0.5;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 36, 61, 0.8), rgba(0, 61, 36, 0.8));
+  z-index: -1;
+}
+
+@keyframes moveStars {
+  from { background-position: 0 0; }
+  to   { background-position: 10000px 10000px; }
+}
+@keyframes moveTwinkling {
+  from { background-position: 0 0; }
+  to   { background-position: -10000px 10000px; }
+}
+
+/* ===== MAIN GAME CONTAINER ===== */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* ===== COUNTDOWN ===== */
+.countdown-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.countdown-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.4rem;
+  color: #96ffea;
+  margin-bottom: 0.3rem;
+}
+#countdownNumber {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 4rem;
+  color: #00ffcc;
+  animation: zoomInOut 1s infinite;
+}
+@keyframes zoomInOut {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* ===== QUIZ CONTAINER ===== */
+.quiz-container {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.hidden {
+  display: none;
+}
+.timer {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: #fffa90;
+}
+.question-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #00ffcc;
+}
+
+/* Group input + feedback in one area with a fixed minimum height 
+   so that feedback won't shift the layout. */
+.answer-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 150px;
+}
+
+/* Input + button row */
+.input-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+/* Futuristic quiz input */
+.quiz-input {
+  width: 240px;
+  height: 50px;
+  font-size: 1.2rem;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid #00ffcc;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  outline: none;
+  transition: background 0.3s, border-color 0.3s;
+}
+.quiz-input::placeholder {
+  color: #ccc;
+}
+.quiz-input:focus {
+  background: rgba(255,255,255,0.2);
+  border-color: #00ffc8;
+}
+.quiz-submit {
+  padding: 0 1.2rem;
+  height: 50px;
+  font-size: 1.1rem;
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Feedback (correct/wrong) with fixed max-width for alignment. */
+.feedback {
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  padding: 0.8rem;
+  border-radius: 6px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.feedback.wrong {
+  background-color: rgba(255, 0, 0, 0.7);
+  color: #fff;
+  animation: shake 0.5s;
+}
+.feedback.correct {
+  background-color: rgba(0, 255, 140, 0.8);
+  color: #000;
+  animation: correctFlash 0.5s;
+}
+
+/* Animations for feedback */
+@keyframes shake {
+  0%   { transform: translateX(0); }
+  25%  { transform: translateX(-5px); }
+  50%  { transform: translateX(5px); }
+  75%  { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+@keyframes correctFlash {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* ===== RESULTS CONTAINER & CARD ===== */
+.results-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.results-card {
+  background: rgba(255,255,255,0.09);
+  border: 2px solid #00ffcc;
+  border-radius: 10px;
+  padding: 1.5rem 1.2rem;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0,255,204,0.3);
+}
+.results-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.2rem;
+  color: #00ffcc;
+  margin-bottom: 1rem;
+}
+.results-info {
+  margin-bottom: 1.2rem;
+}
+.result-stat {
+  font-size: 1.2rem;
+  margin: 0.3rem 0;
+  color: #fff;
+}
+.results-button {
+  margin-top: 1.5rem;
+  background: #00ffcc;
+  color: #000;
+  font-size: 1.1rem;
+  font-family: 'Orbitron', sans-serif;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #008f7a;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.results-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #008f7a;
+}
+
+/* ===== CHART WRAPPER + VERTICAL HISTOGRAM ===== */
+.dist-chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.chart-title {
+  color: #00ffcc;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem; /* space below the title */
+}
+
+.dist-chart-container {
+  margin-top: 0.5rem;
+  border-top: none; /* we no longer need a top border if you prefer it gone */
+  display: flex;
+  align-items: flex-end;  /* align bars to bottom */
+  gap: 1rem;
+  min-height: 120px;
+  justify-content: center;
+}
+.dist-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+.dist-bar {
+  width: 32px;
+  background: #00ffcc;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  /* make text in the bar more legible */
+  color: #000;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.7);
+  padding-bottom: 2px; /* small padding so text isn't on the edge */
+  transition: height 0.4s ease;
+}
+.dist-label {
+  font-size: 0.85rem;
+  color: #00ffc8;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .countdown-text {
+    font-size: 1.2rem;
+  }
+  #countdownNumber {
+    font-size: 3rem;
+  }
+  .question-text {
+    font-size: 1.6rem;
+  }
+  .quiz-input {
+    width: 60%;
+    font-size: 1rem;
+  }
+  .quiz-submit {
+    font-size: 0.9rem;
+  }
+  .timer {
+    font-size: 1.3rem;
+  }
+  .dist-bar {
+    width: 24px;
+    font-size: 0.75rem;
+  }
+  .dist-label {
+    font-size: 0.7rem;
+  }
+}

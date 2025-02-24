@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Important for correct mobile scaling -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Het Periodiek Systeem</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Futuristic Title Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <!-- Body Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  
+  <div class="background-container">
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    <div class="overlay"></div>
+  </div>
+
+  <!-- =========== NOTIFICATION / ERROR MESSAGE =========== -->
+  <div id="notification" class="notification hidden"></div>
+
+  <!-- =========== MAIN CONTAINER =========== -->
+  <main class="landing-container">
+    <!-- Title & Subtitle -->
+    <h1 id="pageTitle" class="main-title">Het Periodiek Systeem</h1>
+    <h2 id="pageSubtitle" class="subtitle">Leer over elementen en metalen</h2>
+
+    <!-- =========== PANELS =========== -->
+    <div class="panel-container">
+      
+      <!-- Panel 1: Name Input -->
+      <div id="panel-name-input" class="panel active">
+        <div class="input-group">
+          <input 
+            type="text"
+            id="playerName"
+            class="futuristic-input"
+            placeholder="Voer naam in"
+            maxlength="12"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+          />
+          <button id="submitNameBtn" class="futuristic-button arrow-button">
+            <span class="arrow-icon">&rarr;</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Panel 2: Game Selection -->
+      <div id="panel-game-options" class="panel hidden">
+        <!-- Container to center content -->
+        <div class="game-selection-container">
+          <!-- Welcome text -->
+          <h2 id="welcomeText" class="welcome-text"></h2>
+
+          <!-- Buttons & Back in a column (left-aligned) -->
+          <div class="selection-column">
+            <div class="options-container">
+              <div class="option-card" id="optionElementen">
+                <h3>Leer de Elementen</h3>
+              </div>
+              <div class="option-card" id="optionMetalen">
+                <h3>Leer de Metalen</h3>
+              </div>
+            </div>
+
+            <!-- < Back button below the options, left-aligned -->
+            <button id="backToNameBtn" class="back-btn">&lt; Back</button>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- end panel-container -->
+  </main>
+
+  <!-- Main JS -->
+  <script src="js/main.js"></script>
+</body>
+</html>

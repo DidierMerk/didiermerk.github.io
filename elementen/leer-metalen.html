@@ -1,0 +1,74 @@
+<!-- leer-metalen.html -->
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leer de Metalen</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Dedicated CSS for "Leer de Metalen" -->
+  <link rel="stylesheet" href="css/leer-metalen.css">
+</head>
+<body>
+  <!-- Starry Background -->
+  <div class="background-container">
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    <div class="overlay"></div>
+  </div>
+
+  <main class="game-container">
+    <!-- Countdown Screen -->
+    <div class="countdown-container" id="countdownContainer">
+      <h2 class="countdown-text">Game Starting in...</h2>
+      <h1 id="countdownNumber">3</h1>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div class="quiz-container hidden" id="quizContainer">
+      <div id="timer" class="timer">00:00</div>
+      <div id="questionText" class="question-text">Voorbeeld Element</div>
+
+      <!-- We wrap the buttons + feedback in a single section 
+           with a min-height to avoid layout shifts. -->
+      <div class="choices-section">
+        <div class="choices-container">
+          <button id="btnMetaal" class="futuristic-button choice-button">Metaal</button>
+          <button id="btnNietMetaal" class="futuristic-button choice-button">Niet-metaal</button>
+        </div>
+
+        <!-- Feedback message -->
+        <div id="feedback" class="feedback hidden"></div>
+      </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div class="results-container hidden" id="resultsContainer">
+      <div class="results-card">
+        <h1 class="results-title" id="finalHeading">Goed gedaan!</h1>
+        <div class="results-info">
+          <p id="finalTime" class="result-stat">Tijd: ...</p>
+        </div>
+
+        <!-- Bar Chart -->
+        <div class="dist-chart-wrapper">
+          <h3 class="chart-title" id="chartTitle"></h3>
+          <div class="dist-chart-container" id="mistakesDistribution"></div>
+        </div>
+
+        <button id="backToMenuBtn" class="futuristic-button results-button">
+          Terug naar Menu
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- JS for "Leer de Metalen" -->
+  <script src="js/leer-metalen.js"></script>
+</body>
+</html>
