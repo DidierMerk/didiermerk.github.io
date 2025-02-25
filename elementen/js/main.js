@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Game option cards
   const optionElementen = document.getElementById("optionElementen");
   const optionMetalen = document.getElementById("optionMetalen");
+  // NEW: Third game option
+  const optionAtomen = document.getElementById("optionAtomen");
 
   // Typed text container
   const welcomeText = document.getElementById("welcomeText");
@@ -63,9 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Store the user name for both games
+    // Store the user name for all games
     localStorage.setItem("playerName", nameValue);
 
+    // Animate fade-out for main title/subtitle
     pageTitle.classList.add("fade-out-up");
     pageSubtitle.classList.add("fade-out-up");
 
@@ -79,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const finalText = `Welcome, ${nameValue}`;
 
+      // Dynamically measure & scale the welcome text
       const containerMaxWidth = Math.floor(selectionContainer.offsetWidth * 0.91);
       const measureSpan = document.createElement("span");
       measureSpan.style.visibility = "hidden";
@@ -103,6 +107,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       optionElementen.style.width = measuredWidth + "px";
       optionMetalen.style.width = measuredWidth + "px";
+      // Also fix the third game card's width
+      optionAtomen.style.width = measuredWidth + "px";
+
       welcomeText.style.fontSize = baseFontSize + "rem";
 
       document.body.removeChild(measureSpan);
@@ -136,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
     welcomeText.style.fontSize = "1.8rem";
     optionElementen.style.width = "auto";
     optionMetalen.style.width = "auto";
+    optionAtomen.style.width = "auto";
 
     setTimeout(() => {
       panelNameInput.classList.remove("hidden");
@@ -180,8 +188,12 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "leer-elementen.html";
   });
 
-  // UPDATED: link to the new "Leer de Metalen" page
   optionMetalen.addEventListener("click", () => {
     window.location.href = "leer-metalen.html";
+  });
+
+  // NEW: link to the "Leer de Atomen" page
+  optionAtomen.addEventListener("click", () => {
+    window.location.href = "leer-atomen.html";
   });
 });
