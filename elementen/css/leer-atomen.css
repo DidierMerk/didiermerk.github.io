@@ -113,7 +113,7 @@ body {
 
 /* IMAGE for question (if any) */
 .question-image {
-  max-width: 200px;  /* NEW: Limit the maximum width to 200px */
+  max-width: 300px;  /* NEW: Limit the maximum width to 200px */
   width: 80%;
   height: auto;
   margin-bottom: 1rem;
