@@ -63,6 +63,9 @@ body {
   padding: 2rem;
   text-align: center;
 }
+.hidden {
+  display: none !important;
+}
 
 /* ===== COUNTDOWN ===== */
 .countdown-container {
@@ -95,9 +98,6 @@ body {
   max-width: 500px;
   margin: 0 auto;
 }
-.hidden {
-  display: none !important;  /* We can forcibly use !important for debugging. */
-}
 .timer {
   font-family: 'Orbitron', sans-serif;
   font-size: 1.6rem;
@@ -118,17 +118,46 @@ body {
   align-items: center;
   min-height: 150px;
 }
-.choices-container {
+
+/* TWO-BUTTON CONTAINER (metaal / niet-metaal):
+   We'll keep them side-by-side, with enough padding.
+*/
+#twoButtonContainer.choices-container {
   display: flex;
   justify-content: center;
   gap: 1rem;
   margin-bottom: 1rem;
   flex-wrap: nowrap;
 }
-.choice-button {
+
+/* We'll add good padding and a standard min-width for these two buttons */
+#twoButtonContainer .choice-button {
   font-size: 1.2rem;
-  min-width: 180px;
+  padding: 0 1.4rem;  /* ensures nice horizontal space */
+  min-width: 130px;
   height: 50px;
+}
+
+/*
+   FOUR-BUTTON CONTAINER (edel / half edel / onedel / zeer onedel):
+   We want a 2×2 grid approach, so let's allow wrapping.
+*/
+#fourButtonContainer.choices-container {
+  display: flex;
+  flex-wrap: wrap;  /* allow wrap to multiple lines */
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+/* Each button is half the container's width in row, minus gap. */
+#fourButtonContainer .choice-button {
+  flex: 1 1 calc(50% - 2rem);
+  min-width: 130px;
+  height: 50px;
+}
+
+/* Shared style for all .choice-button */
+.choice-button {
   background: #00ffcc;
   color: #000;
   border: none;
@@ -281,11 +310,21 @@ body {
   .question-text {
     font-size: 1.6rem;
   }
-  .choice-button {
-    font-size: 1rem;
-    min-width: 140px;
-    height: 45px;
+  .timer {
+    font-size: 1.3rem;
   }
+
+  /* Tweak min-width or font-size if needed on small screens */
+  #twoButtonContainer .choice-button {
+    font-size: 1.1rem;
+    min-width: 120px;
+  }
+
+  #fourButtonContainer .choice-button {
+    font-size: 1rem;
+    min-width: 100px; /* let them shrink more if needed */
+  }
+
   .results-button {
     font-size: 1rem;
   }
