@@ -1,4 +1,3 @@
-<!-- leer-metalen.html -->
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -11,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- Dedicated CSS for "Leer de Metalen" -->
+  <!-- Make sure this CSS is the one actually being used (clear cache if needed) -->
   <link rel="stylesheet" href="css/leer-metalen.css">
 </head>
 <body>
@@ -32,14 +31,22 @@
     <!-- Quiz Screen -->
     <div class="quiz-container hidden" id="quizContainer">
       <div id="timer" class="timer">00:00</div>
-      <div id="questionText" class="question-text">Voorbeeld Element</div>
+      <div id="questionText" class="question-text">Voorbeeld Vraag</div>
 
-      <!-- We wrap the buttons + feedback in a single section 
-           with a min-height to avoid layout shifts. -->
+      <!-- Choices + Feedback -->
       <div class="choices-section">
-        <div class="choices-container">
+        <!-- Two-button container (Metaal / Niet-metaal) -->
+        <div id="twoButtonContainer" class="choices-container hidden">
           <button id="btnMetaal" class="futuristic-button choice-button">Metaal</button>
           <button id="btnNietMetaal" class="futuristic-button choice-button">Niet-metaal</button>
+        </div>
+
+        <!-- Four-button container (Edel / Half edel / Onedel / Zeer Onedel) -->
+        <div id="fourButtonContainer" class="choices-container hidden">
+          <button id="btnEdel" class="futuristic-button choice-button">Edel</button>
+          <button id="btnHalfEdel" class="futuristic-button choice-button">Half edel</button>
+          <button id="btnOnedel" class="futuristic-button choice-button">Onedel</button>
+          <button id="btnZeerOnedel" class="futuristic-button choice-button">Zeer Onedel</button>
         </div>
 
         <!-- Feedback message -->
@@ -68,7 +75,7 @@
     </div>
   </main>
 
-  <!-- JS for "Leer de Metalen" -->
+  <!-- Make sure this JS is the one actually being used (clear cache if needed) -->
   <script src="js/leer-metalen.js"></script>
 </body>
 </html>
