@@ -1,0 +1,77 @@
+/* ==== ELEMENTS GAME THEME ==== */
+
+:root {
+    /* Elements game colors - teal/blue theme */
+    --game-primary: #00e2cd;
+    --game-secondary: #3498db;
+    --game-gradient-start: #00e2cd;
+    --game-gradient-end: #3498db;
+    --game-shadow: rgba(0, 226, 205, 0.5);
+  }
+  
+  /* Custom background overlay for Elements game */
+  .background-container .overlay {
+    background: radial-gradient(circle at center, rgba(10, 17, 32, 0.7) 0%, rgba(10, 17, 32, 0.9) 100%),
+                linear-gradient(135deg, rgba(0, 226, 205, 0.05), rgba(52, 152, 219, 0.05));
+  }
+  
+  /* Element symbol visualization */
+  .element-symbol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 1.2rem;
+    border: 2px solid var(--game-primary);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--game-primary);
+    box-shadow: 0 0 15px rgba(0, 226, 205, 0.2);
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .element-symbol::before {
+    content: attr(data-number);
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+  
+  .element-symbol.highlight {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 226, 205, 0.4);
+    border-color: #3498db;
+  }
+  
+  /* Custom input focus state for Elements theme */
+  .answer-input:focus {
+    background: rgba(0, 226, 205, 0.1);
+    box-shadow: 0 0 0 2px rgba(0, 226, 205, 0.3);
+  }
+  
+  /* Elements-specific progress bar */
+  .progress-bar {
+    background: linear-gradient(90deg, #00e2cd, #3498db);
+  }
+  
+  /* Chart bars for Elements */
+  .chart-bar {
+    background: linear-gradient(to top, #00e2cd, #3498db);
+  }
+  
+  /* Custom animation for correct answers in Elements game */
+  @keyframes elementCorrect {
+    0% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 226, 205, 0.2); }
+    50% { transform: scale(1.1); box-shadow: 0 0 25px rgba(0, 226, 205, 0.6); }
+    100% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 226, 205, 0.2); }
+  }
+  
+  .element-correct {
+    animation: elementCorrect 0.6s ease;
+  }

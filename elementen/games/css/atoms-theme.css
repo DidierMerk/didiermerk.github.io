@@ -1,0 +1,245 @@
+/* ==== ATOMS GAME THEME ==== */
+
+:root {
+    /* Atoms game colors - purple/violet theme */
+    --game-primary: #8a2be2;
+    --game-secondary: #a55eea;
+    --game-gradient-start: #8a2be2;
+    --game-gradient-end: #a55eea;
+    --game-shadow: rgba(138, 43, 226, 0.5);
+  }
+  
+  /* Custom background overlay for Atoms game */
+  .background-container .overlay {
+    background: radial-gradient(circle at center, rgba(10, 17, 32, 0.7) 0%, rgba(10, 17, 32, 0.9) 100%),
+                linear-gradient(135deg, rgba(138, 43, 226, 0.05), rgba(165, 94, 234, 0.05));
+  }
+  
+  /* Atom visualization */
+  .atom-visualization {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .atom-nucleus {
+    width: 35px;
+    height: 35px;
+    background: radial-gradient(circle at 30% 30%, var(--game-primary), var(--game-secondary));
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+    z-index: 2;
+    position: relative;
+  }
+  
+  .electron-orbit {
+    position: absolute;
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 50%;
+    animation: rotate 10s linear infinite;
+  }
+  
+  .electron-orbit:nth-child(1) {
+    width: 70px;
+    height: 70px;
+    animation-duration: 5s;
+  }
+  
+  .electron-orbit:nth-child(2) {
+    width: 95px;
+    height: 95px;
+    transform: rotate(60deg);
+    animation-duration: 8s;
+  }
+  
+  .electron-orbit:nth-child(3) {
+    width: 120px;
+    height: 120px;
+    transform: rotate(30deg);
+    animation-duration: 12s;
+  }
+  
+  .electron {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--game-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.7);
+  }
+
+  .question-image {
+    max-width: 55% !important; /* Override inline styles */
+    max-height: 140px !important; /* Override inline styles */
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Molecule visualization for formula questions */
+  .molecule-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  
+  .molecule-image {
+    max-width: 180px;
+    max-height: 150px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 2px solid rgba(138, 43, 226, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background: rgba(138, 43, 226, 0.05);
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .molecule-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Custom input focus for Atoms game */
+  .answer-input:focus {
+    background: rgba(138, 43, 226, 0.1);
+    box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.3);
+  }
+  
+  /* Atoms-specific progress bar */
+  .progress-bar {
+    background: linear-gradient(90deg, #8a2be2, #a55eea);
+  }
+  
+  /* Chart bars for Atoms */
+  .chart-bar {
+    background: linear-gradient(to top, #8a2be2, #a55eea);
+  }
+  
+  /* Animated pulsing for atom nuclei */
+  @keyframes nucleusPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(138, 43, 226, 0.5); }
+    50% { transform: scale(1.1); box-shadow: 0 0 30px rgba(138, 43, 226, 0.7); }
+  }
+  
+  .pulse-nucleus {
+    animation: nucleusPulse 2s infinite;
+  }
+  
+  /* Atom question styles */
+  .atom-question {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .atom-formula {
+    font-family: monospace;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--game-primary);
+    background: rgba(138, 43, 226, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    letter-spacing: 1px;
+  }
+  
+  .atom-formula sub, 
+  .atom-formula sup {
+    font-size: 0.7em;
+  }
+  
+  /* Group visualization (for element groups) */
+  .element-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    max-width: 280px;
+    margin: 0 auto 1.5rem;
+    padding: 0.75rem;
+    background: rgba(138, 43, 226, 0.05);
+    border: 1px solid rgba(138, 43, 226, 0.2);
+    border-radius: 8px;
+  }
+  
+  .group-element {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: rgba(138, 43, 226, 0.15);
+    color: var(--text-primary);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+  
+  .group-element:hover {
+    transform: scale(1.1);
+    background: rgba(138, 43, 226, 0.3);
+  }
+
+  @media (max-width: 768px) {
+    .question-image {
+      max-width: 60% !important;
+      max-height: 120px !important;
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .atom-visualization {
+      width: 100px;
+      height: 100px;
+    }
+    
+    .atom-nucleus {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .electron-orbit:nth-child(1) {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .electron-orbit:nth-child(2) {
+      width: 80px;
+      height: 80px;
+    }
+    
+    .electron-orbit:nth-child(3) {
+      width: 100px;
+      height: 100px;
+    }
+    
+    .electron {
+      width: 8px;
+      height: 8px;
+    }
+    
+    .molecule-image {
+      max-width: 150px;
+      max-height: 130px;
+    }
+
+    .question-image {
+        max-width: 70% !important;
+        max-height: 100px !important;
+    }
+    
+    .atom-formula {
+      font-size: 1.5rem;
+    }
+  }

@@ -1,0 +1,185 @@
+/* ==== METALS GAME THEME ==== */
+
+:root {
+    /* Metals game colors - gold/orange theme */
+    --game-primary: #ffcc00;
+    --game-secondary: #ff9f43;
+    --game-gradient-start: #ffcc00;
+    --game-gradient-end: #ff9f43;
+    --game-shadow: rgba(255, 204, 0, 0.5);
+  }
+  
+  /* Custom background overlay for Metals game */
+  .background-container .overlay {
+    background: radial-gradient(circle at center, rgba(10, 17, 32, 0.7) 0%, rgba(10, 17, 32, 0.9) 100%),
+                linear-gradient(135deg, rgba(255, 204, 0, 0.05), rgba(255, 159, 67, 0.05));
+  }
+  
+  /* Metals category styles for choice buttons */
+  .choice-button {
+    border-color: var(--game-primary);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .choice-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 204, 0, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .choice-button:hover::before {
+    left: 100%;
+  }
+  
+  /* Metal category indicators */
+  .metal-category {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    margin: 0 0.25rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  
+  .category-edel {
+    background: rgba(255, 204, 0, 0.2);
+    color: #ffcc00;
+    border: 1px solid rgba(255, 204, 0, 0.4);
+  }
+  
+  .category-halfedel {
+    background: rgba(255, 159, 67, 0.2);
+    color: #ff9f43;
+    border: 1px solid rgba(255, 159, 67, 0.4);
+  }
+  
+  .category-onedel {
+    background: rgba(225, 112, 85, 0.2);
+    color: #e17055;
+    border: 1px solid rgba(225, 112, 85, 0.4);
+  }
+  
+  .category-zeeronedel {
+    background: rgba(214, 48, 49, 0.2);
+    color: #d63031;
+    border: 1px solid rgba(214, 48, 49, 0.4);
+  }
+  
+  /* Metal element card */
+  .metal-element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0.8rem;
+    margin: 0 auto 1.2rem;
+    width: 90px;
+    height: 90px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--game-primary);
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
+  }
+  
+  .metal-symbol {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--game-primary);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  
+  .metal-number {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+  
+  .metal-name {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+  }
+  
+  /* Custom animation for metals game */
+  @keyframes metalShine {
+    0% { box-shadow: 0 0 15px rgba(255, 204, 0, 0.2); }
+    50% { box-shadow: 0 0 25px rgba(255, 204, 0, 0.6); }
+    100% { box-shadow: 0 0 15px rgba(255, 204, 0, 0.2); }
+  }
+  
+  .metal-shine {
+    animation: metalShine 1.5s infinite;
+  }
+  
+  /* Metals-specific progress bar */
+  .progress-bar {
+    background: linear-gradient(90deg, #ffcc00, #ff9f43);
+  }
+  
+  /* Chart bars for Metals */
+  .chart-bar {
+    background: linear-gradient(to top, #ffcc00, #ff9f43);
+  }
+  
+  /* Two-button container (metaal/niet-metaal) */
+  .two-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 1.2rem;
+  }
+  
+  .two-buttons .choice-button {
+    flex: 1;
+    min-width: 140px;
+    height: 55px;
+    font-size: 1.1rem;
+  }
+  
+  /* Four-button container (edel/half-edel/etc) */
+  .four-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 1.2rem;
+  }
+  
+  .four-buttons .choice-button {
+    height: 50px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .metal-element {
+      width: 80px;
+      height: 80px;
+    }
+    
+    .metal-symbol {
+      font-size: 1.8rem;
+    }
+    
+    .two-buttons {
+      gap: 1rem;
+    }
+    
+    .two-buttons .choice-button,
+    .four-buttons .choice-button {
+      font-size: 0.9rem;
+      height: 40px;
+    }
+  }

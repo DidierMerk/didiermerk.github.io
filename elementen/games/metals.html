@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChemieHub - Leer de Metalen</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  
+  <!-- Preload font for better performance -->
+  <link rel="preload" href="../assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/game-core.css">
+  <link rel="stylesheet" href="css/metals-theme.css">
+</head>
+<body>
+  <!-- Background Container with Particles -->
+  <div class="background-container">
+    <div id="particles-js" class="particles"></div>
+    <div class="overlay"></div>
+  </div>
+  
+  <!-- Main Game Container -->
+  <div class="game-container">
+    <!-- Header -->
+    <header class="game-header">
+      <div class="header-left">
+        <a href="../index.html" class="back-button">
+          <span class="back-icon">←</span>
+          <span>Terug naar Menu</span>
+        </a>
+      </div>
+      <div class="game-title">Leer de Metalen</div>
+      <div class="header-right">
+        <div id="soundToggle" class="sound-toggle">
+          <span class="sound-icon"></span>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Main Content Area -->
+    <main class="game-content">
+      <!-- Countdown Screen -->
+      <section id="countdownScreen" class="screen countdown-screen active">
+        <h2 class="countdown-title">Herken de Metaalsoorten</h2>
+        <p class="countdown-subtitle">Classificeer de elementen correct!</p>
+        <div id="countdownNumber" class="countdown-number">3</div>
+      </section>
+      
+      <!-- Quiz Screen -->
+      <section id="quizScreen" class="screen quiz-screen">
+        <div class="quiz-header">
+          <div id="timer" class="timer">00:00</div>
+        </div>
+        
+        <div class="progress">
+          <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+        </div>
+        
+        <div id="metalElement" class="metal-element metal-shine">
+          <div id="metalNumber" class="metal-number">26</div>
+          <div id="metalSymbol" class="metal-symbol">Fe</div>
+          <div id="metalName" class="metal-name">IJzer</div>
+        </div>
+        
+        <h2 id="question" class="question">Is dit een metaal of niet-metaal?</h2>
+        
+        <div class="answer-section">
+          <!-- Two-button container (Metaal / Niet-metaal) -->
+          <div id="twoButtonContainer" class="two-buttons">
+            <button id="btnMetaal" class="choice-button">Metaal</button>
+            <button id="btnNietMetaal" class="choice-button">Niet-metaal</button>
+          </div>
+          
+          <!-- Four-button container (Edel / Half edel / Onedel / Zeer Onedel) -->
+          <div id="fourButtonContainer" class="four-buttons hidden">
+            <button id="btnEdel" class="choice-button">Edel</button>
+            <button id="btnHalfEdel" class="choice-button">Half edel</button>
+            <button id="btnOnedel" class="choice-button">Onedel</button>
+            <button id="btnZeerOnedel" class="choice-button">Zeer Onedel</button>
+          </div>
+          
+          <!-- Feedback message -->
+          <div id="feedback" class="feedback">De feedback komt hier</div>
+        </div>
+      </section>
+      
+      <!-- Results Screen -->
+      <section id="resultsScreen" class="screen results-screen">
+        <h1 class="results-title">Goed gedaan!</h1>
+        <p id="playerResult" class="results-subtitle">Je hebt het voltooid in 00:00</p>
+        
+        <div class="results-stats">
+          <div class="stat-card">
+            <div id="totalQuestionsValue" class="stat-value">0</div>
+            <div class="stat-label">Vragen</div>
+          </div>
+          <div class="stat-card">
+            <div id="mistakesValue" class="stat-value">0</div>
+            <div class="stat-label">Fouten</div>
+          </div>
+        </div>
+        
+        <button id="backToMenuBtn" class="action-button">Terug naar Menu</button>
+      </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="game-footer">
+      <p>Gemaakt voor Metehan | © 2025 DidierMerk</p>
+    </footer>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="../assets/js/particles.js"></script>
+  <script src="js/metals.js"></script>
+</body>
+</html>

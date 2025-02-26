@@ -1,93 +1,131 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <!-- Important for correct mobile scaling -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Het Periodiek Systeem</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChemieHub - Het Periodiek Systeem</title>
   
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Futuristic Title Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
-  <!-- Body Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="css/style.css" />
+  <!-- Favicon -->
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+  
+  <!-- Preload font for better performance -->
+  <link rel="preload" href="assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+  
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+  <!-- Particles Background -->
+  <div id="particles-js"></div>
   
-  <div class="background-container">
-    <div class="stars"></div>
-    <div class="twinkling"></div>
-    <div class="overlay"></div>
-  </div>
-
-  <!-- =========== NOTIFICATION / ERROR MESSAGE =========== -->
-  <div id="notification" class="notification hidden"></div>
-
-  <!-- =========== MAIN CONTAINER =========== -->
-  <main class="landing-container">
-    <!-- Title & Subtitle -->
-    <h1 id="pageTitle" class="main-title">Het Periodiek Systeem</h1>
-    <h2 id="pageSubtitle" class="subtitle">Leer over elementen en metalen</h2>
-
-    <!-- =========== PANELS =========== -->
-    <div class="panel-container">
-      
-      <!-- Panel 1: Name Input -->
-      <div id="panel-name-input" class="panel active">
-        <div class="input-group">
-          <input 
-            type="text"
-            id="playerName"
-            class="futuristic-input"
-            placeholder="Voer naam in"
-            maxlength="12"
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
-          />
-          <button id="submitNameBtn" class="futuristic-button arrow-button">
-            <span class="arrow-icon">&rarr;</span>
-          </button>
-        </div>
+  <!-- Main Content Container -->
+  <div class="app-container">
+    <!-- Logo -->
+    <header class="logo-container">
+      <div class="logo">
+        <span>Chemie</span><span class="highlight">Hub</span>
       </div>
-
-      <!-- Panel 2: Game Selection -->
-      <div id="panel-game-options" class="panel hidden">
-        <!-- Container to center content -->
-        <div class="game-selection-container">
-          <!-- Welcome text -->
-          <h2 id="welcomeText" class="welcome-text"></h2>
-
-          <!-- Buttons & Back in a column (left-aligned) -->
-          <div class="selection-column">
-            <div class="options-container">
-              <div class="option-card" id="optionElementen">
-                <h3>Leer de Elementen</h3>
+    </header>
+    
+    <!-- Main Content Screens -->
+    <main class="screen-container">
+      <!-- Landing Screen -->
+      <section id="landing-screen" class="screen active">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            <span class="gradient-text">Het Periodiek Systeem</span>
+          </h1>
+          <p class="hero-subtitle">Ontdek en leer de elementen, metalen, en atomen</p>
+          
+          <!-- Name Entry Form -->
+          <div class="name-entry">
+            <form id="nameForm" class="name-form">
+              <div class="input-wrapper">
+                <input 
+                  type="text" 
+                  id="playerName" 
+                  autocomplete="off" 
+                  autocorrect="off" 
+                  autocapitalize="off"
+                  spellcheck="false"
+                  maxlength="12" 
+                  required
+                >
+                <span class="placeholder">Jouw naam</span>
+                <span class="input-border"></span>
               </div>
-              <div class="option-card" id="optionMetalen">
-                <h3>Leer de Metalen</h3>
+              <div id="nameErrorContainer" class="error-container">
+                <div id="nameErrorMessage" class="error-message"></div>
               </div>
-              <!-- NEW: Third option card -->
-              <div class="option-card" id="optionAtomen">
-                <h3>Leer de Atomen</h3>
-              </div>
-            </div>
-
-            <!-- < Back button below the options, left-aligned -->
-            <button id="backToNameBtn" class="back-btn">&lt; Back</button>
+              
+              <button type="submit" class="action-button">
+                <span class="button-text">Start je avontuur</span>
+                <span class="button-icon">→</span>
+              </button>
+            </form>
           </div>
         </div>
+      </section>
+      
+      <!-- Game Selection Screen -->
+      <section id="selection-screen" class="screen">
+        <div class="screen-content">
+          <div class="welcome-header">
+            <h2 id="welcomeMessage" class="welcome-text">Welkom, Speler!</h2>
+            <p class="instruction-text">Kies een game om te beginnen</p>
+          </div>
+          
+          <div class="game-grid">
+            <!-- Elements Game -->
+            <a href="games/elements.html" class="game-card">
+              <div class="card-content">
+                <div class="element-symbol" id="elementSymbol">El</div>
+                <h3>Leer de Elementen</h3>
+                <p>Test je kennis van de elementen in het periodiek systeem</p>
+              </div>
+            </a>
+            
+            <!-- Metals Game -->
+            <a href="games/metals.html" class="game-card">
+              <div class="card-content">
+                <div class="element-symbol metal" id="metalSymbol">Me</div>
+                <h3>Leer de Metalen</h3>
+                <p>Ontdek welke elementen metalen zijn en hun eigenschappen</p>
+              </div>
+            </a>
+            
+            <!-- Atoms Game -->
+            <a href="games/atoms.html" class="game-card">
+              <div class="card-content">
+                <div class="element-symbol atom" id="atomSymbol">At</div>
+                <h3>Leer de Atomen</h3>
+                <p>Leer alles over atomen, hun structuur en verbindingen</p>
+              </div>
+            </a>
+          </div>
+          
+          <button id="backButton" class="back-button">
+            <span class="back-icon">←</span>
+            <span class="back-text">Terug</span>
+          </button>
+        </div>
+      </section>
+    </main>
+    
+    <!-- Footer Area -->
+    <footer class="footer">
+      <div class="footer-content">
+        <p>Gemaakt voor Metehan | © 2025 DidierMerk</p>
+        <button id="soundToggle" class="sound-toggle" aria-label="Toggle sound">
+          <span class="sound-icon"></span>
+        </button>
       </div>
-
-    </div> <!-- end panel-container -->
-  </main>
-
-  <!-- Main JS -->
-  <script src="js/main.js"></script>
+    </footer>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="assets/js/particles.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>

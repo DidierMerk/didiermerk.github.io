@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChemieHub - Leer de Atomen</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  
+  <!-- Preload font for better performance -->
+  <link rel="preload" href="../assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/game-core.css">
+  <link rel="stylesheet" href="css/atoms-theme.css">
+</head>
+<body>
+  <!-- Background Container with Particles -->
+  <div class="background-container">
+    <div id="particles-js" class="particles"></div>
+    <div class="overlay"></div>
+  </div>
+  
+  <!-- Main Game Container -->
+  <div class="game-container">
+    <!-- Header -->
+    <header class="game-header">
+      <div class="header-left">
+        <a href="../index.html" class="back-button">
+          <span class="back-icon">←</span>
+          <span>Terug naar Menu</span>
+        </a>
+      </div>
+      <div class="game-title">Leer de Atomen</div>
+      <div class="header-right">
+        <div id="soundToggle" class="sound-toggle">
+          <span class="sound-icon"></span>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Main Content Area -->
+    <main class="game-content">
+      <!-- Countdown Screen -->
+      <section id="countdownScreen" class="screen countdown-screen active">
+        <h2 class="countdown-title">Leer Atoomstructuren</h2>
+        <p class="countdown-subtitle">Ontdek moleculen en verbindingen!</p>
+        <div id="countdownNumber" class="countdown-number">3</div>
+      </section>
+      
+      <!-- Quiz Screen -->
+      <section id="quizScreen" class="screen quiz-screen">
+        <div class="quiz-header">
+          <div id="timer" class="timer">00:00</div>
+        </div>
+        
+        <div class="progress">
+          <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+        </div>
+        
+        <!-- Atom Visualization -->
+        <div id="atomVisualization" class="atom-visualization">
+          <div class="electron-orbit">
+            <div class="electron" style="top: 0; left: 45px;"></div>
+          </div>
+          <div class="electron-orbit">
+            <div class="electron" style="top: 70px; left: 0;"></div>
+            <div class="electron" style="bottom: 0; right: 35px;"></div>
+          </div>
+          <div class="electron-orbit">
+            <div class="electron" style="bottom: 35px; left: 0;"></div>
+            <div class="electron" style="top: 20px; right: 0;"></div>
+            <div class="electron" style="top: 90px; right: 30px;"></div>
+          </div>
+          <div class="atom-nucleus pulse-nucleus"></div>
+        </div>
+        
+        <!-- Question Image (hidden by default) -->
+        <img id="questionImage" class="question-image hidden" src="" alt="Atom Structure">
+        
+        <h2 id="question" class="question">Vraag komt hier...</h2>
+        
+        <div class="answer-section">
+          <div class="input-group">
+            <input
+              type="text"
+              id="answerInput"
+              class="answer-input"
+              placeholder="Type je antwoord..."
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+            >
+            <button id="submitBtn" class="submit-button">OK</button>
+          </div>
+          
+          <div id="feedback" class="feedback">De feedback komt hier</div>
+        </div>
+      </section>
+      
+      <!-- Results Screen -->
+      <section id="resultsScreen" class="screen results-screen">
+        <h1 class="results-title">Goed gedaan!</h1>
+        <p id="playerResult" class="results-subtitle">Je hebt het voltooid in 00:00</p>
+        
+        <div class="results-stats">
+          <div class="stat-card">
+            <div id="totalQuestionsValue" class="stat-value">0</div>
+            <div class="stat-label">Vragen</div>
+          </div>
+          <div class="stat-card">
+            <div id="mistakesValue" class="stat-value">0</div>
+            <div class="stat-label">Fouten</div>
+          </div>
+        </div>
+
+        
+        <button id="backToMenuBtn" class="action-button">Terug naar Menu</button>
+      </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="game-footer">
+      <p>Gemaakt voor Metehan | © 2025 DidierMerk</p>
+    </footer>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="../assets/js/particles.js"></script>
+  <script src="js/atoms.js"></script>
+</body>
+</html>
