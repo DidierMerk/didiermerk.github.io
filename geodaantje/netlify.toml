@@ -1,6 +1,7 @@
 [build]
-  publish = "public"
-  functions = "functions"
+  base = "geodaantje/"        # The directory where your project is located
+  publish = "public"          # The folder to publish (relative to base)
+  functions = "functions"     # Functions directory (relative to base)
 
 # Redirect API requests to our functions
 [[redirects]]
