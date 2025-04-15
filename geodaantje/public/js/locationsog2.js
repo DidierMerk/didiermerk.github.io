@@ -19,64 +19,64 @@
 
 const gameLocations = [
     {
-      // Example: Eze
-      position: { lat: 43.7276967, lng: 7.3617562 },
+      // Example: Maastricht
+      position: { lat: 50.8451423, lng: 5.6898313 },
       pov: {
         heading: 250,
         pitch: 0,
         zoom: 0
       },
-      hint: "I" // First hint
+      hint: "1" // First hint
     },
     {
       // Example: Sardinia
-      position: { lat: 53.2182207, lng: 6.5684624 },
+      position: { lat: 40.8758001, lng: 9.6289244 },
       pov: {
         heading: 70,
         pitch: 10,
         zoom: 0
       },
-      hint: "L" // Second hint
+      hint: "2" // Second hint
     },
     {
       // Example: Nice, France
-      position: { lat: 53.3515336, lng: -6.2991907 },
+      position: { lat: 43.6952838, lng: 7.2757472 },
       pov: {
         heading: 180,
         pitch: 0,
         zoom: 0
       },
-      hint: "O" // Third hint
+      hint: "1" // Third hint
     },
     {
       // Example: Dordogne, France
-      position: { lat: 52.3201849, lng: 4.8918898 },
+      position: { lat: 44.8265633, lng: 1.2669633 },
       pov: {
         heading: 0,
         pitch: 0,
         zoom: 0
       },
-      hint: "V" // Fourth hint
+      hint: "4" // Fourth hint
     },
     {
         // Example: Tilburg, Netherlands
-        position: { lat: 48.8370604, lng: 2.3811095 },
+        position: { lat: 51.553584, lng: 5.103149 },
         pov: {
           heading: 0,
           pitch: 0,
           zoom: 0
         },
-        hint: "E" // Fifth hint
+        hint: "J" // Fifth hint
       },
     {
       // Example: Gent, Belgium
-      position: { lat: 53.3867104, lng: -6.0660251 },
+      position: { lat: 51.0554101, lng: 3.7246344 },
       pov: {
         heading: 90,
         pitch: 0,
         zoom: 0
       },
-      hint: "U" // Sixth hint
+      hint: "2" // Sixth hint
     }
   ];
   
