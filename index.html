@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Didier Merk | AI & ML Researcher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container nav-container">
+            <div class="nav-toggle" id="navToggle">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <a href="#hero" class="logo">Didier<span>Merk</span></a>
+        
+            <!-- Add this new mobile theme toggle button -->
+            <button id="mobileThemeToggle" class="mobile-theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#publications">Publications</a></li>
+                <button id="themeToggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div id="particles-js"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h3>Hello, I'm</h3>
+                    <h1>Didier Merk</h1>
+                    <h3>AI & ML Researcher</h3>
+                    <p>
+                        A graduate in Artificial Intelligence from the University of Amsterdam,
+                        most recently working on time-series forecasting using Generative Pre-Trained Transformers.
+                    </p>
+                    
+                    <ul class="social-links">
+                        <li><a href="mailto:didier.merk@gmail.com"><i class="fas fa-envelope"></i></a></li>
+                        <li><a href="https://x.com/hallometdidier" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="https://github.com/didiermerk" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a></li>
+                        <li><a href="https://www.linkedin.com/in/didier-merk/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a></li>
+                        <li><a href="https://scholar.google.com/citations?user=vzgjYysAAAAJ&hl=en" target="_blank" rel="noopener noreferrer"><i class="fab fa-google-scholar"></i></a></li>
+                    </ul>
+                </div>
+                
+                <div class="hero-image">
+                    <div class="circles-composition">
+                        <div class="profile-img-container">
+                            <img src="assets/images/avatar.jpg" alt="Didier Merk" class="profile-img">
+                        </div>
+                        <div class="profile-backdrop"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scroll-indicator" id="scrollIndicator">
+                <div class="scroll-arrow"></div>
+                <div class="scroll-arrow"></div>
+                <div class="scroll-arrow"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            
+            <div class="about-layout">
+                <!-- Left column with bio -->
+                <div class="about-content">
+                    <div class="biography-content">
+                        <p>
+                            I am recently graduated student of the Artificial Intelligence master's programme
+                            at the University of Amsterdam, where I am currently writing my thesis at ING
+                            Bank's Wholesale Advanced Analytics department.
+                        </p>
+                        <p>
+                            My research focuses on forecasting financial time-series data using Generative Pre-Trained
+                            Transformers. Before my MSc, I completed a major in AI as part of the Natural and Social
+                            Sciences Bachelor's programme, also at the University of Amsterdam.
+                        </p>
+                        <p>
+                            I interned at international research organisation CERN, where I wrote my thesis on
+                            Hyperparameter Optimization for Jet Tagging.
+                        </p>
+                        <p>
+                            I interned at international research organisation CERN, where I wrote my thesis on
+                            Hyperparameter Optimization for Jet Tagging.
+                        </p>
+                    </div>
+                    
+
+                </div>
+                
+                <!-- Right column with tabbed content -->
+                <div class="about-cards">
+                    <!-- Tab navigation -->
+                    <div class="tabs-nav">
+                        <button class="tab-btn active" data-tab="education">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Education</span>
+                            <div class="tab-indicator"></div>
+                        </button>
+                        <button class="tab-btn" data-tab="skills">
+                            <i class="fas fa-cogs"></i>
+                            <span>Skills</span>
+                            <div class="tab-indicator"></div>
+                        </button>
+                    </div>
+                    
+                    <!-- Tab content -->
+                    <div class="tabs-content">
+                        <!-- Education Tab (default visible) -->
+                        <div id="education-tab" class="tab-panel active">
+                            <div class="education-overview" id="education-overview">
+                                <div class="education-item">
+                                    <div class="education-degree">
+                                        <a href="#" class="degree-link" data-degree="msc">MSc in Artificial Intelligence</a>
+                                    </div>
+                                    <div class="education-details">
+                                        <span class="education-institution">University of Amsterdam</span>
+                                        <span class="education-date">2022 - 2024</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="education-item">
+                                    <div class="education-degree">
+                                        <a href="#" class="degree-link" data-degree="bsc-ai">BSc Major in Artificial Intelligence</a>
+                                    </div>
+                                    <div class="education-details">
+                                        <span class="education-institution">University of Amsterdam</span>
+                                        <span class="education-date">2020 - 2022</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="education-item">
+                                    <div class="education-degree">
+                                        <a href="#" class="degree-link" data-degree="bsc-nss">BSc Natural and Social Sciences</a>
+                                    </div>
+                                    <div class="education-details">
+                                        <span class="education-institution">University of Amsterdam</span>
+                                        <span class="education-date">2015 - 2016</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Degree Detail Views (hidden by default) -->
+                            <div class="degree-details" id="msc-details">
+                                <div class="degree-header">
+                                    <h4 class="degree-detail-title">MSc in Artificial Intelligence</h4>
+                                    <div class="degree-meta">
+                                        <span class="degree-institution">University of Amsterdam</span>
+                                        <span class="degree-years">2022 - 2024</span>
+                                    </div>
+                                </div>
+                                <div class="degree-detail-info">
+                                    <p>Two years master programme focused on mathematical and theoretical ground work of AI models. Graduated with an 8.2 GPA and my thesis was called "Rethinking Models and Evaluations for Time Series Forecasting".</p>
+                                    <p>Core courses included Advanced Machine Learning, Natural Language Processing, Computer Vision, and Reinforcement Learning. Specialized in time-series forecasting using transformer-based architectures.</p>
+                                    <div class="degree-highlights">
+                                        <div class="highlight-item">
+                                            <span class="highlight-label">GPA</span>
+                                            <span class="highlight-value">8.2/10</span>
+                                        </div>
+                                        <div class="highlight-item">
+                                            <span class="highlight-label">Thesis Grade</span>
+                                            <span class="highlight-value">8.0/10</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline back-to-education">
+                                    <i class="fas fa-arrow-left"></i> Back to all degrees
+                                </button>
+                            </div>
+                            
+                            <div class="degree-details" id="bsc-ai-details">
+                                <div class="degree-header">
+                                    <h4 class="degree-detail-title">BSc Major in Artificial Intelligence</h4>
+                                    <div class="degree-meta">
+                                        <span class="degree-institution">University of Amsterdam</span>
+                                        <span class="degree-years">2020 - 2022</span>
+                                    </div>
+                                </div>
+                                <div class="degree-detail-info">
+                                    <p>Specialized major in Artificial Intelligence as part of the Natural and Social Sciences Bachelor's programme. Focused on fundamental AI principles, algorithms, and applications.</p>
+                                    <p>Completed coursework in Machine Learning, Neural Networks, Logic, and Data Structures & Algorithms. Final project involved developing a hyperparameter optimization system for particle physics at CERN.</p>
+                                    <div class="degree-highlights">
+                                        <div class="highlight-item">
+                                            <span class="highlight-label">GPA</span>
+                                            <span class="highlight-value">7.7/10</span>
+                                        </div>
+                                        <div class="highlight-item">
+                                            <span class="highlight-label">Thesis Grade</span>
+                                            <span class="highlight-value">8.5/10</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline back-to-education">
+                                    <i class="fas fa-arrow-left"></i> Back to all degrees
+                                </button>
+                            </div>
+                            
+                            <div class="degree-details" id="bsc-nss-details">
+                                <div class="degree-header">
+                                    <h4 class="degree-detail-title">BSc Natural and Social Sciences</h4>
+                                    <div class="degree-meta">
+                                        <span class="degree-institution">University of Amsterdam</span>
+                                        <span class="degree-years">2015 - 2016</span>
+                                    </div>
+                                </div>
+                                <div class="degree-detail-info">
+                                    <p>Interdisciplinary programme combining natural sciences (physics, mathematics, biology) with social sciences (psychology, economics, sociology). This broad foundation provided diverse perspectives and analytical approaches.</p>
+                                    <p>The programme's multidisciplinary nature helped develop critical thinking skills and the ability to approach complex problems from different angles, which proved valuable for later AI studies.</p>
+                                    <div class="degree-highlights">
+                                        <div class="highlight-item">
+                                            <span class="highlight-label">Key Skills</span>
+                                            <span class="highlight-value">Research, Critical Thinking</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline back-to-education">
+                                    <i class="fas fa-arrow-left"></i> Back to all degrees
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Skills Tab (hidden by default) -->
+                        <div id="skills-tab" class="tab-panel">
+                            <!-- <h3 class="sidebar-title"><i class="fas fa-cogs"></i> Skills</h3> -->
+                            <div class="skills-grid">
+                                <span class="skill-item">Machine Learning</span>
+                                <span class="skill-item">Deep Learning</span>
+                                <span class="skill-item">Time Series Analysis</span>
+                                <span class="skill-item">Natural Language Processing</span>
+                                <span class="skill-item">Python</span>
+                                <span class="skill-item">TensorFlow</span>
+                                <span class="skill-item">PyTorch</span>
+                                <span class="skill-item">Data Analysis</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title">Experience</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item" data-expanded="false">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Jan 2024 - Oct 2024</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <div class="timeline-logo-container">
+                                <img src="assets/images/inglogo.png" alt="ING Logo" class="timeline-logo">
+                            </div>
+                            <div class="timeline-role-info">
+                                <h3 class="timeline-role">Machine Learning Intern</h3>
+                                <div class="timeline-company">ING Bank</div>
+                                <div class="timeline-location">Amsterdam, Netherlands</div>
+                            </div>
+                            <button class="timeline-toggle" aria-label="Toggle details">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="timeline-expandable">
+                            <p class="timeline-description">
+                                Researched the application of Large Language Model architectures in the field of financial time series forecasting, for the largest bank in The Netherlands. This work, completed under supervision of <a href="https://www.linkedin.com/in/fabian-jansen-3334b513/" class="no-underline-link" target="_blank" rel="noopener noreferrer">Fabian Jansen</a> and <a href="https://ivi.fnwi.uva.nl/vislab/author/yongtuo-liu/" class="no-underline-link" target="_blank" rel="noopener noreferrer">Yongtuo Liu</a>, resulted in my Master Thesis and a talk at ING's <a href="https://medium.com/wbaa/data-science-community-conference-2023-1f946681445e" class="no-underline-link" target="_blank" rel="noopener noreferrer">DSC Conference</a> 2024.
+                            </p>
+                            <div class="timeline-links">
+                                <a href="assets/files/MSc_Thesis_DidierMerk.pdf" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Blog</a>
+                                <a href="assets/files/DSCC_Presentation_Redacted.pdf" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Talk</a>
+                                <a href="assets/files/MSc_Thesis_DidierMerk.pdf" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Thesis</a>
+                                <a href="https://github.com/DidierMerk/Forecasting" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Code</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-expanded="false">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Mar 2024 - Jun 2024</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <div class="timeline-logo-container">
+                                <img src="assets/images/uvalogo.png" alt="UvA Logo" class="timeline-logo">
+                            </div>
+                            <div class="timeline-role-info">
+                                <h3 class="timeline-role">Graduate Teaching Assistant · Game Theory</h3>
+                                <div class="timeline-company">University of Amsterdam</div>
+                                <div class="timeline-location">Amsterdam, Netherlands</div>
+                            </div>
+                            <button class="timeline-toggle" aria-label="Toggle details">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="timeline-expandable">
+                            <p class="timeline-description">
+                                In the academic year of 2023-2024 I worked as a graduate teaching assistant for the master's course Game Theory, taught by Prof. <a href="https://staff.fnwi.uva.nl/u.endriss/" class="no-underline-link" target="_blank" rel="noopener noreferrer">Ulle Endriss</a>. As a teaching assistant (or tutorial lecturer) I co-led a tutorial group, during which we helped students with exercises and went deeper into the course material. This introductory course focuses on the mathematical properties of so-called games and how to analyse strategic interactions between rational agents.
+                            </p>
+                            <div class="timeline-links">
+                                <a href="https://studiegids.uva.nl/xmlpages/page/2023-2024-en/search-course/course/109561" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Course Guide</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-expanded="false">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Mar 2022 - Jul 2022</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <div class="timeline-logo-container">
+                                <img src="assets/images/cernlogo.png" alt="CERN Logo" class="timeline-logo">
+                            </div>
+                            <div class="timeline-role-info">
+                                <h3 class="timeline-role">Research Intern</h3>
+                                <div class="timeline-company">CERN</div>
+                                <div class="timeline-location">Geneva, Switzerland</div>
+                            </div>
+                            <button class="timeline-toggle" aria-label="Toggle details">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div class="timeline-expandable">
+                            <p class="timeline-description">
+                                Conducted my Bachelor Thesis research at the CERN Cloud Team, under supervision of <a href="https://www.linkedin.com/in/ricardo-rocha-739aa718/" class="no-underline-link" target="_blank" rel="noopener noreferrer">Ricardo Rocha</a>. Here I focused on improving the performance of the <a href="https://arxiv.org/html/2202.03772v3" class="no-underline-link" target="_blank" rel="noopener noreferrer">Particle Transformer</a> model used for <em>Jet Tagging</em> at the CMS experiment. This involved performing a hyperparameter optimization study utilizing CERN's newly launched centralized machine learning platform, <a href="https://cds.cern.ch/record/2780362/files/document.pdf" class="no-underline-link" target="_blank" rel="noopener noreferrer">Kubeflow</a>, to better classify particle jets resulting from proton collisions at the Large Hadron Collider.
+                            </p>
+                            <div class="timeline-links">
+                                <a href="assets/files/BSc_Thesis_DidierMerk.pdf" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Thesis</a>
+                                <a href="https://github.com/DidierMerk/BachelorThesis" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Code</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/images/segmentation.png" alt="Improving the grounding of AI generated images">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">
+                            <a href="#" class="project-link">Improving the Grounding of AI Generated Images</a>
+                        </h3>
+                        <p class="project-description">
+                            Enhanced existing visual grounding techniques by simultaneously generating images and precise segmentation masks directly from natural language prompts.
+                        </p>
+                        <div class="project-tags">
+                            <span>PyTorch</span>
+                            <span>Transformers</span>
+                            <span>Time Series</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/images/segthor.png" alt="Improving the grounding of AI generated images">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">
+                            <a href="segthor/segthor.html" class="project-link">Thoracic Organ Segmentation Challenge</a>
+                        </h3>
+                        <p class="project-description">
+                            Enhanced existing visual grounding techniques by simultaneously generating images and precise segmentation masks directly from natural language prompts.
+                        </p>
+                        <div class="project-tags">
+                            <span>3D Slicer</span>
+                            <span>Transformers</span>
+                            <span>Time Series</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/images/jettagging.png" alt="Jet Tagging">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">
+                            <a href="#" class="project-link">Hyperparameter Optimization for Jet Tagging</a>
+                        </h3>
+                        <p class="project-description">
+                            Developed machine learning models for identifying particle jets in high-energy physics experiments at CERN.
+                        </p>
+                        <div class="project-tags">
+                            <span>Python</span>
+                            <span>TensorFlow</span>
+                            <span>Physics</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section id="publications" class="publications">
+        <div class="container">
+            <h2 class="section-title">Publications</h2>
+            
+            <div class="publications-list">
+                <div class="publication-item">
+                    <div class="publication-meta">
+                        <div class="publication-date">2023</div>
+                    </div>
+                    <h3 class="publication-title">[Re] Latent Space Smoothing For Individually Fair Representations</h3>
+                    <div class="publication-authors"><strong>Didier Merk</strong>, Tsatsral Mendsuren, Denny Smit, Boaz Beukers</div>
+                    <div class="publication-journal">Accepted as poster at NeurIPS 2023</div>
+                    <p class="publication-abstract">
+                        Fairness has become an increasingly more important topic within the AI community. Using recent advances in generative modelling and deep learning, researchers at DeepMind have proposed a novel representation learning method called LASSI. This model ensures that similar individuals are treated similarly, known as individual fairness. In this paper we aim to verify the original claims and extend the research by performing additional experiments to validate the robustness of LASSI.
+                    </p>
+                    <div class="publication-links">
+                        <a href="https://openreview.net/pdf?id=J-Lgb7Vc0wX" class="publication-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> PDF</a>
+                        <a href="https://mametchiii.github.io/lassi-reproducibility/" class="publication-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-globe"></i> Website</a>
+                        <a href="https://github.com/Mametchiii/lassi-reproducibility" class="publication-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-code"></i> Code</a>
+                        <a href="#" class="cite-link" data-bibtex="assets/bibtex/lassi.bib"><i class="fas fa-quote-right"></i> Cite</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <ul class="footer-links">
+                <li><a href="mailto:didier.merk@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
+                <li><a href="https://x.com/hallometdidier" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> Twitter</a></li>
+                <li><a href="https://github.com/didiermerk" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a></li>
+                <li><a href="https://www.linkedin.com/in/didier-merk/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+            </ul>
+            <p>&copy; 2025 Didier Merk. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Citation Modal -->
+    <div id="citationModal" class="citation-modal">
+        <div class="citation-modal-content">
+            <div class="citation-modal-header">
+                <h3>BibTeX Citation</h3>
+                <span class="citation-modal-close">&times;</span>
+            </div>
+            <div class="citation-modal-body">
+                <pre id="bibtexContent" class="bibtex-content"></pre>
+            </div>
+            <div class="citation-modal-footer">
+                <button id="copyBibtex" class="btn btn-outline">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+                <button id="downloadBibtex" class="btn btn-outline">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/theme.js"></script>
+</body>
+</html>

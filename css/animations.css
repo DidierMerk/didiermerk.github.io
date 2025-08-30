@@ -1,0 +1,621 @@
+/* 
+* Animations stylesheet for Didier Merk's academic resume website
+* Contains all animations and transition effects
+* Version: 1.0
+*/
+
+/* Fade In Up Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Scroll Arrow Animation */
+@keyframes scrollArrow {
+    0% {
+        opacity: 0;
+        transform: rotate(45deg) translate(-5px, -5px);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Highlight Animation */
+@keyframes highlight {
+    0% {
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Fade Out Down Animation */
+@keyframes fadeOutDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+/* Button Pulse Animation */
+@keyframes buttonPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(100, 255, 218, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(100, 255, 218, 0);
+    }
+}
+
+/* Slide In Animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Slide Out Animation */
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+}
+
+/* Slide Down Animation */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scale Up Animation */
+@keyframes scaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Improved Back Button Animation */
+@keyframes backButtonPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 0 6px rgba(100, 255, 218, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(100, 255, 218, 0);
+    }
+}
+
+/* Apply animations to degree details */
+.slide-in {
+    animation: slideIn 0.4s ease forwards;
+}
+
+.slide-out {
+    animation: slideOut 0.4s ease forwards;
+}
+
+.degree-detail-info {
+    animation: slideDown 0.5s ease forwards;
+}
+
+.degree-highlights {
+    animation: scaleUp 0.5s ease forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+/* Highlight animation for degree links */
+@keyframes degreePulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 5px rgba(100, 255, 218, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(100, 255, 218, 0);
+    }
+}
+
+.degree-link:active {
+    animation: degreePulse 0.8s ease-out;
+}
+
+/* Back button animation */
+.back-to-education {
+    position: relative;
+    overflow: hidden;
+    animation: backButtonPulse 2s infinite;
+}
+
+.back-to-education:hover {
+    animation: none;
+}
+
+.back-to-education::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(100, 255, 218, 0.1);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.back-to-education:hover::after {
+    transform: translateX(0);
+}
+
+/* Hero Section Animations */
+.hero-text h1 {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards 0.3s;
+}
+
+.hero-text h3:first-child {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards 0.1s;
+}
+
+.hero-text h3:not(:first-child) {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards 0.5s;
+}
+
+.hero-text p {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards 0.7s;
+}
+
+.social-links {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards 0.9s;
+}
+
+.hero-image {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards 0.7s;
+}
+
+.scroll-indicator {
+    opacity: 0;
+    animation: fadeIn 0.6s ease forwards 1.5s;
+}
+
+/* Section Title Animation */
+.section-title {
+    position: relative;
+    overflow: hidden;
+}
+
+.section-title::after {
+    animation: highlight 2s ease forwards;
+}
+
+/* Timeline Item Animation */
+.timeline-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.timeline-item.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Timeline Expandable Animations */
+@keyframes expandTimeline {
+    from {
+        max-height: 0;
+        opacity: 0;
+    }
+    to {
+        max-height: 500px;
+        opacity: 1;
+    }
+}
+
+@keyframes collapseTimeline {
+    from {
+        max-height: 500px;
+        opacity: 1;
+    }
+    to {
+        max-height: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes rotateChevron {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes highlightDot {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.4);
+    }
+    50% {
+        transform: scale(1.2);
+        box-shadow: 0 0 0 5px rgba(100, 255, 218, 0);
+    }
+    100% {
+        transform: scale(1.2);
+        box-shadow: 0 0 10px rgba(100, 255, 218, 0.4);
+    }
+}
+
+.timeline-item[data-expanded="true"] .timeline-dot {
+    animation: highlightDot 0.5s ease forwards;
+}
+
+.timeline-item[data-expanded="true"] .timeline-content {
+    animation: cardHighlight 0.5s ease forwards;
+}
+
+@keyframes cardHighlight {
+    from {
+        box-shadow: 0 0 0 rgba(100, 255, 218, 0);
+        background-color: var(--card-bg);
+    }
+    to {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        background-color: rgba(100, 255, 218, 0.05);
+    }
+}
+
+.timeline-expandable-animating {
+    animation: expandTimeline 0.5s ease forwards;
+}
+
+.timeline-collapsible-animating {
+    animation: collapseTimeline 0.5s ease forwards;
+}
+
+.chevron-rotate {
+    animation: rotateChevron 0.3s ease forwards;
+}
+
+/* Project Card Animation */
+.project-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.project-card.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Project link animation */
+@keyframes projectLinkPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 5px rgba(100, 255, 218, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(100, 255, 218, 0);
+    }
+}
+
+.project-title a:active {
+    animation: projectLinkPulse 0.8s ease-out;
+}
+
+/* Publication Item Animation */
+.publication-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.publication-item.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Skills List Animation */
+.skills-list li {
+    opacity: 0;
+    transform: translateX(20px);
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.skills-list li:nth-child(1) { animation-delay: 0.1s; }
+.skills-list li:nth-child(2) { animation-delay: 0.2s; }
+.skills-list li:nth-child(3) { animation-delay: 0.3s; }
+.skills-list li:nth-child(4) { animation-delay: 0.4s; }
+.skills-list li:nth-child(5) { animation-delay: 0.5s; }
+.skills-list li:nth-child(6) { animation-delay: 0.6s; }
+.skills-list li:nth-child(7) { animation-delay: 0.7s; }
+.skills-list li:nth-child(8) { animation-delay: 0.8s; }
+
+/* Education Item Animation */
+.education-item {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.education-item:nth-child(1) { animation-delay: 0.2s; }
+.education-item:nth-child(2) { animation-delay: 0.3s; }
+.education-item:nth-child(3) { animation-delay: 0.4s; }
+
+/* Back to Top Button Animation */
+.back-to-top {
+    animation: pulse 2s infinite;
+}
+
+/* About Section Toggle Animations */
+.toggle-btn.active {
+    animation: buttonPulse 1.5s ease-out 1;
+}
+
+.info-card.active {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.info-card:not(.active) {
+    animation: fadeOutDown 0.5s ease forwards;
+}
+
+/* Skills Grid Animation */
+.skills-grid .skill-item {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInUp 0.4s ease forwards;
+}
+
+.skills-grid .skill-item:nth-child(1) { animation-delay: 0.1s; }
+.skills-grid .skill-item:nth-child(2) { animation-delay: 0.15s; }
+.skills-grid .skill-item:nth-child(3) { animation-delay: 0.2s; }
+.skills-grid .skill-item:nth-child(4) { animation-delay: 0.25s; }
+.skills-grid .skill-item:nth-child(5) { animation-delay: 0.3s; }
+.skills-grid .skill-item:nth-child(6) { animation-delay: 0.35s; }
+.skills-grid .skill-item:nth-child(7) { animation-delay: 0.4s; }
+.skills-grid .skill-item:nth-child(8) { animation-delay: 0.45s; }
+
+@keyframes successPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(76, 175, 80, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+    }
+}
+
+@keyframes errorShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    20%, 60% {
+        transform: translateX(-5px);
+    }
+    40%, 80% {
+        transform: translateX(5px);
+    }
+}
+
+/* Tab System Animations */
+@keyframes fadeInTab {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOutTab {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes indicatorSlide {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+.tab-btn.animate-in .tab-indicator {
+    animation: indicatorSlide 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+.tab-panel.animate-in {
+    animation: fadeInTab 0.45s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+.tab-panel.animate-out {
+    animation: fadeOutTab 0.35s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+/* Simplified Skills Animation System */
+.skills-grid .skill-item {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Define the order for skill items to appear */
+#skills-tab.show-skills .skill-item:nth-child(1),
+#skills-tab.show-skills .skill-item:nth-child(2) {
+    transition-delay: 0.05s;
+}
+
+#skills-tab.show-skills .skill-item:nth-child(3),
+#skills-tab.show-skills .skill-item:nth-child(4) {
+    transition-delay: 0.1s;
+}
+
+#skills-tab.show-skills .skill-item:nth-child(5),
+#skills-tab.show-skills .skill-item:nth-child(6) {
+    transition-delay: 0.15s;
+}
+
+#skills-tab.show-skills .skill-item:nth-child(7),
+#skills-tab.show-skills .skill-item:nth-child(8) {
+    transition-delay: 0.2s;
+}
+
+/* When the show-skills class is added, make all items visible */
+#skills-tab.show-skills .skill-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Tab Navigation Hide Animation */
+@keyframes tabsSlideUp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 60px;
+        margin-bottom: 1.5rem;
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+        max-height: 0;
+        margin-bottom: 0;
+    }
+}
+
+/* Tab Navigation Show Animation */
+@keyframes tabsSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+        max-height: 0;
+        margin-bottom: 0;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 60px;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.tabs-nav-slide-up {
+    animation: tabsSlideUp 0.4s ease forwards;
+}
+
+.tabs-nav-slide-down {
+    animation: tabsSlideDown 0.4s ease forwards;
+}
+
+/* Add these to your animations.css file */
+@keyframes expandContainer {
+    from { max-height: var(--prev-height); }
+    to { max-height: var(--new-height); }
+}
+
+@keyframes fadeContent {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.tabs-content-animating {
+    transition: height 0.3s ease-out;
+    overflow: hidden;
+}
+
+.content-fade-in {
+    animation: fadeContent 0.3s ease-out forwards;
+}
+
+.content-fade-out {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}

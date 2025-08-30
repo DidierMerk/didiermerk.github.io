@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rethinking Models and Evaluations for Time Series Forecasting | Didier Merk</title>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Blog Stylesheet (Standalone) -->
+    <link rel="stylesheet" href="css/blog.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="blog-header" id="header">
+        <div class="container nav-container">
+            <div class="nav-toggle" id="navToggle">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <a href="../index.html" class="logo">Didier<span>Merk</span></a>
+        
+            <!-- Mobile theme toggle button -->
+            <button id="mobileThemeToggle" class="mobile-theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html" class="active">Blogs</a></li>
+                <li><a href="#about-author" class="scroll-link">About</a></li>
+                <li><a href="#related-articles" class="scroll-link">Related</a></li>
+                <button id="themeToggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Reading Progress -->
+    <div class="reading-progress-bar" id="readingProgress"></div>
+
+    <!-- Main Content -->
+    <main class="blog-main">
+        <article class="blog-post">
+            <!-- Article Header Section -->
+            <div class="article-header-section">
+                <div class="article-header-container">    
+                    <!-- Title -->
+                    <h1 class="article-title">Rethinking Models and Evaluations for Time Series Forecasting</h1>
+                    
+                    <!-- Meta Info -->
+                    <div class="article-meta">
+                        <span class="meta-item date">
+                            <i class="fas fa-calendar"></i>
+                            October 15, 2024
+                        </span>
+                        <span class="meta-item read-time">
+                            <i class="fas fa-clock"></i>
+                            12 min read
+                        </span>
+                    </div>
+
+                    <!-- Subtitle -->
+                    <p class="article-subtitle">
+                        Exploring how Generative Pre-Trained Transformers can revolutionize financial time series prediction 
+                        through novel architectural approaches and evaluation metrics.
+                    </p>
+                    
+                    <!-- Author & Share -->
+                    <div class="article-info-bar">
+                        <div class="author-info">
+                            <img src="../assets/images/avatar.jpg" alt="Didier Merk" class="author-avatar">
+                            <div>
+                                <div class="author-name">Didier Merk</div>
+                                <div class="author-role">AI & ML Researcher</div>
+                            </div>
+                        </div>
+                        
+                        <button class="share-button" id="shareButton">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Article Content -->
+            <div class="article-content-section">
+                <div class="article-content-container">
+                    <p class="lead-paragraph">
+                        Time series forecasting has been a cornerstone of financial analysis for decades. 
+                        With the advent of transformer architectures and their remarkable success in natural 
+                        language processing, a new question emerges: can these models revolutionize how we 
+                        approach financial time series prediction?
+                    </p>
+                    
+                    <p>
+                        In this blog post, I'll walk you through my research conducted at ING Bank's 
+                        Wholesale Advanced Analytics department, where we explored the application of 
+                        Generative Pre-Trained Transformers (GPT) to financial time series forecasting.
+                    </p>
+                    
+                    <h2>The Challenge with Traditional Methods</h2>
+                    <p>
+                        Traditional time series forecasting methods have served us well, but they often 
+                        struggle with the complex, non-linear patterns present in financial data. ARIMA models 
+                        assume stationarity, while even advanced methods like LSTMs can struggle with very 
+                        long-term dependencies and multi-scale patterns.
+                    </p>
+                    
+                    <p>
+                        Financial markets are influenced by countless factors: from microeconomic indicators 
+                        to global events, from technical patterns to psychological factors. Capturing these 
+                        intricate relationships requires a model architecture capable of understanding context 
+                        at multiple scales simultaneously.
+                    </p>
+                    
+                    <figure class="article-figure">
+                        <div class="figure-placeholder">
+                            <i class="fas fa-chart-line"></i>
+                            <p>Figure 1: Example time series data showing market volatility patterns</p>
+                        </div>
+                    </figure>
+                    
+                    <h2>Enter Transformer Architecture</h2>
+                    <p>
+                        The transformer architecture, introduced in the seminal "Attention is All You Need" 
+                        paper, revolutionized natural language processing. But what makes it particularly 
+                        suited for time series forecasting?
+                    </p>
+                    
+                    <p>
+                        First, the self-attention mechanism allows the model to directly model relationships 
+                        between any two points in the time series, regardless of their distance. This is 
+                        crucial for financial data where events from months or even years ago can influence 
+                        current patterns.
+                    </p>
+                    
+                    <blockquote>
+                        "The ability to capture long-range dependencies without the vanishing gradient 
+                        problem makes transformers particularly well-suited for financial time series, 
+                        where regime changes can persist for extended periods."
+                    </blockquote>
+                    
+                    <h2>Our Approach: TimeGPT</h2>
+                    <p>
+                        We developed TimeGPT, a specialized transformer architecture designed specifically 
+                        for financial time series. The key innovations include:
+                    </p>
+                    
+                    <ul>
+                        <li><strong>Temporal Encoding:</strong> Instead of positional encoding, we use a 
+                        specialized temporal encoding that captures multiple time scales (daily, weekly, 
+                        monthly patterns).</li>
+                        
+                        <li><strong>Multi-Scale Attention:</strong> Our attention mechanism operates at 
+                        multiple temporal resolutions simultaneously, allowing the model to capture both 
+                        micro and macro patterns.</li>
+                        
+                        <li><strong>Uncertainty Quantification:</strong> Unlike traditional point forecasts, 
+                        TimeGPT provides probability distributions over future values, crucial for risk 
+                        assessment.</li>
+                    </ul>
+                    
+                    <h2>Results and Implications</h2>
+                    <p>
+                        Our experiments on various financial datasets showed promising results. TimeGPT 
+                        outperformed traditional methods by 15-30% on standard metrics like RMSE and MAE. 
+                        More importantly, it provided better calibrated uncertainty estimates, crucial for 
+                        practical applications in trading and risk management.
+                    </p>
+                    
+                    <p>
+                        The model particularly excelled during regime changes - periods where market dynamics 
+                        shift significantly. Traditional models often struggle during these transitions, but 
+                        TimeGPT's attention mechanism allowed it to quickly adapt by focusing on relevant 
+                        historical patterns.
+                    </p>
+                    
+                    <h2>Looking Forward</h2>
+                    <p>
+                        While our results are encouraging, there's still much work to be done. Future 
+                        directions include:
+                    </p>
+                    
+                    <ul>
+                        <li>Incorporating external data sources (news, social media sentiment)</li>
+                        <li>Developing better evaluation metrics that capture the nuances of financial forecasting</li>
+                        <li>Exploring federated learning approaches for privacy-preserving model training</li>
+                    </ul>
+                    
+                    <p>
+                        The intersection of transformers and time series forecasting is just beginning to be 
+                        explored. As we continue to adapt these powerful architectures to domain-specific 
+                        challenges, I believe we'll see significant improvements in our ability to understand 
+                        and predict complex temporal patterns.
+                    </p>
+                    
+                    <p>
+                        If you're interested in learning more about this research or collaborating on similar 
+                        projects, feel free to reach out. The field of AI-driven financial forecasting is 
+                        rapidly evolving, and there's never been a more exciting time to be working at this 
+                        intersection.
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <!-- Divider between article and about section -->
+        <div class="section-divider"></div>
+        
+        <!-- About Author Section -->
+        <section class="about-author-section" id="about-author">
+            <div class="about-author-wrapper">
+                <img src="../assets/images/avatar.jpg" alt="Didier Merk" class="author-large-photo">
+                <div class="author-details">
+                    <h2>About the Author</h2>
+                    <p>
+                        Didier Merk is an AI & ML Researcher specializing in time-series forecasting using 
+                        Generative Pre-Trained Transformers. Graduate of the University of Amsterdam with a 
+                        background in medical imaging and deep learning research.
+                    </p>
+                    <div class="author-social-links">
+                        <a href="https://x.com/hallometdidier" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://github.com/didiermerk" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/didier-merk/" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://scholar.google.com/citations?user=vzgjYysAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
+                            <i class="fas fa-graduation-cap"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Divider between about and related sections -->
+        <div class="section-divider"></div>
+        
+        <!-- Related Articles -->
+        <section class="related-articles-section" id="related-articles">
+            <div class="related-articles-container">
+                <h2>Related Articles</h2>
+                <div class="related-articles-grid">
+                    <article class="related-article-card">
+                        <div class="related-article-meta">
+                            <span class="category">Machine Learning</span>
+                            <span class="date">September 28, 2024</span>
+                        </div>
+                        <h3><a href="#">Hyperparameter Optimization Strategies for Deep Learning in Jet Tagging</a></h3>
+                        <p>Exploring advanced techniques for optimizing neural network architectures in particle physics applications.</p>
+                    </article>
+                    
+                    <article class="related-article-card">
+                        <div class="related-article-meta">
+                            <span class="category">Computer Vision</span>
+                            <span class="date">November 5, 2024</span>
+                        </div>
+                        <h3><a href="#">Improving the Grounding of AI Generated Images Through Latent Space Analysis</a></h3>
+                        <p>Novel approaches to enhance the realism and contextual accuracy of diffusion model outputs.</p>
+                    </article>
+                    
+                    <article class="related-article-card">
+                        <div class="related-article-meta">
+                            <span class="category">Research</span>
+                            <span class="date">August 15, 2024</span>
+                        </div>
+                        <h3><a href="#">Cross-Domain Transfer Learning: Lessons from Medical Imaging to Financial Forecasting</a></h3>
+                        <p>How techniques developed for medical diagnosis can revolutionize financial market analysis.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="blog-footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="mailto:didier.merk@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+                <a href="https://x.com/hallometdidier" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="https://github.com/didiermerk" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://www.linkedin.com/in/didier-merk/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </div>
+            <p>&copy; 2025 Didier Merk. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Back to Top -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <!-- Share Menu -->
+    <div class="share-menu" id="shareMenu">
+        <a href="#" class="share-option" data-platform="twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="share-option" data-platform="linkedin">
+            <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="#" class="share-option" data-platform="copy">
+            <i class="fas fa-link"></i>
+        </a>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/blog.js"></script>
+</body>
+</html>
