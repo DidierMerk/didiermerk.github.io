@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rethinking Financial Forecasting: Can Language Models Predict the Future? | Didier Merk</title>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Blog Stylesheet -->
+    <link rel="stylesheet" href="../css/blog.css">
+    
+    <!-- Forecasting Specific Styles -->
+    <link rel="stylesheet" href="css/forecasting-blog.css">
+    
+    <!-- Chart.js and Plotly for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+    <!-- Prism.js for code highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="blog-header" id="header">
+        <div class="container nav-container">
+            <div class="nav-toggle" id="navToggle">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <a href="../../index.html" class="logo">Didier<span>Merk</span></a>
+        
+            <!-- Mobile theme toggle button -->
+            <button id="mobileThemeToggle" class="mobile-theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../index.html#blogs" class="active">Blogs</a></li>
+                <li><a href="#about-author" class="scroll-link">About</a></li>
+                <li><a href="#related-articles" class="scroll-link">Related</a></li>
+                <button id="themeToggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Reading Progress -->
+    <div class="reading-progress-bar" id="readingProgress"></div>
+
+    <!-- Main Content -->
+    <main class="blog-main">
+        <article class="blog-post">
+            <!-- Article Header Section -->
+            <div class="article-header-section">
+                <div class="article-header-container">    
+                    <!-- Title -->
+                    <h1 class="article-title">Teaching Language Models the Language of Time: A Journey into Financial Forecasting</h1>
+                    
+                    <!-- Meta Info -->
+                    <div class="article-meta">
+                        <span class="meta-item date">
+                            <i class="fas fa-calendar"></i>
+                            December 17, 2024
+                        </span>
+                        <span class="meta-item read-time">
+                            <i class="fas fa-clock"></i>
+                            18 min read
+                        </span>
+                    </div>
+
+                    <!-- Subtitle -->
+                    <p class="article-subtitle">
+                        How foundation models pre-trained on time series data challenge traditional forecasting methods, 
+                        achieving remarkable zero-shot performance on financial data while revealing surprising limitations 
+                        in uncertainty quantification.
+                    </p>
+                    
+                    <!-- Author & Share -->
+                    <div class="article-info-bar">
+                        <div class="author-info">
+                            <img src="../../assets/images/avatar.jpg" alt="Didier Merk" class="author-avatar">
+                            <div>
+                                <div class="author-name">Didier Merk</div>
+                                <div class="author-role">MSc AI, University of Amsterdam</div>
+                            </div>
+                        </div>
+                        
+                        <button class="share-button" id="shareButton">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Article Content -->
+            <div class="article-content-section">
+                <div class="article-content-container">
+                    <p class="lead-paragraph">
+                        What if I told you that a model trained to predict the next word in a sentence could 
+                        also predict tomorrow's bank account balance? This seemingly absurd proposition lies 
+                        at the heart of a revolution in time series forecasting—one that challenges everything 
+                        we thought we knew about predicting the future from data.
+                    </p>
+
+                    <!-- Live Forecasting Demo -->
+                    <div class="demo-container">
+                        <h3>Experience Live Forecasting</h3>
+                        <p class="demo-description">
+                            Interact with real forecasting models. Draw your own time series or use sample data 
+                            to see how different models—from simple statistical methods to advanced foundation 
+                            models—attempt to predict the future.
+                        </p>
+                        <div class="forecasting-demo">
+                            <div class="demo-controls">
+                                <button class="demo-btn active" data-series="trend">Trending</button>
+                                <button class="demo-btn" data-series="seasonal">Seasonal</button>
+                                <button class="demo-btn" data-series="volatile">Volatile</button>
+                                <button class="demo-btn" data-series="draw">Draw Your Own</button>
+                            </div>
+                            <div class="demo-chart-container">
+                                <canvas id="forecastingCanvas"></canvas>
+                                <div class="drawing-overlay" id="drawingOverlay" style="display: none;">
+                                    <canvas id="drawingCanvas"></canvas>
+                                </div>
+                            </div>
+                            <div class="model-selector">
+                                <label>Select Model:</label>
+                                <select id="modelSelect">
+                                    <option value="naive">Naive (Baseline)</option>
+                                    <option value="arima">AutoARIMA</option>
+                                    <option value="ets">AutoETS</option>
+                                    <option value="patchtst">PatchTST</option>
+                                    <option value="chronos" selected>Chronos (Foundation Model)</option>
+                                </select>
+                                <button class="forecast-btn" id="forecastBtn">Generate Forecast</button>
+                            </div>
+                            <div class="forecast-metrics" id="forecastMetrics" style="display: none;">
+                                <div class="metric">
+                                    <span class="metric-label">MAE:</span>
+                                    <span class="metric-value" id="maeValue">-</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">MAPE:</span>
+                                    <span class="metric-value" id="mapeValue">-</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">Confidence:</span>
+                                    <span class="metric-value" id="confidenceValue">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h2>The Forecasting Revolution</h2>
+                    
+                    <p>
+                        In 2024, millions evacuated their homes in Florida based on AI weather predictions. 
+                        The model responsible? GraphCast, a foundation model that predicted Hurricane Milton's 
+                        landfall 18 hours earlier than traditional methods. This is the promise of foundation 
+                        models—massive neural networks that learn universal patterns from vast datasets and 
+                        apply them to new, unseen problems.
+                    </p>
+                    
+                    <p>
+                        My research at ING Bank explored whether this same revolution could transform financial 
+                        forecasting. Could a model trained on diverse time series—from electricity consumption 
+                        to heartbeat patterns—accurately predict bank account balances it had never seen before?
+                    </p>
+
+                    <h2>From Words to Numbers: The Chronos Framework</h2>
+                    
+                    <p>
+                        The key innovation lies in treating time series like language. Just as ChatGPT predicts 
+                        the next word in a sentence, Chronos predicts the next value in a sequence. But there's 
+                        a catch: language has a finite vocabulary, while numerical values are infinite. How do 
+                        we bridge this gap?
+                    </p>
+
+                    <!-- Tokenization Visualizer -->
+                    <div class="tokenization-visualizer">
+                        <h3>How Chronos Learns the Language of Time</h3>
+                        <div class="tokenization-steps">
+                            <div class="token-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Original Time Series</h4>
+                                    <div class="mini-chart" id="originalSeries"></div>
+                                    <p>Raw numerical values: [142.3, 145.7, 139.2, ...]</p>
+                                </div>
+                            </div>
+                            <div class="token-arrow">→</div>
+                            <div class="token-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Mean Scaling</h4>
+                                    <div class="mini-chart" id="scaledSeries"></div>
+                                    <p>Normalized values: [0.98, 1.01, 0.96, ...]</p>
+                                </div>
+                            </div>
+                            <div class="token-arrow">→</div>
+                            <div class="token-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>Quantization</h4>
+                                    <div class="token-grid" id="tokenGrid">
+                                        <div class="token">T245</div>
+                                        <div class="token">T267</div>
+                                        <div class="token">T234</div>
+                                        <div class="token">T251</div>
+                                    </div>
+                                    <p>Discrete tokens from finite vocabulary</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tokenization-explanation">
+                            <p>
+                                <strong>The magic happens through quantization:</strong> continuous values are mapped 
+                                to a finite set of bins, creating a "vocabulary" of numerical tokens. This allows 
+                                the T5 language model architecture to process time series just like text.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h2>The Experiment: 278 Financial Time Series</h2>
+                    
+                    <p>
+                        Working with ING's transaction data, I analyzed 278 aggregated account balance time 
+                        series spanning nearly three years. Each series represented complex financial behaviors—
+                        from steady corporate accounts to volatile trading portfolios. The challenge: could 
+                        Chronos, without any training on this specific data, outperform models explicitly 
+                        designed and trained for this task?
+                    </p>
+
+                    <!-- Code Example -->
+                    <div class="code-example">
+                        <h4>Setting Up the Forecasting Pipeline</h4>
+                        <pre><code class="language-python"># Initialize Chronos for zero-shot forecasting
+from chronos import ChronosPipeline
+
+# Load pre-trained model (710M parameters)
+pipeline = ChronosPipeline.from_pretrained(
+    "amazon/chronos-t5-large",
+    device="cuda",
+    torch_dtype=torch.float32
+)
+
+# Prepare financial time series
+context_length = 15 * forecast_horizon  # 450 days for 30-day forecast
+time_series = prepare_data(account_balances, 
+                          scaling="minmax",
+                          handle_missing="forward_fill")
+
+# Generate probabilistic forecasts
+forecast = pipeline.predict(
+    context=time_series[-context_length:],
+    prediction_length=30,
+    num_samples=100  # For confidence intervals
+)
+
+# Extract predictions and confidence bounds
+median_forecast = forecast.median(axis=0)
+lower_bound = forecast.quantile(0.1, axis=0)  # 90% CI
+upper_bound = forecast.quantile(0.9, axis=0)</code></pre>
+                    </div>
+
+                    <h2>The Results: Surprising Success, Unexpected Weakness</h2>
+                    
+                    <p>
+                        The results challenged my expectations. Chronos achieved remarkable zero-shot performance, 
+                        matching or exceeding specialized models across multiple forecasting horizons. But this 
+                        success came with a surprising caveat.
+                    </p>
+
+                    <!-- Performance Comparison Visualizer -->
+                    <div class="performance-explorer">
+                        <h3>Model Performance Across Forecasting Horizons</h3>
+                        <div class="horizon-selector">
+                            <button class="horizon-btn active" data-horizon="1">1 Day</button>
+                            <button class="horizon-btn" data-horizon="7">7 Days</button>
+                            <button class="horizon-btn" data-horizon="14">14 Days</button>
+                            <button class="horizon-btn" data-horizon="30">30 Days</button>
+                        </div>
+                        <div class="performance-chart-container">
+                            <div id="performanceChart"></div>
+                        </div>
+                        <div class="performance-insights">
+                            <div class="insight-card">
+                                <i class="fas fa-trophy"></i>
+                                <div class="insight-content">
+                                    <h4>Best Performer</h4>
+                                    <p id="bestPerformer">Chronos-Large</p>
+                                </div>
+                            </div>
+                            <div class="insight-card">
+                                <i class="fas fa-chart-line"></i>
+                                <div class="insight-content">
+                                    <h4>Average MAPE</h4>
+                                    <p id="avgMape">18.35%</p>
+                                </div>
+                            </div>
+                            <div class="insight-card">
+                                <i class="fas fa-percentage"></i>
+                                <div class="insight-content">
+                                    <h4>vs. Baseline</h4>
+                                    <p id="vsBaseline">-15.2%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <blockquote>
+                        "Chronos achieved an 18.35% MAPE on 30-day forecasts—outperforming every baseline 
+                        model without seeing a single training example from our financial dataset."
+                    </blockquote>
+
+                    <h2>The Confidence Crisis</h2>
+                    
+                    <p>
+                        But here's where things get interesting. While Chronos excelled at point predictions, 
+                        its confidence intervals told a different story. The model was consistently overconfident, 
+                        producing narrow uncertainty bands that failed to capture the true variability of 
+                        financial data.
+                    </p>
+
+                    <!-- Confidence Calibration Interactive -->
+                    <div class="calibration-explorer">
+                        <h3>The Overconfidence Problem</h3>
+                        <p class="calibration-intro">
+                            Explore how different models estimate uncertainty. Well-calibrated models should 
+                            have their predictions fall within confidence intervals at the expected rate.
+                        </p>
+                        <div class="calibration-controls">
+                            <label>Confidence Level:</label>
+                            <div class="confidence-selector">
+                                <button class="conf-btn" data-conf="60">60%</button>
+                                <button class="conf-btn" data-conf="70">70%</button>
+                                <button class="conf-btn active" data-conf="80">80%</button>
+                                <button class="conf-btn" data-conf="90">90%</button>
+                            </div>
+                        </div>
+                        <div class="calibration-chart-container">
+                            <canvas id="calibrationChart"></canvas>
+                        </div>
+                        <div class="calibration-explanation">
+                            <div class="calib-example good">
+                                <div class="calib-icon">✓</div>
+                                <div class="calib-text">
+                                    <strong>Well-Calibrated:</strong> 90% CI captures ~90% of actual values
+                                </div>
+                            </div>
+                            <div class="calib-example bad">
+                                <div class="calib-icon">✗</div>
+                                <div class="calib-text">
+                                    <strong>Overconfident:</strong> 90% CI captures only ~60% of actual values
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>Understanding the Patterns</h2>
+                    
+                    <p>
+                        Financial time series aren't created equal. Some follow predictable seasonal patterns—
+                        think monthly salary deposits or quarterly tax payments. Others exhibit high entropy, 
+                        bouncing unpredictably with market movements. How do different models handle this 
+                        diversity?
+                    </p>
+
+                    <!-- Seasonality and Entropy Explorer -->
+                    <div class="pattern-explorer">
+                        <h3>Time Series Characteristics vs. Model Performance</h3>
+                        <div class="pattern-tabs">
+                            <button class="pattern-tab active" data-pattern="seasonal">Seasonality</button>
+                            <button class="pattern-tab" data-pattern="entropy">Entropy</button>
+                            <button class="pattern-tab" data-pattern="trend">Trend</button>
+                        </div>
+                        <div class="pattern-content">
+                            <div id="patternVisualization"></div>
+                            <div class="pattern-insights">
+                                <p id="patternInsight">
+                                    Models perform best on series with clear seasonal patterns. Foundation 
+                                    models show particular strength in detecting hidden periodicities that 
+                                    traditional methods miss.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>Lessons from the Frontier</h2>
+                    
+                    <p>
+                        This research reveals both the promise and pitfalls of applying foundation models to 
+                        financial forecasting. The key insights:
+                    </p>
+                    
+                    <div class="key-findings">
+                        <div class="finding">
+                            <div class="finding-number">1</div>
+                            <div class="finding-content">
+                                <h4>Zero-Shot Superiority</h4>
+                                <p>
+                                    Foundation models can match or exceed task-specific models without any 
+                                    training on financial data, suggesting they learn universal temporal patterns.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="finding">
+                            <div class="finding-number">2</div>
+                            <div class="finding-content">
+                                <h4>The Uncertainty Gap</h4>
+                                <p>
+                                    While accurate in point predictions, foundation models struggle with 
+                                    uncertainty quantification—critical for risk management applications.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="finding">
+                            <div class="finding-number">3</div>
+                            <div class="finding-content">
+                                <h4>Fine-Tuning Paradox</h4>
+                                <p>
+                                    Surprisingly, fine-tuning Chronos on financial data didn't improve 
+                                    performance—and actually worsened confidence calibration.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="finding">
+                            <div class="finding-number">4</div>
+                            <div class="finding-content">
+                                <h4>Context Matters</h4>
+                                <p>
+                                    Performance varies dramatically based on time series characteristics. 
+                                    Simple patterns favor traditional methods; complex patterns favor foundation models.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>The Future of Financial Forecasting</h2>
+                    
+                    <p>
+                        As foundation models continue to evolve, their role in financial forecasting will likely 
+                        expand. The ability to leverage patterns learned from diverse domains—applying lessons 
+                        from weather patterns to stock movements, or from heartbeats to transaction flows—opens 
+                        new possibilities for understanding financial dynamics.
+                    </p>
+                    
+                    <p>
+                        Yet challenges remain. The overconfidence problem isn't just a technical issue—it's a 
+                        fundamental question about how these models understand uncertainty. Future research must 
+                        address this gap before foundation models can be trusted with critical financial decisions.
+                    </p>
+
+                    <!-- Interactive Model Comparison Tool -->
+                    <div class="model-comparison-tool">
+                        <h3>Compare Models Head-to-Head</h3>
+                        <p>Select two models to compare their strengths and weaknesses across different metrics.</p>
+                        <div class="comparison-selectors">
+                            <div class="model-select-group">
+                                <label>Model A:</label>
+                                <select id="modelA">
+                                    <option value="chronos-large" selected>Chronos-Large</option>
+                                    <option value="chronos-small">Chronos-Small</option>
+                                    <option value="patchtst">PatchTST</option>
+                                    <option value="nhits">NHITS</option>
+                                    <option value="deepar">DeepAR</option>
+                                    <option value="arima">AutoARIMA</option>
+                                    <option value="ets">AutoETS</option>
+                                    <option value="naive">Naive</option>
+                                </select>
+                            </div>
+                            <div class="vs-indicator">VS</div>
+                            <div class="model-select-group">
+                                <label>Model B:</label>
+                                <select id="modelB">
+                                    <option value="patchtst" selected>PatchTST</option>
+                                    <option value="chronos-large">Chronos-Large</option>
+                                    <option value="chronos-small">Chronos-Small</option>
+                                    <option value="nhits">NHITS</option>
+                                    <option value="deepar">DeepAR</option>
+                                    <option value="arima">AutoARIMA</option>
+                                    <option value="ets">AutoETS</option>
+                                    <option value="naive">Naive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="comparison-radar">
+                            <canvas id="radarChart"></canvas>
+                        </div>
+                        <div class="comparison-summary" id="comparisonSummary">
+                            <p>
+                                <strong>Chronos-Large</strong> excels in accuracy across all horizons but struggles 
+                                with confidence calibration. <strong>PatchTST</strong> offers better uncertainty 
+                                estimates at the cost of slightly lower accuracy.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h2>Practical Implications</h2>
+                    
+                    <p>
+                        For practitioners in financial institutions, these findings suggest a nuanced approach 
+                        to adopting foundation models:
+                    </p>
+                    
+                    <ul>
+                        <li><strong>For point forecasting:</strong> Foundation models offer immediate value, 
+                        especially for diverse portfolios where training individual models is impractical.</li>
+                        
+                        <li><strong>For risk assessment:</strong> Traditional methods or calibrated deep learning 
+                        models remain more reliable due to better uncertainty quantification.</li>
+                        
+                        <li><strong>For rapid prototyping:</strong> Zero-shot capabilities enable quick 
+                        experimentation without extensive data preparation or training.</li>
+                        
+                        <li><strong>For production systems:</strong> Consider ensemble approaches that combine 
+                        foundation model accuracy with traditional model reliability.</li>
+                    </ul>
+
+                    <div class="code-example">
+                        <h4>A Practical Ensemble Approach</h4>
+                        <pre><code class="language-python"># Combine foundation model accuracy with traditional uncertainty
+class EnsembleForecaster:
+    def __init__(self):
+        self.chronos = ChronosPipeline.from_pretrained("amazon/chronos-t5-large")
+        self.arima = AutoARIMA(season_length=[7, 30])
+        
+    def forecast(self, time_series, horizon=30):
+        # Get point predictions from Chronos
+        chronos_pred = self.chronos.predict(
+            time_series, 
+            prediction_length=horizon
+        ).median(axis=0)
+        
+        # Get confidence intervals from ARIMA
+        arima_fit = self.arima.fit(time_series)
+        arima_intervals = arima_fit.predict_interval(horizon)
+        
+        # Combine: Chronos accuracy + ARIMA uncertainty
+        return {
+            'prediction': chronos_pred,
+            'lower_bound': chronos_pred - (arima_intervals.width / 2),
+            'upper_bound': chronos_pred + (arima_intervals.width / 2),
+            'confidence': 0.9
+        }
+
+# Usage
+forecaster = EnsembleForecaster()
+results = forecaster.forecast(account_balances, horizon=30)
+print(f"30-day forecast: {results['prediction'][-1]:.2f}")
+print(f"90% CI: [{results['lower_bound'][-1]:.2f}, {results['upper_bound'][-1]:.2f}]")</code></pre>
+                    </div>
+
+                    <h2>Conclusion: The Dawn of a New Era</h2>
+                    
+                    <p>
+                        The success of foundation models in financial forecasting marks a paradigm shift. We're 
+                        moving from an era of specialized, task-specific models to one where general-purpose AI 
+                        systems can tackle diverse prediction challenges out of the box.
+                    </p>
+                    
+                    <p>
+                        Yet this shift brings new responsibilities. As these models become more powerful, 
+                        understanding their limitations becomes crucial. The overconfidence problem I discovered 
+                        isn't just a technical curiosity—it's a warning that even the most advanced AI systems 
+                        have blind spots.
+                    </p>
+                    
+                    <p>
+                        The future of financial forecasting lies not in choosing between traditional methods and 
+                        foundation models, but in understanding how to combine their complementary strengths. As 
+                        we stand at this crossroads, one thing is clear: the language of time has found a new 
+                        translator, and finance will never be the same.
+                    </p>
+
+                    <div class="research-links">
+                        <h3>Explore Further</h3>
+                        <div class="link-cards">
+                            <a href="https://github.com/didiermerk/forecasting" target="_blank" class="link-card">
+                                <i class="fab fa-github"></i>
+                                <div>
+                                    <h4>Code Repository</h4>
+                                    <p>Full implementation and experiments</p>
+                                </div>
+                            </a>
+                            <a href="https://arxiv.org/abs/2403.07815" target="_blank" class="link-card">
+                                <i class="fas fa-file-alt"></i>
+                                <div>
+                                    <h4>Chronos Paper</h4>
+                                    <p>Original foundation model research</p>
+                                </div>
+                            </a>
+                            <a href="#" class="link-card">
+                                <i class="fas fa-graduation-cap"></i>
+                                <div>
+                                    <h4>Full Thesis</h4>
+                                    <p>Complete research document</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        
+        <!-- Divider between article and about section -->
+        <div class="section-divider"></div>
+        
+        <!-- About Author Section -->
+        <section class="about-author-section" id="about-author">
+            <div class="about-author-wrapper">
+                <img src="../../assets/images/avatar.jpg" alt="Didier Merk" class="author-large-photo">
+                <div class="author-details">
+                    <h2>About the Author</h2>
+                    <p>
+                        Didier Merk completed his MSc in Artificial Intelligence at the University of Amsterdam, 
+                        specializing in foundation models for time series forecasting. This research was conducted 
+                        at ING Bank's Wholesale Banking Advanced Analytics department, where he explored the 
+                        application of large language models to financial prediction tasks.
+                    </p>
+                    <div class="author-social-links">
+                        <a href="https://x.com/hallometdidier" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://github.com/didiermerk" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/didier-merk/" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://scholar.google.com/citations?user=vzgjYysAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
+                            <i class="fas fa-graduation-cap"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Divider between about and related sections -->
+        <div class="section-divider"></div>
+        
+        <!-- Related Articles -->
+        <section class="related-articles-section" id="related-articles">
+            <div class="related-articles-container">
+                <h2>Related Articles</h2>
+                <div class="related-articles-grid">
+                    <article class="related-article-card">
+                        <div class="related-article-meta">
+                            <span class="category">Machine Learning</span>
+                            <span class="date">November 15, 2024</span>
+                        </div>
+                        <h3><a href="#">Foundation Models in Production: Lessons from Deploying LLMs at Scale</a></h3>
+                        <p>Practical insights from implementing large language models in enterprise environments.</p>
+                    </article>
+                    
+                    <article class="related-article-card">
+                        <div class="related-article-meta">
+                            <span class="category">Finance</span>
+                            <span class="date">October 8, 2024</span>
+                        </div>
+                        <h3><a href="#">The Hidden Patterns in Transaction Data: A Deep Learning Perspective</a></h3>
+                        <p>Exploring how neural networks uncover behavioral patterns in financial time series.</p>
+                    </article>
+                    
+                    <article class="related-article-card">
+                        <div class="related-article-meta">
+                            <span class="category">Research</span>
+                            <span class="date">September 22, 2024</span>
+                        </div>
+                        <h3><a href="#">Beyond Accuracy: Why Uncertainty Quantification Matters in AI</a></h3>
+                        <p>Understanding the importance of confidence intervals in machine learning predictions.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="blog-footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="mailto:didier.merk@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+                <a href="https://x.com/hallometdidier" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="https://github.com/didiermerk" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://www.linkedin.com/in/didier-merk/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </div>
+            <p>&copy; 2025 Didier Merk. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Back to Top -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <!-- Share Menu -->
+    <div class="share-menu" id="shareMenu">
+        <a href="#" class="share-option" data-platform="twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="share-option" data-platform="linkedin">
+            <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="#" class="share-option" data-platform="copy">
+            <i class="fas fa-link"></i>
+        </a>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="../js/blog.js"></script>
+    <script src="data/sample-data.js"></script>
+    <script src="js/forecasting-blog.js"></script>
+</body>
+</html>

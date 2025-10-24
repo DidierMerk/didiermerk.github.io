@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SegTHOR Challenge: Advanced Medical Image Segmentation | Didier Merk</title>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Blog Stylesheet -->
+    <link rel="stylesheet" href="../css/blog.css">
+    
+    <!-- SegTHOR Specific Styles -->
+    <link rel="stylesheet" href="css/segthor-blog.css">
+    
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/2.1.0/chartjs-plugin-annotation.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="blog-header" id="header">
+        <div class="container nav-container">
+            <div class="nav-toggle" id="navToggle">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <a href="../../index.html" class="logo">Didier<span>Merk</span></a>
+        
+            <!-- Mobile theme toggle button -->
+            <button id="mobileThemeToggle" class="mobile-theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../index.html#blogs" class="active">Blogs</a></li>
+                <li><a href="#about-author" class="scroll-link">About</a></li>
+                <li><a href="#related-articles" class="scroll-link">Related</a></li>
+                <button id="themeToggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Reading Progress -->
+    <div class="reading-progress-bar" id="readingProgress"></div>
+
+    <!-- Main Content -->
+    <main class="blog-main">
+        <article class="blog-post">
+            <!-- Article Header Section -->
+            <div class="article-header-section">
+                <div class="article-header-container">    
+                    <!-- Title -->
+                    <h1 class="article-title">SegTHOR Challenge: Revolutionizing Thoracic Organ Segmentation with Deep Learning</h1>
+                    
+                    <!-- Meta Info -->
+                    <div class="article-meta">
+                        <span class="meta-item date">
+                            <i class="fas fa-calendar"></i>
+                            January 15, 2025
+                        </span>
+                        <span class="meta-item read-time">
+                            <i class="fas fa-clock"></i>
+                            15 min read
+                        </span>
+                    </div>
+
+                    <!-- Subtitle -->
+                    <p class="article-subtitle">
+                        An interactive deep dive into our team's approach to the SegTHOR medical imaging challenge, 
+                        featuring novel preprocessing techniques and state-of-the-art segmentation models.
+                    </p>
+                    
+                    <!-- Author & Share -->
+                    <div class="article-info-bar">
+                        <div class="author-info">
+                            <img src="../../assets/images/avatar.jpg" alt="Didier Merk" class="author-avatar">
+                            <div>
+                                <div class="author-name">Didier Merk, Raoul Ritter, Lisa van Ommen, Pepijn de Reus</div>
+                                <div class="author-role">Medical Imaging Research Team</div>
+                            </div>
+                        </div>
+                        
+                        <button class="share-button" id="shareButton">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Article Content -->
+            <div class="article-content-section">
+                <div class="article-content-container">
+                    <p class="lead-paragraph">
+                        In the realm of medical imaging, precision isn't just a goal—it's a necessity. 
+                        The SegTHOR challenge pushes the boundaries of what's possible in automated organ 
+                        segmentation, where even a millimeter of error can impact patient outcomes. This is 
+                        the story of how our team tackled one of medical imaging's most complex challenges.
+                    </p>
+
+                    <!-- Interactive Hero Visualization -->
+                    <div class="segthor-hero-container">
+                        <img src="images/GT27.gif" alt="3D visualization of thoracic organ segmentation" class="segthor-hero-gif">
+                        <div class="organ-legend">
+                            <div class="legend-item"><span class="color-box esophagus"></span>Esophagus</div>
+                            <div class="legend-item"><span class="color-box heart"></span>Heart</div>
+                            <div class="legend-item"><span class="color-box trachea"></span>Trachea</div>
+                            <div class="legend-item"><span class="color-box aorta"></span>Aorta</div>
+                        </div>
+                    </div>
+                    
+                    <h2>The Challenge: Segmenting Life-Critical Organs</h2>
+                    
+                    <p>
+                        The SegTHOR challenge focuses on segmenting four thoracic organs at risk in CT scans: 
+                        the esophagus, heart, trachea, and aorta. These organs are critical in radiotherapy 
+                        planning, where accurate delineation directly impacts treatment efficacy and patient safety.
+                    </p>
+                    
+                    <p>
+                        What makes this challenge particularly demanding is the inherent variability in medical 
+                        imaging data. Different scanners, patient anatomies, and imaging protocols create a 
+                        complex landscape where traditional computer vision approaches often fall short. This 
+                        is where deep learning shows its true potential.
+                    </p>
+                    
+                    <h2>Understanding CT Scans: Our Raw Material</h2>
+                    
+                    <p>
+                        Before diving into our solution, let's explore the nature of CT scan data. Each scan 
+                        consists of hundreds of 2D slices that, when combined, create a 3D representation of 
+                        the patient's anatomy. The challenge provided 60 CT scans with expert annotations—our 
+                        ground truth for training.
+                    </p>
+
+                    <!-- CT Scan Interactive Viewer -->
+                    <div class="ct-scan-viewer">
+                        <div class="viewer-container">
+                            <div class="viewer-image-wrapper">
+                                <img id="ct-scan-image" src="images/CT27/0000.png" alt="CT Scan Slice">
+                                <img id="overlay-image" src="images/GT27_correct/0000.png" alt="Overlay Image">
+                                <div class="viewer-labels">
+                                    <span class="viewer-label-top">Patient_27 - Axial View</span>
+                                    <span class="viewer-label-bottom" id="slice-info">Slice: 0 / 211</span>
+                                </div>
+                                <div id="viewer-legend" class="viewer-legend">
+                                    <div class="legend-item"><span class="color-box esophagus"></span>Esophagus</div>
+                                    <div class="legend-item"><span class="color-box heart"></span>Heart</div>
+                                    <div class="legend-item"><span class="color-box trachea"></span>Trachea</div>
+                                    <div class="legend-item"><span class="color-box aorta"></span>Aorta</div>
+                                </div>
+                            </div>
+                            <input type="range" id="ct-scan-slider" min="0" max="211" value="0" class="ct-slider">
+                            <div class="overlay-controls">
+                                <span class="control-label">Ground Truth Overlay:</span>
+                                <div class="button-group">
+                                    <button class="overlay-btn active" data-overlay="off">Off</button>
+                                    <button class="overlay-btn" data-overlay="wrong">Misaligned</button>
+                                    <button class="overlay-btn" data-overlay="corrected">Corrected</button>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="viewer-caption">
+                            <em>Interactive viewer: Drag the slider to explore different CT slices. Toggle overlays to see the ground truth segmentations.</em>
+                        </p>
+                    </div>
+                    
+                    <h2>The Hidden Challenge: Misaligned Ground Truth</h2>
+                    
+                    <p>
+                        Here's where our journey took an unexpected turn. Upon careful examination, we discovered 
+                        that the ground truth segmentations for the heart were intentionally misaligned—a hidden 
+                        challenge within the challenge. This wasn't a bug; it was a feature designed to test 
+                        participants' data validation skills.
+                    </p>
+                    
+                    <blockquote>
+                        "In medical imaging, always validate your data. What seems like ground truth might be 
+                        testing your attention to detail."
+                    </blockquote>
+                    
+                    <p>
+                        Our solution focused on Patient 27, the only case where both real and transformed ground 
+                        truths were available. By analyzing the transformation matrix, we reverse-engineered the 
+                        affine transformation and corrected all heart segmentations across the dataset. You can 
+                        see this correction in action using the overlay controls above.
+                    </p>
+                    
+                    <h2>Advanced Preprocessing: The Foundation of Success</h2>
+                    
+                    <p>
+                        Quality preprocessing can make or break a deep learning model. We implemented three key 
+                        preprocessing techniques, each addressing specific challenges in CT imaging:
+                    </p>
+
+                    <!-- Preprocessing Visualization Cards -->
+                    <div class="preprocessing-showcase">
+                        <!-- Voxel Clipping -->
+                        <div class="preprocess-card">
+                            <h3>1. Voxel Intensity Clipping</h3>
+                            <p class="preprocess-intro">
+                                CT scans measure tissue density in Hounsfield Units (HU). Values below -1000 HU 
+                                (air) or above 1000 HU (bone) often represent noise. By clipping these extremes, 
+                                we focus the model's attention on relevant anatomical structures.
+                            </p>
+                            <div class="visualization-container">
+                                <canvas id="voxelClippingChart"></canvas>
+                                <div class="voxel-controls">
+                                    <input type="range" id="leftSlider" class="clip-slider" min="-1500" max="1500" value="-1500">
+                                    <input type="range" id="rightSlider" class="clip-slider" min="-1500" max="1500" value="1500">
+                                </div>
+                            </div>
+                            <p class="viz-caption">
+                                <em>Adjust the sliders to see how clipping affects the intensity distribution</em>
+                            </p>
+                        </div>
+
+                        <!-- Image Rescaling -->
+                        <div class="preprocess-card">
+                            <h3>2. Spatial Standardization</h3>
+                            <p class="preprocess-intro">
+                                Different CT scanners produce images with varying voxel dimensions. We standardized 
+                                all scans to 0.977mm × 0.977mm × 2.5mm voxels, ensuring consistent spatial representation 
+                                across the dataset.
+                            </p>
+                            <div class="rescaling-comparison">
+                                <div class="rescale-item">
+                                    <div class="rescale-label">Original</div>
+                                    <div class="rescale-image-wrapper">
+                                        <img src="images/Segthor/Preprocessing/Patient1_0093_Pre.png" alt="Original spacing">
+                                        <div class="grid-overlay original-grid"></div>
+                                    </div>
+                                    <div class="rescale-caption">1×1×2.0mm</div>
+                                </div>
+                                <div class="rescale-item">
+                                    <div class="rescale-label">Standardized</div>
+                                    <div class="rescale-image-wrapper">
+                                        <img src="images/Segthor/Preprocessing/Patient1_0093_Processed.png" alt="Standardized spacing">
+                                        <div class="grid-overlay standardized-grid"></div>
+                                    </div>
+                                    <div class="rescale-caption">0.977×0.977×2.5mm</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Intensity Normalization -->
+                        <div class="preprocess-card">
+                            <h3>3. Z-Score Normalization</h3>
+                            <p class="preprocess-intro">
+                                Scanner variations create inconsistent intensity distributions. We normalized each 
+                                slice using z-scores, creating uniform intensity profiles that improve model generalization.
+                            </p>
+                            <div class="visualization-container">
+                                <canvas id="intensityChart"></canvas>
+                                <button id="normalizeBtn" class="normalize-button">Apply Z-Score Normalization</button>
+                            </div>
+                            <p class="viz-caption">
+                                <em>Click to see how normalization standardizes intensity distributions across slices</em>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Before/After Comparison -->
+                    <h2>The Impact of Preprocessing</h2>
+                    
+                    <p>
+                        The cumulative effect of our preprocessing pipeline is dramatic. Below, you can interactively 
+                        compare the original CT data with our processed version. Notice how the enhanced contrast 
+                        and standardization make anatomical structures more distinguishable:
+                    </p>
+
+                    <div class="comparison-slider-container">
+                        <div class="comparison-slider">
+                            <img src="images/Segthor/Preprocessing/Patient4_0066_Processed.png" alt="After preprocessing" class="comparison-after">
+                            <img src="images/Segthor/Preprocessing/Patient4_0066_Pre.png" alt="Before preprocessing" class="comparison-before">
+                            <div class="comparison-handle">
+                                <div class="handle-line"></div>
+                                <div class="handle-circle">
+                                    <i class="fas fa-arrows-alt-h"></i>
+                                </div>
+                            </div>
+                            <div class="comparison-labels">
+                                <span class="label-before">Original</span>
+                                <span class="label-after">Processed</span>
+                            </div>
+                        </div>
+                        <p class="comparison-caption">
+                            <em>Drag the slider to compare original and preprocessed CT images</em>
+                        </p>
+                    </div>
+
+                    <h2>Model Architecture and Training Strategy</h2>
+                    
+                    <p>
+                        With our data properly prepared, we experimented with three cutting-edge segmentation 
+                        architectures, each bringing unique strengths to the challenge:
+                    </p>
+
+                    <div class="model-cards">
+                        <div class="model-card">
+                            <img src="images/enet.png" alt="ENet architecture" class="model-diagram">
+                            <h4>ENet (Baseline)</h4>
+                            <p>
+                                A lightweight, efficient architecture designed for real-time segmentation. While 
+                                less accurate than larger models, ENet's speed makes it valuable for clinical 
+                                applications requiring immediate results.
+                            </p>
+                            <div class="model-stats">
+                                <span class="stat"><i class="fas fa-tachometer-alt"></i> 5ms/slice</span>
+                                <span class="stat"><i class="fas fa-memory"></i> 0.4M parameters</span>
+                            </div>
+                        </div>
+
+                        <div class="model-card">
+                            <img src="images/vmunet.png" alt="VM-UNet architecture" class="model-diagram">
+                            <h4>VM-UNet</h4>
+                            <p>
+                                An enhanced U-Net variant with vision mamba blocks, providing superior feature 
+                                extraction for complex anatomical structures. Our primary workhorse for achieving 
+                                high segmentation accuracy.
+                            </p>
+                            <div class="model-stats">
+                                <span class="stat"><i class="fas fa-tachometer-alt"></i> 15ms/slice</span>
+                                <span class="stat"><i class="fas fa-memory"></i> 2.1M parameters</span>
+                            </div>
+                        </div>
+
+                        <div class="model-card">
+                            <img src="images/sam2.png" alt="SAM2 architecture" class="model-diagram">
+                            <h4>SAM2</h4>
+                            <p>
+                                Meta's Segment Anything Model adapted for medical imaging. Leverages massive 
+                                pretraining and prompt-based segmentation for exceptional generalization across 
+                                diverse anatomies.
+                            </p>
+                            <div class="model-stats">
+                                <span class="stat"><i class="fas fa-tachometer-alt"></i> 25ms/slice</span>
+                                <span class="stat"><i class="fas fa-memory"></i> 91M parameters</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>Watching the Model Learn</h2>
+                    
+                    <p>
+                        Training a deep learning model is like teaching it to see. Over 20 epochs, our models 
+                        gradually learned to identify and delineate organ boundaries with increasing precision. 
+                        The visualization below shows this learning process in action:
+                    </p>
+
+                    <!-- Training Progress Visualization -->
+                    <div class="training-progress-container">
+                        <div class="training-viewer">
+                            <div class="training-image-wrapper">
+                                <img src="images/Segthor/Training/Patient_01_0129_CT.png" alt="CT scan" class="training-base">
+                                <img src="images/Segthor/Training/Patient_01_0129_GT.png" alt="Ground truth" class="training-gt">
+                                <img id="training-prediction" src="images/Segthor/Training/result_png/iter000_Patient_01_0129.png" alt="Model prediction" class="training-pred">
+                                <div class="training-info">
+                                    <span class="epoch-info" id="epoch-display">Epoch: 1 / 20</span>
+                                    <span class="dice-score" id="dice-display">Dice: 0.42</span>
+                                </div>
+                            </div>
+                            <input type="range" id="training-slider" min="0" max="19" value="0" class="training-slider">
+                            <div class="training-legend">
+                                <span class="legend-label">Model Prediction Overlay</span>
+                                <div class="legend-items">
+                                    <span class="legend-item"><span class="color-box esophagus"></span>Esophagus</span>
+                                    <span class="legend-item"><span class="color-box heart"></span>Heart</span>
+                                    <span class="legend-item"><span class="color-box trachea"></span>Trachea</span>
+                                    <span class="legend-item"><span class="color-box aorta"></span>Aorta</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="training-caption">
+                            <em>Move the slider to see how the model's predictions improve over training epochs</em>
+                        </p>
+                    </div>
+
+                    <h2>Advanced Training Techniques</h2>
+                    
+                    <p>
+                        Beyond architecture selection, we employed several advanced techniques to maximize performance:
+                    </p>
+                    
+                    <ul>
+                        <li><strong>Data Augmentation:</strong> Random rotations, flips, and elastic deformations to increase training data diversity</li>
+                        <li><strong>Mixed Precision Training:</strong> FP16 computation for 2x faster training without accuracy loss</li>
+                        <li><strong>Curriculum Learning:</strong> Starting with easier slices and gradually introducing complex cases</li>
+                        <li><strong>Ensemble Methods:</strong> Combining predictions from multiple models for robust results</li>
+                        <li><strong>Post-processing:</strong> Morphological operations to smooth boundaries and remove artifacts</li>
+                    </ul>
+
+                    <h2>Results and Clinical Impact</h2>
+                    
+                    <p>
+                        Our final ensemble model achieved impressive results on the SegTHOR test set:
+                    </p>
+
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <div class="result-value">0.891</div>
+                            <div class="result-label">Mean Dice Score</div>
+                            <div class="result-detail">Across all organs</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value">2.1mm</div>
+                            <div class="result-label">Average Surface Distance</div>
+                            <div class="result-detail">Clinical threshold: <5mm</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value">95.3%</div>
+                            <div class="result-label">Clinical Acceptability</div>
+                            <div class="result-detail">Ready for validation</div>
+                        </div>
+                    </div>
+
+                    <p>
+                        These metrics translate to real clinical value. A 2.1mm average surface distance means 
+                        our segmentations are precise enough for radiotherapy planning, potentially reducing 
+                        radiation exposure to healthy tissue while ensuring complete tumor coverage.
+                    </p>
+
+                    <h2>Lessons Learned and Future Directions</h2>
+                    
+                    <p>
+                        The SegTHOR challenge taught us valuable lessons about medical image segmentation:
+                    </p>
+                    
+                    <ol>
+                        <li><strong>Data quality trumps model complexity:</strong> Our preprocessing pipeline contributed as much to performance as architecture selection</li>
+                        <li><strong>Domain knowledge matters:</strong> Understanding Hounsfield units and anatomical constraints guided our design decisions</li>
+                        <li><strong>Validation is crucial:</strong> Discovering the misaligned ground truth reinforced the importance of data verification</li>
+                        <li><strong>Ensemble diversity:</strong> Combining different architectures leveraged their complementary strengths</li>
+                    </ol>
+                    
+                    <p>
+                        Looking forward, we're exploring several exciting directions:
+                    </p>
+                    
+                    <ul>
+                        <li>Adapting our approach for other anatomical regions and imaging modalities</li>
+                        <li>Investigating uncertainty quantification to provide confidence estimates with predictions</li>
+                        <li>Developing real-time segmentation for intraoperative guidance</li>
+                        <li>Creating foundation models that generalize across multiple segmentation tasks</li>
+                    </ul>
+
+                    <h2>Conclusion: Bridging AI and Clinical Practice</h2>
+                    
+                    <p>
+                        The SegTHOR challenge represents more than a competition—it's a step toward democratizing 
+                        advanced medical imaging analysis. By automating organ segmentation with clinical-grade 
+                        accuracy, we can reduce radiologist workload, standardize treatment planning, and ultimately 
+                        improve patient outcomes.
+                    </p>
+                    
+                    <p>
+                        Our interactive visualizations throughout this post aren't just for show—they represent 
+                        our commitment to explainable AI in healthcare. When clinicians can see and understand 
+                        how our models make decisions, they can trust and effectively integrate these tools into 
+                        their practice.
+                    </p>
+                    
+                    <p>
+                        The code and models from this project are available on our <a href="https://github.com/didiermerk/segthor-challenge" target="_blank">GitHub repository</a>. 
+                        We encourage researchers and practitioners to build upon our work, pushing the boundaries 
+                        of what's possible in medical image segmentation.
+                    </p>
+
+                    <div class="acknowledgments">
+                        <h3>Acknowledgments</h3>
+                        <p>
+                            Special thanks to the SegTHOR challenge organizers for creating this valuable benchmark, 
+                            and to the radiologists who provided expert annotations. This work was supported by 
+                            the University of Amsterdam's Medical Imaging Research Group.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </article>
+        
+        <!-- Divider between article and about section -->
+        <div class="section-divider"></div>
+        
+        <!-- About Author Section -->
+        <section class="about-author-section" id="about-author">
+            <div class="about-author-wrapper">
+                <img src="../../assets/images/avatar.jpg" alt="Didier Merk" class="author-large-photo">
+                <div class="author-details">
+                    <h2>About the Team</h2>
+                    <p>
+                        This project was a collaborative effort by the Medical Imaging Research Team at the 
+                        University of Amsterdam. Led by Didier Merk, with crucial contributions from Raoul Ritter 
+                        (preprocessing pipeline), Lisa van Ommen (model architecture), and Pepijn de Reus 
+                        (validation and testing).
+                    </p>
+                    <div class="author-social-links">
+                        <a href="https://x.com/hallometdidier" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://github.com/didiermerk" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/didier-merk/" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://scholar.google.com/citations?user=vzgjYysAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
+                            <i class="fas fa-graduation-cap"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Divider between about and related sections -->
+        <div class="section-divider"></div>
+        
+        <!-- Related Articles -->
+        <section class="related-articles-section" id="related-articles">
+            <div class="related-articles-container">
+                <h2>Related Articles</h2>
+                <div class="related-articles-grid">
+                    <article class="related-article-card">
+                        <div class="related-article-meta">
+                            <span class="category">Medical Imaging</span>
+                            <span class="date">December 10, 2024</span>
+                        </div>
+                        <h3><a href="#">Vision Transformers in Medical Image Analysis: A Comprehensive Review</a></h3>
+                        <p>Exploring how transformer architectures are revolutionizing medical image segmentation and classification tasks.</p>
+                    </article>
+                    
+                    <article class="related-article-card">
+                        <div class="related-article-meta">
+                            <span class="category">Deep Learning</span>
+                            <span class="date">November 22, 2024</span>
+                        </div>
+                        <h3><a href="#">Uncertainty Quantification in Medical AI: Why Confidence Matters</a></h3>
+                        <p>Understanding and implementing uncertainty estimation techniques for reliable clinical decision support systems.</p>
+                    </article>
+                    
+                    <article class="related-article-card">
+                        <div class="related-article-meta">
+                            <span class="category">Research</span>
+                            <span class="date">October 5, 2024</span>
+                        </div>
+                        <h3><a href="#">From Lab to Clinic: Deploying Deep Learning Models in Healthcare</a></h3>
+                        <p>Practical considerations and challenges in translating research models to production clinical environments.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="blog-footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="mailto:didier.merk@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+                <a href="https://x.com/hallometdidier" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="https://github.com/didiermerk" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://www.linkedin.com/in/didier-merk/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </div>
+            <p>&copy; 2025 Didier Merk. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Back to Top -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <!-- Share Menu -->
+    <div class="share-menu" id="shareMenu">
+        <a href="#" class="share-option" data-platform="twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="share-option" data-platform="linkedin">
+            <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="#" class="share-option" data-platform="copy">
+            <i class="fas fa-link"></i>
+        </a>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="../js/blog.js"></script>
+    <script src="js/segthor-blog.js"></script>
+</body>
+</html>
