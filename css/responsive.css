@@ -463,6 +463,11 @@
     .container {
         padding: 0 1rem;
     }
+
+    .project-card {
+        flex: 0 0 calc(100vw - 2rem);
+        max-width: 100%;
+    }
     
     /* CRITICAL FIX: Use height: 100vh instead of min-height to prevent overflow */
     .hero {

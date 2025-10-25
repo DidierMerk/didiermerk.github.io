@@ -166,7 +166,6 @@ function animateOnScroll() {
 }
 
 // ===== PROJECTS CAROUSEL FUNCTIONALITY =====
-// ===== PROJECTS CAROUSEL FUNCTIONALITY - IMPROVED =====
 (function() {
     const carouselTrack = document.getElementById('projectsCarouselTrack');
     const carouselWrapper = document.querySelector('.projects-carousel-wrapper');
@@ -178,6 +177,20 @@ function animateOnScroll() {
     
     const cards = carouselTrack.querySelectorAll('.project-card');
     const cardCount = cards.length;
+
+    // Helper function to get actual card dimensions
+    function getCardDimensions() {
+        if (cards.length === 0) return { width: 380, gap: 24 };
+        
+        const firstCard = cards[0];
+        const cardWidth = firstCard.offsetWidth;
+        
+        // Calculate gap from CSS
+        const trackStyle = window.getComputedStyle(carouselTrack);
+        const gap = parseFloat(trackStyle.gap) || 24;
+        
+        return { width: cardWidth, gap: gap };
+    }
     
     // Create pagination dots
     function createPaginationDots() {
@@ -208,8 +221,7 @@ function animateOnScroll() {
     
     // Scroll to a specific card by index
     function scrollToCard(index) {
-        const cardWidth = 380; // Match the card width from CSS
-        const gap = 24; // 1.5rem = 24px gap
+        const { width: cardWidth, gap } = getCardDimensions();
         const scrollPosition = index * (cardWidth + gap);
         
         carouselTrack.scrollTo({
@@ -232,8 +244,7 @@ function animateOnScroll() {
     // Get the current card index based on scroll position
     function getCurrentCardIndex() {
         const scrollLeft = carouselTrack.scrollLeft;
-        const cardWidth = 380;
-        const gap = 24;
+        const { width: cardWidth, gap } = getCardDimensions();
         const cardTotalWidth = cardWidth + gap;
         
         // Calculate which card is most visible
@@ -251,8 +262,7 @@ function animateOnScroll() {
         
         const scrollLeft = carouselTrack.scrollLeft;
         const viewportWidth = carouselTrack.clientWidth;
-        const cardWidth = 380;
-        const gap = 24;
+        const { width: cardWidth, gap } = getCardDimensions();
         const cardTotalWidth = cardWidth + gap;
         
         // Calculate the range of visible cards
