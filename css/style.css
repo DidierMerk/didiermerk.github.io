@@ -1568,7 +1568,7 @@ header {
 
 /* Light mode adjustment for selection bar */
 .light-mode .carousel-selection-bar {
-    opacity: 0.4;
+    opacity: 1;
 }
 
 /* Light mode adjustments */

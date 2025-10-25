@@ -371,6 +371,38 @@
     .timeline-toggle {
         top: 5px;
     }
+
+    /* Make projects carousel full-width on mobile */
+    .projects .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    
+    /* Add padding back to the title only */
+    .projects .section-title {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    /* Add padding to carousel track for breathing room */
+    .projects-carousel-track {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        scroll-padding: 1rem; /* Ensures snap alignment accounts for padding */
+    }
+    
+    /* Adjust card width to fit mobile screens perfectly */
+    .project-card {
+        flex: 0 0 calc(100vw - 2rem); /* Full width minus padding */
+        max-width: calc(100vw - 2rem);
+        scroll-snap-align: start;
+    }
+    
+    /* Hide carousel fade gradients on very small screens */
+    .projects-carousel-wrapper::before,
+    .projects-carousel-wrapper::after {
+        display: none !important;
+    }
     
     .publication-title {
         font-size: 1.2rem;
