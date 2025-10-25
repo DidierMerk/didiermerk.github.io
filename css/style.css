@@ -1824,3 +1824,102 @@ footer {
     opacity: 1;
     transform: translateY(0);
 }
+
+/* ===== Blog Toast Notification ===== */
+.blog-toast {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10000;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 320px;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.blog-toast.show {
+    top: 90px;
+    opacity: 1;
+}
+
+.blog-toast-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+}
+
+.blog-toast-content i {
+    color: var(--secondary);
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.blog-toast-content span {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.blog-toast-close {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.blog-toast-close:hover {
+    color: var(--text-primary);
+    background-color: rgba(100, 255, 218, 0.1);
+}
+
+/* Light mode adjustments */
+.light-mode .blog-toast {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .blog-toast-close:hover {
+    background-color: rgba(0, 122, 204, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .blog-toast {
+        min-width: 280px;
+        max-width: calc(100% - 2rem);
+        left: 1rem;
+        right: 1rem;
+        transform: none;
+        padding: 0.875rem 1rem;
+    }
+    
+    .blog-toast.show {
+        top: 80px;
+    }
+    
+    .blog-toast-content span {
+        font-size: 0.9rem;
+    }
+    
+    .blog-toast-content i {
+        font-size: 1.1rem;
+    }
+}

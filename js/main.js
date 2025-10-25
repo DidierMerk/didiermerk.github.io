@@ -1017,3 +1017,51 @@ document.addEventListener('DOMContentLoaded', setActiveNav);
 window.addEventListener('resize', function() {
     updateExperienceSectionPosition();
 });
+
+// ===== BLOG TOAST NOTIFICATION =====
+document.addEventListener('DOMContentLoaded', function() {
+    const blogLinks = document.querySelectorAll('.blog-coming-soon');
+    const toast = document.getElementById('blogToast');
+    const closeButton = toast ? toast.querySelector('.blog-toast-close') : null;
+    let toastTimeout;
+    
+    if (!toast || blogLinks.length === 0) return;
+    
+    // Function to show toast
+    function showToast() {
+        if (toastTimeout) clearTimeout(toastTimeout);
+        
+        toast.classList.add('show');
+        
+        // Auto-hide after 3.5 seconds
+        toastTimeout = setTimeout(() => {
+            hideToast();
+        }, 3500);
+    }
+    
+    // Function to hide toast
+    function hideToast() {
+        toast.classList.remove('show');
+        if (toastTimeout) clearTimeout(toastTimeout);
+    }
+    
+    // Add click event to all blog links
+    blogLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            showToast();
+        });
+    });
+    
+    // Close button
+    if (closeButton) {
+        closeButton.addEventListener('click', hideToast);
+    }
+    
+    // Close on ESC key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && toast.classList.contains('show')) {
+            hideToast();
+        }
+    });
+});

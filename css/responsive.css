@@ -956,3 +956,57 @@
         text-decoration: underline;
     }
 }
+
+/* ============================================
+   EXTRA SMALL DEVICES (under 450px)
+   Simplified footer with icons only
+   ============================================ */
+@media (max-width: 449.98px) {
+    /* Hide all text content in footer links */
+    .footer-links a {
+        font-size: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transition: var(--transition);
+    }
+    
+    /* Make icons visible and properly sized */
+    .footer-links a i {
+        font-size: 1.2rem;
+        color: var(--secondary);
+    }
+    
+    /* Ensure icons stay visible */
+    .footer-links a i::before {
+        font-size: 1.2rem;
+    }
+    
+    /* Adjust footer-links layout */
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Make copyright text smaller but keep it visible */
+    footer p {
+        font-size: 0.75rem;
+        line-height: 1.4;
+    }
+    
+    /* Optional: Add hover effect for better UX */
+    .footer-links a:hover {
+        background-color: rgba(100, 255, 218, 0.1);
+    }
+    
+    /* Reduce footer padding on very narrow screens */
+    footer {
+        padding: 1.5rem 0;
+    }
+}
