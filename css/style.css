@@ -779,6 +779,244 @@ header {
     color: var(--secondary);
 }
 
+/* ===================================
+   SKILLS EXPANDABLE LIST STYLES
+   =================================== */
+
+.skills-expandable {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.skill-category {
+    position: relative;
+}
+
+.skill-category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+}
+
+.skill-category-header:hover {
+    padding-left: 0.5rem;
+}
+
+.skill-category-header h4 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.skill-category-header:hover h4 {
+    color: var(--accent);
+}
+
+.skill-chevron {
+    font-size: 0.9rem;
+    color: var(--accent);
+    transition: transform 0.3s ease;
+    opacity: 0.7;
+}
+
+.skill-category-header:hover .skill-chevron {
+    opacity: 1;
+}
+
+.skill-category[data-expanded="true"] .skill-chevron {
+    transform: rotate(180deg);
+}
+
+.skill-category-list {
+    max-height: 0;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.4s ease;
+}
+
+.skill-category[data-expanded="true"] .skill-category-list {
+    max-height: 400px;
+    opacity: 1;
+    margin-top: 1rem;
+}
+
+.skill-category-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.skill-category-list li:last-child {
+    margin-bottom: 0;
+}
+
+.skill-category-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent);
+    border-radius: 50%;
+}
+
+.skill-category-list li strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Divider line between categories */
+.skill-category:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: -0.75rem;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(100, 255, 218, 0.2) 20%,
+        rgba(100, 255, 218, 0.2) 80%,
+        transparent
+    );
+}
+
+/* Light mode adjustments */
+.light-mode .skill-category:not(:last-child)::after {
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(0, 122, 204, 0.25) 20%,
+        rgba(0, 122, 204, 0.25) 80%,
+        transparent
+    );
+}
+
+/* ===================================
+   SIMPLE SKILLS LIST STYLES
+   =================================== */
+
+.skills-simple-list {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+}
+
+.skill-simple-item {
+    position: relative;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(35, 53, 84, 0.3);
+}
+
+.skill-simple-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.light-mode .skill-simple-item {
+    border-bottom-color: rgba(226, 232, 240, 0.5);
+}
+
+.light-mode .skill-simple-item:last-child {
+    border-bottom: none;
+}
+
+.skill-simple-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.skill-simple-header span {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: color 0.2s ease;
+}
+
+.skill-simple-header:hover span {
+    color: var(--secondary);
+}
+
+.skill-simple-chevron {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    transition: transform 0.3s ease, color 0.2s ease;
+}
+
+.skill-simple-header:hover .skill-simple-chevron {
+    color: var(--secondary);
+}
+
+.skill-simple-item[data-expanded="true"] .skill-simple-chevron {
+    transform: rotate(180deg);
+}
+
+.skill-simple-content {
+    max-height: 0;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease, padding-bottom 0.3s ease;
+}
+
+.skill-simple-item[data-expanded="true"] .skill-simple-content {
+    max-height: 300px;
+    opacity: 1;
+    padding-bottom: 0.5rem;
+}
+
+.skill-simple-content li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.skill-simple-content li:last-child {
+    margin-bottom: 0;
+}
+
+.skill-simple-content li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    top: -0.15em;
+    color: var(--secondary);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.skill-simple-content li strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
 /* ===== Experience Section ===== */
 .experience {
     background-color: rgba(15, 32, 59, 0.4);
@@ -1060,25 +1298,89 @@ header {
     color: var(--text-primary);
 }
 
-/* ===== Projects Section ===== */
+/* ===== Projects Section - Improved Carousel Design ===== */
 .projects {
     padding: 5rem 0 3rem;
 }
 
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-top: 2rem;
+/* Carousel Wrapper - Contains track and controls */
+.projects-carousel-wrapper {
+    position: relative;
+    margin-top: -1rem;
+    /* No padding - cards now use full width */
 }
 
+/* Scrollable Track - Holds all project cards */
+.projects-carousel-track {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    padding: 1rem 0 2rem 0; /* Bottom padding for better spacing */
+    
+    /* Hide scrollbar but keep functionality */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+.projects-carousel-track::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Opera */
+}
+
+/* Subtle fade effect on edges - more subtle than before */
+.projects-carousel-wrapper::before,
+.projects-carousel-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 60px; /* Don't cover the controls */
+    width: 60px;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0.6;  /* Default opacity for RIGHT gradient */
+    transition: opacity 0.3s ease;
+}
+
+/* LEFT gradient - HIDDEN by default */
+.projects-carousel-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, var(--background) 0%, transparent 100%);
+    opacity: 0;  /* ← ADD THIS LINE - Hide by default */
+}
+
+/* RIGHT gradient - visible by default */
+.projects-carousel-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, var(--background) 0%, transparent 100%);
+}
+
+/* Keep LEFT gradient hidden at start (redundant but explicit) */
+.projects-carousel-wrapper.at-start::before {
+    opacity: 0;
+}
+
+/* SHOW LEFT gradient ONLY when at end (scrolled all the way right) */
+.projects-carousel-wrapper.at-end::before {
+    opacity: 0.6;  /* ← ADD THIS NEW RULE */
+}
+
+/* Hide RIGHT gradient when at end */
+.projects-carousel-wrapper.at-end::after {
+    opacity: 0;
+}
+
+/* Project Card - Full width design */
 .project-card {
+    flex: 0 0 380px; /* Fixed width for consistent sizing */
+    scroll-snap-align: start;
     background-color: var(--card-bg);
     border-radius: var(--radius);
     overflow: hidden;
     transition: var(--transition);
-    height: 100%;
     border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
 }
 
 .project-card:hover {
@@ -1105,6 +1407,9 @@ header {
 
 .project-content {
     padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-title {
@@ -1143,6 +1448,7 @@ header {
 .project-description {
     font-size: 0.95rem;
     margin-bottom: 1rem;
+    flex: 1;
 }
 
 .project-tags {
@@ -1168,6 +1474,119 @@ header {
 
 .project-links a {
     font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+.project-links a:hover {
+    transform: translateY(-2px);
+}
+
+/* ===== CAROUSEL CONTROLS - Bottom Navigation ===== */
+.carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 0rem;
+    padding: 0.75rem 0;
+}
+
+/* Control Buttons - Left and Right Arrows */
+.carousel-control-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 2px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+
+.carousel-control-btn:hover {
+    opacity: 1;
+    border-color: var(--secondary);
+    color: var(--secondary);
+    background-color: rgba(100, 255, 218, 0.05);
+    transform: scale(1.1);
+}
+
+.carousel-control-btn:active {
+    transform: scale(0.95);
+}
+
+/* Hide buttons when at start/end */
+.carousel-control-btn.hidden {
+    opacity: 0.3;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/* Pagination Dots Container */
+.carousel-pagination {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+    position: relative; /* Needed for absolute positioning of selection bar */
+}
+
+/* Individual Pagination Dot */
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--border);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    padding: 0;
+    position: relative;
+    z-index: 1; /* Place dots above the selection bar */
+}
+
+.carousel-dot:hover {
+    background-color: var(--text-secondary);
+    transform: scale(1.3);
+}
+
+/* Sliding Selection Bar - NEW */
+.carousel-selection-bar {
+    position: absolute;
+    height: 8px;
+    background-color: var(--secondary);
+    border-radius: 4px;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    z-index: 2; /* Place bar behind dots */
+    opacity: 1;
+}
+
+/* Light mode adjustment for selection bar */
+.light-mode .carousel-selection-bar {
+    opacity: 0.4;
+}
+
+/* Light mode adjustments */
+.light-mode .carousel-control-btn {
+    background-color: transparent;
+}
+
+.light-mode .carousel-control-btn:hover {
+    background-color: rgba(0, 122, 204, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.light-mode .carousel-dot {
+    background-color: var(--border);
+}
+
+.light-mode .carousel-dot:hover {
+    background-color: var(--text-secondary);
 }
 
 /* ===== Publications Section ===== */

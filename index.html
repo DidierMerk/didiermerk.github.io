@@ -182,7 +182,7 @@
                                 </div>
                                 <div class="degree-detail-info">
                                     <p>Two years master programme focused on mathematical and theoretical ground work of AI models. Graduated with an 8.2 GPA and my thesis was called "Rethinking Models and Evaluations for Time Series Forecasting".</p>
-                                    <p>Core courses included Advanced Machine Learning, Natural Language Processing, Computer Vision, and Reinforcement Learning. Specialized in time-series forecasting using transformer-based architectures.</p>
+                                    <p>Core courses included Advanced Machine Learning, Deep Learning, Natural Language Processing and Computer Vision. Specialized in time-series forecasting using foundation models.</p>
                                     <div class="degree-highlights">
                                         <div class="highlight-item">
                                             <span class="highlight-label">GPA</span>
@@ -235,8 +235,8 @@
                                     </div>
                                 </div>
                                 <div class="degree-detail-info">
-                                    <p>Interdisciplinary programme combining natural sciences (physics, mathematics, biology) with social sciences (psychology, economics, sociology). This broad foundation provided diverse perspectives and analytical approaches.</p>
-                                    <p>The programme's multidisciplinary nature helped develop critical thinking skills and the ability to approach complex problems from different angles, which proved valuable for later AI studies.</p>
+                                    <p>Interdisciplinary programme combining natural sciences (physics, mathematics, biology) with social sciences (psychology, economics and urban planning). This broad foundation provided diverse perspectives and analytical approaches.</p>
+                                    <p>The programme's interdisciplinary nature helped develop critical thinking skills and the ability to approach complex problems from different angles, which proved valuable for later AI studies.</p>
                                     <div class="degree-highlights">
                                         <div class="highlight-item">
                                             <span class="highlight-label">Key Skills</span>
@@ -252,16 +252,47 @@
                         
                         <!-- Skills Tab (hidden by default) -->
                         <div id="skills-tab" class="tab-panel">
-                            <!-- <h3 class="sidebar-title"><i class="fas fa-cogs"></i> Skills</h3> -->
-                            <div class="skills-grid">
-                                <span class="skill-item">Machine Learning</span>
-                                <span class="skill-item">Deep Learning</span>
-                                <span class="skill-item">Time Series Analysis</span>
-                                <span class="skill-item">Natural Language Processing</span>
-                                <span class="skill-item">Python</span>
-                                <span class="skill-item">TensorFlow</span>
-                                <span class="skill-item">PyTorch</span>
-                                <span class="skill-item">Data Analysis</span>
+                            <div class="skills-simple-list">
+                                
+                                <!-- Algorithm Design -->
+                                <div class="skill-simple-item" data-expanded="true">
+                                    <div class="skill-simple-header">
+                                        <span>Algorithm Design</span>
+                                        <i class="fas fa-chevron-down skill-simple-chevron"></i>
+                                    </div>
+                                    <ul class="skill-simple-content">
+                                        <li>Design of end-to-end machine learning projects</li>
+                                        <li>Large-scale data analysis</li>
+                                        <li>Evaluation and statistical validation</li>
+                                        <li>Optimization of machine learning models</li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Coding -->
+                                <div class="skill-simple-item" data-expanded="false">
+                                    <div class="skill-simple-header">
+                                        <span>Coding</span>
+                                        <i class="fas fa-chevron-down skill-simple-chevron"></i>
+                                    </div>
+                                    <ul class="skill-simple-content">
+                                        <li>Python (PyTorch, NumPy, scikit-learn, neuralforecast), C, R, SQL</li>
+                                        <li>Web Development: HTML, CSS, JavaScript</li>
+                                        <li>Tooling: Git, Docker, Jupyter, LaTeX, Markdown</li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Math & Theory -->
+                                <div class="skill-simple-item" data-expanded="false">
+                                    <div class="skill-simple-header">
+                                        <span>Math & Theory</span>
+                                        <i class="fas fa-chevron-down skill-simple-chevron"></i>
+                                    </div>
+                                    <ul class="skill-simple-content">
+                                        <li>Linear Algebra, Calculus, Bayesian Statistics, Game Theory</li>
+                                        <li>Foundations across Machine Learning, Deep Learning, Computer Vision, NLP and Information Retrieval</li>
+                                    </ul>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -372,78 +403,145 @@
         <div class="container">
             <h2 class="section-title">Projects</h2>
             
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="assets/images/segmentation.png" alt="Improving the grounding of AI generated images">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">
-                            <a href="https://github.com/DidierMerk/grounded-diffusers" class="project-link">Improving the Grounding of AI Generated Images</a>
-                        </h3>
-                        <p class="project-description">
-                            Enhanced existing visual grounding techniques by simultaneously generating images and precise segmentation masks directly from natural language prompts.
-                        </p>
-                        <div class="project-tags">
-                            <span>PyTorch</span>
-                            <span>Transformers</span>
-                            <span>Time Series</span>
+            <!-- Carousel Container -->
+            <div class="projects-carousel-wrapper">
+                <!-- Scrollable Projects Track -->
+                <div class="projects-carousel-track" id="projectsCarouselTrack">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="assets/images/segmentation.png" alt="AI Image Grounding">
                         </div>
-                        <div class="project-links">
-                            <a href="https://github.com/DidierMerk/grounded-diffusers" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
-                            <a href="assets/files/GroundedDiffusers.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i></a>
-                            <a href="assets/files/GroundingPoster.pdf" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-image"></i></a>
+                        <div class="project-content">
+                            <h3 class="project-title">
+                                <a href="https://github.com/DidierMerk/grounded-diffusers" class="project-link" target="_blank" rel="noopener noreferrer">Improving the Grounding of AI Generated Images</a>
+                            </h3>
+                            <p class="project-description">
+                                Enhanced existing visual grounding techniques by simultaneously generating images and precise segmentation masks directly from natural language prompts.
+                            </p>
+                            <!-- <div class="project-tags">
+                                <span>PyTorch</span>
+                                <span>Transformers</span>
+                                <span>Time Series</span>
+                            </div> -->
+                            <div class="project-links">
+                                <a href="https://github.com/DidierMerk/grounded-diffusers" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                                <a href="assets/files/GroundedDiffusers.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i></a>
+                                <a href="assets/files/GroundingPoster.pdf" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-image"></i></a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="assets/images/segthor.png" alt="Improving the grounding of AI generated images">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">
-                            <a href="blog/segthor/segthor-blog.html" class="project-link">Thoracic Organ Segmentation Challenge</a>
-                        </h3>
-                        <p class="project-description">
-                            Enhanced existing visual grounding techniques by simultaneously generating images and precise segmentation masks directly from natural language prompts.
-                        </p>
-                        <div class="project-tags">
-                            <span>3D Slicer</span>
-                            <span>Transformers</span>
-                            <span>Time Series</span>
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="assets/images/segthor.png" alt="Thoracic Segmentation">
                         </div>
-                        <div class="project-links">
-                            <a href="blog/segthor/segthor-blog.html"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="https://github.com/raoulritter/ai4mi_project" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
-                            <a href="assets/files/GroundedDiffusers.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i></a>
+                        <div class="project-content">
+                            <h3 class="project-title">
+                                <a href="blog/segthor/segthor-blog.html" class="project-link">Deep Learning for Thoracic Organ Segmentation</a>
+                            </h3>
+                            <p class="project-description">
+                                Produced state-of-the-art segmentation accuracy in CT scans of thoracic organs through optimized pre- and postprocessing and model tuning.
+                            </p>
+                            <!-- <div class="project-tags">
+                                <span>3D Slicer</span>
+                                <span>Transformers</span>
+                                <span>Time Series</span>
+                            </div> -->
+                            <div class="project-links">
+                                <a href="blog/segthor/segthor-blog.html"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="https://github.com/raoulritter/ai4mi_project" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                                <a href="assets/files/SegthorChallenge.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="assets/images/fairness.png" alt="LASSI">
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">
+                                <a href="https://mametchiii.github.io/lassi-reproducibility/" target="_blank" rel="noopener noreferrer" class="project-link">Latent Space Smoothing For Individually Fair Representations</a>
+                            </h3>
+                            <p class="project-description">
+                                Reproduced and extended fairness-focused deep learning model LASSI, which uses generative modelling and representation learning to ensure individual fairness. 
+                            </p>
+                            <!-- <div class="project-tags">
+                                <span>Python</span>
+                                <span>TensorFlow</span>
+                                <span>Physics</span>
+                            </div> -->
+                            <div class="project-links">
+                                <a href="https://mametchiii.github.io/lassi-reproducibility/" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i></a>
+                                <a href="https://github.com/Mametchiii/lassi-reproducibility" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                                <a href="https://openreview.net/pdf?id=J-Lgb7Vc0wX" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="assets/images/jettagging.png" alt="Jet Tagging">
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">
+                                <a href="assets/files/BSc_Thesis_DidierMerk.pdf" class="project-link" target="_blank" rel="noopener noreferrer">Hyperparameter Optimization for Jet Tagging at CERN</a>
+                            </h3>
+                            <p class="project-description">
+                                Optimized the Particle Transformer machine learning model used to identify particle collision jets in high-energy physics experiments at CERN.
+                            </p>
+                            <!-- <div class="project-tags">
+                                <span>Python</span>
+                                <span>TensorFlow</span>
+                                <span>Physics</span>
+                            </div> -->
+                            <div class="project-links">
+                                <a href="assets/files/BSc_Thesis_DidierMerk.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i></a>
+                                <a href="https://github.com/DidierMerk/BachelorThesis" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="assets/images/llmtime.png" alt="Time Series">
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">
+                                <a href="#" class="project-link">Time Series Forecasting Using Foundation Models</a>
+                            </h3>
+                            <p class="project-description">
+                                Studied the use of foundation models for forecasting transaction data, connecting advances in language modeling with time series prediction.
+                            </p>
+                            <!-- <div class="project-tags">
+                                <span>Python</span>
+                                <span>TensorFlow</span>
+                                <span>Physics</span>
+                            </div> -->
+                            <div class="project-links">
+                                <a href="blog/segthor/segthor-blog.html"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="assets/files/DSCC_Presentation_Redacted.pdf" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-chalkboard-user"></i></a>
+                                <a href="assets/files/MSc_Thesis_DidierMerk.pdf" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i></a>
+                                <a href="https://github.com/DidierMerk/Forecasting" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="assets/images/jettagging.png" alt="Jet Tagging">
+                <!-- Carousel Controls - Below the cards -->
+                <div class="carousel-controls">
+                    <button class="carousel-control-btn carousel-control-left" id="carouselControlLeft" aria-label="Previous project">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="carousel-pagination" id="carouselPagination">
+                        <!-- Dots will be generated by JavaScript -->
                     </div>
-                    <div class="project-content">
-                        <h3 class="project-title">
-                            <a href="#" class="project-link">Hyperparameter Optimization for Jet Tagging</a>
-                        </h3>
-                        <p class="project-description">
-                            Optimized machine learning models used to identify particle jets in high-energy physics experiments at CERN.
-                        </p>
-                        <div class="project-tags">
-                            <span>Python</span>
-                            <span>TensorFlow</span>
-                            <span>Physics</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#"><i class="fab fa-github"></i></a>
-                            <a href="#"><i class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    </div>
+                    
+                    <button class="carousel-control-btn carousel-control-right" id="carouselControlRight" aria-label="Next project">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
-
             </div>
         </div>
     </section>
@@ -485,7 +583,7 @@
                 <li><a href="https://github.com/didiermerk" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a></li>
                 <li><a href="https://www.linkedin.com/in/didier-merk/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
             </ul>
-            <p>&copy; 2025 Didier Merk. All rights reserved.</p>
+            <p>&copy; 2025 Didier Merk. Created with help of Claude Sonnet 4.5 and GPT-5.</p>
         </div>
     </footer>
 

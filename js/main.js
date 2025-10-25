@@ -165,6 +165,167 @@ function animateOnScroll() {
     });
 }
 
+// ===== PROJECTS CAROUSEL FUNCTIONALITY =====
+// ===== PROJECTS CAROUSEL FUNCTIONALITY - IMPROVED =====
+(function() {
+    const carouselTrack = document.getElementById('projectsCarouselTrack');
+    const carouselWrapper = document.querySelector('.projects-carousel-wrapper');
+    const leftBtn = document.getElementById('carouselControlLeft');
+    const rightBtn = document.getElementById('carouselControlRight');
+    const paginationContainer = document.getElementById('carouselPagination');
+    
+    if (!carouselTrack || !leftBtn || !rightBtn || !paginationContainer) return;
+    
+    const cards = carouselTrack.querySelectorAll('.project-card');
+    const cardCount = cards.length;
+    
+    // Create pagination dots
+    function createPaginationDots() {
+        paginationContainer.innerHTML = '';
+        
+        // Create the sliding selection bar
+        const selectionBar = document.createElement('div');
+        selectionBar.className = 'carousel-selection-bar';
+        selectionBar.id = 'carouselSelectionBar';
+        paginationContainer.appendChild(selectionBar);
+        
+        // Create dots
+        for (let i = 0; i < cardCount; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'carousel-dot';
+            dot.setAttribute('aria-label', `Go to project ${i + 1}`);
+            dot.setAttribute('data-index', i);
+            
+            // Click handler for each dot
+            dot.addEventListener('click', () => scrollToCard(i));
+            
+            paginationContainer.appendChild(dot);
+        }
+        
+        // Set initial selection bar position
+        updateSelectionBar();
+    }
+    
+    // Scroll to a specific card by index
+    function scrollToCard(index) {
+        const cardWidth = 380; // Match the card width from CSS
+        const gap = 24; // 1.5rem = 24px gap
+        const scrollPosition = index * (cardWidth + gap);
+        
+        carouselTrack.scrollTo({
+            left: scrollPosition,
+            behavior: 'smooth'
+        });
+    }
+    
+    // Scroll one card at a time
+    function scrollCarousel(direction) {
+        const currentIndex = getCurrentCardIndex();
+        
+        if (direction === 'left' && currentIndex > 0) {
+            scrollToCard(currentIndex - 1);
+        } else if (direction === 'right' && currentIndex < cardCount - 1) {
+            scrollToCard(currentIndex + 1);
+        }
+    }
+    
+    // Get the current card index based on scroll position
+    function getCurrentCardIndex() {
+        const scrollLeft = carouselTrack.scrollLeft;
+        const cardWidth = 380;
+        const gap = 24;
+        const cardTotalWidth = cardWidth + gap;
+        
+        // Calculate which card is most visible
+        const index = Math.round(scrollLeft / cardTotalWidth);
+        return Math.max(0, Math.min(index, cardCount - 1));
+    }
+    
+    // Update the sliding selection bar position and width
+    function updateSelectionBar() {
+        const selectionBar = document.getElementById('carouselSelectionBar');
+        if (!selectionBar) return;
+        
+        const dots = paginationContainer.querySelectorAll('.carousel-dot');
+        if (dots.length === 0) return;
+        
+        const scrollLeft = carouselTrack.scrollLeft;
+        const viewportWidth = carouselTrack.clientWidth;
+        const cardWidth = 380;
+        const gap = 24;
+        const cardTotalWidth = cardWidth + gap;
+        
+        // Calculate the range of visible cards
+        const firstVisibleIndex = Math.floor(scrollLeft / cardTotalWidth);
+        const lastVisibleIndex = Math.floor((scrollLeft + viewportWidth - gap) / cardTotalWidth);
+        
+        // Get the first and last visible dots
+        const firstDot = dots[firstVisibleIndex];
+        const lastDot = dots[lastVisibleIndex];
+        
+        if (firstDot && lastDot) {
+            // Calculate position relative to pagination container
+            const containerRect = paginationContainer.getBoundingClientRect();
+            const firstDotRect = firstDot.getBoundingClientRect();
+            const lastDotRect = lastDot.getBoundingClientRect();
+            
+            // Calculate the bar's left position and width
+            const barLeft = firstDotRect.left - containerRect.left;
+            const barWidth = lastDotRect.right - firstDotRect.left;
+            
+            // Apply the position and width
+            selectionBar.style.left = `${barLeft}px`;
+            selectionBar.style.width = `${barWidth}px`;
+        }
+    }
+    
+    // Update button visibility and fade effects based on scroll position
+    function updateCarouselState() {
+        const scrollLeft = carouselTrack.scrollLeft;
+        const maxScroll = carouselTrack.scrollWidth - carouselTrack.clientWidth;
+        const currentIndex = getCurrentCardIndex();
+        
+        // Update active dot
+        updateSelectionBar();
+        
+        // Update button states
+        if (scrollLeft <= 0) {
+            leftBtn.classList.add('hidden');
+            carouselWrapper.classList.add('at-start');
+        } else {
+            leftBtn.classList.remove('hidden');
+            carouselWrapper.classList.remove('at-start');
+        }
+        
+        if (scrollLeft >= maxScroll - 1) {
+            rightBtn.classList.add('hidden');
+            carouselWrapper.classList.add('at-end');
+        } else {
+            rightBtn.classList.remove('hidden');
+            carouselWrapper.classList.remove('at-end');
+        }
+    }
+    
+    // Event Listeners
+    leftBtn.addEventListener('click', () => scrollCarousel('left'));
+    rightBtn.addEventListener('click', () => scrollCarousel('right'));
+    
+    // Update on scroll
+    carouselTrack.addEventListener('scroll', updateCarouselState);
+    
+    // Update on window resize
+    window.addEventListener('resize', () => {
+        updateCarouselState();
+        // Scroll to current card to maintain position
+        const currentIndex = getCurrentCardIndex();
+        scrollToCard(currentIndex);
+    });
+    
+    // Initialize
+    createPaginationDots();
+    updateCarouselState();
+})();
+
 // Timeline item expand/collapse functionality
 function initializeTimelineItems() {
     const timelineItems = document.querySelectorAll('.timeline-item');
@@ -494,6 +655,32 @@ function prepareSkillsAnimation() {
         document.getElementById('skills-tab').classList.add('show-skills');
     }, 50);
 }
+
+// ===================================
+// SIMPLE SKILLS LIST FUNCTIONALITY
+// ===================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const skillItems = document.querySelectorAll('.skill-simple-item');
+    
+    skillItems.forEach(item => {
+        const header = item.querySelector('.skill-simple-header');
+        
+        header.addEventListener('click', function() {
+            const isExpanded = item.getAttribute('data-expanded') === 'true';
+            
+            // Close all other items first (accordion behavior)
+            skillItems.forEach(otherItem => {
+                if (otherItem !== item && otherItem.getAttribute('data-expanded') === 'true') {
+                    otherItem.setAttribute('data-expanded', 'false');
+                }
+            });
+            
+            // Toggle the clicked item
+            item.setAttribute('data-expanded', isExpanded ? 'false' : 'true');
+        });
+    });
+});
 
 // Show degree details
 function showDegreeDetails(degreeId) {

@@ -619,3 +619,84 @@
     transform: translateY(10px);
     transition: opacity 0.2s ease-out, transform 0.2s ease-out;
 }
+
+/* ===================================
+   SIMPLE SKILLS ANIMATIONS
+   =================================== */
+
+.skill-simple-item[data-expanded="true"] .skill-simple-content li {
+    opacity: 0;
+    animation: fadeInUp 0.3s ease forwards;
+}
+
+.skill-simple-item[data-expanded="true"] .skill-simple-content li:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.skill-simple-item[data-expanded="true"] .skill-simple-content li:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.skill-simple-item[data-expanded="true"] .skill-simple-content li:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+.skill-simple-item[data-expanded="true"] .skill-simple-content li:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+.skill-simple-item[data-expanded="true"] .skill-simple-content li:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+/* ===== CAROUSEL ARROW ANIMATIONS ===== */
+
+/* Subtle pulse animation for arrows to draw attention */
+@keyframes arrowPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(100, 255, 218, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(100, 255, 218, 0);
+    }
+}
+
+/* Apply pulse animation on first load to indicate interactivity */
+.carousel-nav {
+    animation: arrowPulse 2s ease-out 1s 2;
+}
+
+/* Smooth fade in/out for arrow visibility */
+.carousel-nav {
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* Hover bounce effect */
+@keyframes arrowBounce {
+    0%, 100% {
+        transform: translateY(-50%) translateX(0);
+    }
+    50% {
+        transform: translateY(-50%) translateX(-3px);
+    }
+}
+
+@keyframes arrowBounceRight {
+    0%, 100% {
+        transform: translateY(-50%) translateX(0);
+    }
+    50% {
+        transform: translateY(-50%) translateX(3px);
+    }
+}
+
+.carousel-nav-left:hover {
+    animation: arrowBounce 0.6s ease-in-out infinite;
+}
+
+.carousel-nav-right:hover {
+    animation: arrowBounceRight 0.6s ease-in-out infinite;
+}
