@@ -446,9 +446,9 @@
         font-size: 0.95rem;
     }
     
-    .degree-detail-info, .degree-highlights {
+    /* .degree-detail-info, .degree-highlights {
         padding: 1.25rem;
-    }
+    } */
     
     .degree-highlights h4 {
         font-size: 1.1rem;
@@ -534,6 +534,28 @@
         width: 16px;
         height: 16px;
         margin: -8px; /* Adjusted from -10px to maintain proportion (16px/20px = 0.8, so -10px * 0.8 = -8px) */
+    }
+
+    /* Tab button mobile sizing */
+    .tab-btn {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.95rem;
+    }
+    
+    .tab-btn span {
+        font-size: 0.9rem;
+    }
+    
+    .tab-btn i {
+        font-size: 1.1rem;
+    }
+    
+    /* Back-to-top button mobile sizing and positioning */
+    .back-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 35px;
+        height: 35px;
     }
 }
 
