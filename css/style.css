@@ -563,8 +563,8 @@ header {
     right: 0;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(10px);
-    transition: opacity 0.35s ease, transform 0.35s ease;
+    /* transform: translateY(10px);
+    transition: opacity 0.35s ease, transform 0.35s ease; */
     width: 100%;
 }
 
@@ -572,7 +572,7 @@ header {
     position: relative;
     opacity: 1;
     pointer-events: auto;
-    transform: translateY(0);
+    /* transform: translateY(0); */
     z-index: 2;
 }
 

@@ -663,8 +663,8 @@ function initializeTabSystem() {
                     tabsContent.classList.add('tabs-content-animating');
                     
                     // Show the target panel (invisible but in DOM flow)
-                    targetPanel.classList.add('active');
                     targetPanel.style.opacity = '0';
+                    targetPanel.classList.add('active');
                     
                     // Get the new height and animate to it
                     const newHeight = targetPanel.offsetHeight;
