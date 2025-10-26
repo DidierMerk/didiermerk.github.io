@@ -19,12 +19,13 @@ function getThemePreference() {
         return localStorage.getItem('theme');
     }
     
-    // If not found in localStorage, check system preference
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        return 'light';
-    }
-    
-    // Default to dark
+    // If I want the system preference detection back, uncomment below:
+    // // If not found in localStorage, check system preference
+    // if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    //     return 'light';
+    // }
+
+    // Default to dark mode for all first-time visitors
     return 'dark';
 }
 

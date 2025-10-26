@@ -508,6 +508,44 @@ function resetEducationItemAnimations() {
     });
 }
 
+// Reset animations for degree detail views (fixes Safari bug with disappearing grades)
+function resetDegreeDetailAnimations(degreeId) {
+    const degreeDetails = document.getElementById(`${degreeId}-details`);
+    
+    if (!degreeDetails) return;
+    
+    // Get all animated elements within the degree details
+    const degreeInfo = degreeDetails.querySelector('.degree-detail-info');
+    const degreeHighlights = degreeDetails.querySelector('.degree-highlights');
+    
+    // Reset degree-detail-info animation
+    if (degreeInfo) {
+        degreeInfo.style.animation = 'none';
+        degreeInfo.style.opacity = '0';
+        
+        // Force reflow
+        void degreeInfo.offsetWidth;
+        
+        // Reapply animation
+        degreeInfo.style.animation = 'slideDown 0.5s ease forwards';
+        degreeInfo.style.opacity = '';
+    }
+    
+    // Reset degree-highlights animation (the grades section)
+    if (degreeHighlights) {
+        degreeHighlights.style.animation = 'none';
+        degreeHighlights.style.opacity = '0';
+        
+        // Force reflow - CRITICAL for Safari
+        void degreeHighlights.offsetWidth;
+        
+        // Reapply animation with delay
+        degreeHighlights.style.animation = 'scaleUp 0.5s ease forwards';
+        degreeHighlights.style.animationDelay = '0.2s';
+        degreeHighlights.style.opacity = '';
+    }
+}
+
 // Properly setup education overview
 function setupEducationOverview() {
     // Hide all degree details first
@@ -727,6 +765,11 @@ function showDegreeDetails(degreeId) {
         // Get new height and animate to it
         const newHeight = degreeDetails.offsetHeight;
         tabsContent.style.height = `${newHeight}px`;
+
+        // *** FIX: Reset and retrigger animations for degree details (fixes Safari grades bug) ***
+        setTimeout(() => {
+            resetDegreeDetailAnimations(degreeId);
+        }, 50);
         
         // Clean up after animation completes
         setTimeout(() => {
@@ -784,6 +827,9 @@ function showEducationOverview() {
             educationOverview.classList.remove('slide-out');
             educationOverview.classList.add('slide-in');
             educationOverview.style.opacity = '';
+
+            // *** FIX: Reset and retrigger education item animations for Safari ***
+            resetEducationItemAnimations();
             
             // Clear animation class after it completes
             setTimeout(() => {

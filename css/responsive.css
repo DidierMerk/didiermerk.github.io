@@ -453,6 +453,11 @@
     .degree-highlights h4 {
         font-size: 1.1rem;
     }
+
+    /* Reduce skills arrow size on mobile */
+    .skill-simple-content li::before {
+        font-size: 0.95rem;
+    }
 }
 
 /* ============================================
@@ -556,6 +561,11 @@
         right: 1rem;
         width: 35px;
         height: 35px;
+    }
+
+    .skill-simple-content li::before {
+        font-size: 0.85rem;
+        top: 0rem;
     }
 }
 
