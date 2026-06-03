@@ -375,9 +375,9 @@ const SAMPLE_PUMPS = [
 /* ---------- factor configuration (notebook defaults) ---------- */
 const FACTORS = [
   {key:"pop",  field:"s_pop",  name:"People served",      desc:"Population relying on this pump"},
-  {key:"qty",  field:"s_qty",  name:"Water availability", desc:"A dry pump is rarely worth repairing"},
+  {key:"qty",  field:"s_qty",  name:"Water availability", desc:"Amount of water available to pump"},
   {key:"dist", field:"s_dist", name:"Isolation",          desc:"Distance to the nearest working pump"},
-  {key:"non",  field:"s_non",  name:"Nearby failures",    desc:"Broken pumps clustered within ~20 km"},
+  {key:"non",  field:"s_non",  name:"Nearby failures",    desc:"Broken pumps clustered within 20 km"},
 ];
 const DEFAULT_WEIGHTS = {pop:40, qty:20, dist:25, non:15};   // = 0.40/0.20/0.25/0.15
 
