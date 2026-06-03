@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Water Pump Triage — Priority Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- shown only on phones / very small screens -->
+<div class="small-screen-block">
+  <div class="ssb-card">
+    <h2>Best viewed on desktop</h2>
+    <p>The Water Pump Triage tool is built for a larger screen. Please open it on a desktop, or widen your browser window.</p>
+  </div>
+</div>
+
+<div class="app-shell">
+
+<header class="topbar">
+  <div class="brand-text">
+    <h1>Water Pump Triage</h1>
+    <p>Tanzanian Ministry of Water &middot; repair &amp; replace prioritisation</p>
+  </div>
+  <div class="topbar-actions">
+    <span id="sourceBadge" class="badge badge-sample">Sample data &middot; 360 pumps</span>
+    <label class="btn btn-ghost" for="csvInput">
+      <svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 16V4m0 0L8 8m4-4l4 4M5 18v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Load ranked CSV
+    </label>
+    <input id="csvInput" type="file" accept=".csv" hidden>
+  </div>
+</header>
+
+<main class="layout">
+
+  <!-- ============ CONTROL PANEL ============ -->
+  <aside class="panel controls">
+    <div class="impact-switch">
+      <div class="switch-label">
+        <span class="switch-title">Impact weighting</span>
+        <span class="switch-sub" id="switchSub">On &middot; likelihood &times; impact</span>
+      </div>
+      <button id="impactToggle" class="switch is-on" role="switch" aria-checked="true" aria-label="Toggle impact weighting">
+        <span class="switch-knob"></span>
+      </button>
+    </div>
+    <p class="controls-hint" id="controlsHint">Twist the knobs to set how much each factor matters. Pumps re-rank live.</p>
+
+    <div class="knobs" id="knobs">
+      <!-- knob template injected by JS -->
+    </div>
+
+    <div class="topn-block">
+      <span class="section-label">Triage batch size</span>
+      <div class="seg seg-wrap" id="topnSeg" role="group" aria-label="Batch size">
+        <button data-n="50">Top 50</button>
+        <button data-n="250">Top 250</button>
+        <button data-n="1000">Top 1000</button>
+        <button data-n="all" class="is-active">Show all</button>
+      </div>
+    </div>
+
+    <details class="formula">
+      <summary>How the priority score works</summary>
+      <div class="formula-body">
+        <p class="eq">priority = P(non&#8209;functional) &times; impact &times; 100</p>
+        <p>The model gives each pump a probability of being non&#8209;functional (the <b>likelihood</b>). The <b>impact</b> is a blend of four factors scored 1&ndash;10:</p>
+        <ul>
+          <li><b>People served</b> — more people, higher impact</li>
+          <li><b>Water availability</b> — a dry pump is rarely worth fixing</li>
+          <li><b>Isolation</b> — distance to the nearest working pump</li>
+          <li><b>Nearby failures</b> — broken pumps within ~20&nbsp;km</li>
+        </ul>
+        <p>The knobs set each factor's share of impact. Turn impact off to rank on raw failure probability alone.</p>
+      </div>
+    </details>
+  </aside>
+
+  <!-- ============ CONTENT ============ -->
+  <section class="content">
+
+    <div class="viewbar">
+      <div class="seg" id="viewSeg" role="group" aria-label="View">
+        <button data-view="rank" class="is-active">Ranked list</button>
+        <button data-view="geo">Map view</button>
+      </div>
+      <div class="legend" id="legend">
+        <span class="legend-label">low</span>
+        <span class="legend-scale"></span>
+        <span class="legend-label">urgent</span>
+      </div>
+    </div>
+
+    <div class="stage">
+      <!-- ranked list + map share this column; detail + KPIs on the right -->
+      <div class="viz">
+        <div id="rankView" class="rank-view">
+          <div class="rank-head">
+            <span id="rankCount">Top 50 pumps to inspect</span>
+            <button id="reverseBtn" class="mini-toggle" type="button" aria-pressed="false">&#8645; Reverse</button>
+          </div>
+          <div id="rankList" class="rank-list"></div>
+        </div>
+
+        <div id="geoView" class="geo-view" hidden>
+          <div class="geo-canvas">
+            <svg id="geoSvg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Map of pumps coloured by priority"></svg>
+            <div class="geo-zoom" role="group" aria-label="Map zoom">
+              <button data-zoom="in" type="button" aria-label="Zoom in">+</button>
+              <button data-zoom="out" type="button" aria-label="Zoom out">&minus;</button>
+              <button data-zoom="reset" type="button" aria-label="Reset view" title="Reset view">&#10530;</button>
+            </div>
+          </div>
+          <p class="geo-note">Each dot is a pump &middot; size = people served, colour = priority. Ringed dots are in the current batch. Scroll or use +/&minus; to zoom, drag to pan, click a pump for detail.</p>
+        </div>
+      </div>
+
+      <aside class="side">
+        <div id="detail" class="detail">
+          <!-- detail injected by JS -->
+        </div>
+        <div id="miniKpis" class="mini-kpis">
+          <!-- the two KPI cards injected by JS -->
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+</div><!-- /app-shell -->
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
