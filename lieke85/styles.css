@@ -1,0 +1,388 @@
+/* ==========================================================
+   Lieke — 85 jaar
+   Palette: Delfts blauw & goud op koel porselein
+   ========================================================== */
+
+:root {
+  --porcelain:   #f2f1ec;   /* background, cool bone white   */
+  --delft:       #1e3a6e;   /* deep Delft blue (ink)         */
+  --delft-deep:  #142647;   /* darkest blue, headings        */
+  --faded-ink:   #5b74a3;   /* soft blue, secondary text     */
+  --gold:        #c1994a;   /* the golden thread of time     */
+  --gold-soft:   #e3cf9e;
+  --paper:       #fdfcf9;   /* photo paper white             */
+
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-utility: "Karla", -apple-system, sans-serif;
+
+  --content-max: 480px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--porcelain);
+  color: var(--delft-deep);
+  font-family: var(--font-display);
+  font-size: 18px;
+  line-height: 1.55;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- reveal-on-scroll ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- floating era badge ---------- */
+.era-badge {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 50;
+  background: var(--delft);
+  color: var(--gold-soft);
+  font-family: var(--font-utility);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(20, 38, 71, 0.25);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+.era-badge.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================
+   HERO
+   ========================================================== */
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 24px 72px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-utility);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faded-ink);
+  margin-bottom: 20px;
+}
+
+.hero-name {
+  font-size: clamp(72px, 22vw, 120px);
+  font-weight: 500;
+  line-height: 0.95;
+  color: var(--delft-deep);
+  letter-spacing: 0.01em;
+}
+
+.hero-number {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 26px 0;
+  transition-delay: 0.15s;
+}
+.hero-number .rule {
+  width: 56px;
+  height: 1px;
+  background: var(--gold);
+}
+.hero-number .num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 40px;
+  color: var(--gold);
+}
+
+.hero-sub {
+  font-style: italic;
+  font-size: 19px;
+  color: var(--faded-ink);
+  max-width: 300px;
+  transition-delay: 0.3s;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 34px;
+  left: 50%;
+  translate: -50% 0;
+  transition-delay: 0.5s;
+}
+.chevron {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-right: 1.5px solid var(--gold);
+  border-bottom: 1.5px solid var(--gold);
+  transform: rotate(45deg);
+  animation: bob 2.2s ease-in-out infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 0.9; }
+  50%      { transform: rotate(45deg) translate(5px, 5px); opacity: 0.4; }
+}
+
+/* ---------- drifting gold motes (hero & outro) ---------- */
+.motes { position: absolute; inset: 0; pointer-events: none; }
+.motes span {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0;
+  animation: drift 11s linear infinite;
+}
+.motes span:nth-child(1) { left: 12%; animation-delay: 0s;   animation-duration: 12s; }
+.motes span:nth-child(2) { left: 30%; animation-delay: 2.5s; width: 3px; height: 3px; }
+.motes span:nth-child(3) { left: 48%; animation-delay: 5s;   animation-duration: 14s; }
+.motes span:nth-child(4) { left: 64%; animation-delay: 1.2s; width: 4px; height: 4px; }
+.motes span:nth-child(5) { left: 80%; animation-delay: 6.5s; animation-duration: 10s; }
+.motes span:nth-child(6) { left: 90%; animation-delay: 3.8s; width: 3px; height: 3px; }
+@keyframes drift {
+  0%   { bottom: -6%; opacity: 0; }
+  12%  { opacity: 0.55; }
+  85%  { opacity: 0.25; }
+  100% { bottom: 104%; opacity: 0; }
+}
+
+/* ==========================================================
+   TIMELINE
+   ========================================================== */
+.timeline {
+  position: relative;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 24px 22px 80px;
+}
+
+/* the golden thread */
+.thread {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  translate: -50% 0;
+  background: rgba(30, 58, 110, 0.14);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.thread-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--gold-soft), var(--gold));
+  transform-origin: top;
+  transform: scaleY(0);
+}
+
+.entries {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---------- era markers ---------- */
+.era {
+  position: relative;
+  margin: 72px 0 40px;
+  text-align: center;
+  z-index: 2;
+}
+.era-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid var(--porcelain);
+  box-shadow: 0 0 0 1.5px var(--gold);
+  margin: 0 auto 14px;
+}
+.era-card {
+  display: inline-block;
+  background: var(--porcelain);
+  padding: 6px 20px 10px;
+}
+.era-label {
+  display: block;
+  font-family: var(--font-utility);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--delft);
+}
+.era-sub {
+  font-style: italic;
+  font-size: 17px;
+  color: var(--faded-ink);
+  margin-top: 6px;
+}
+
+/* ---------- photo cards ---------- */
+.moment {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.moment .pin {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--delft);
+  margin-bottom: 16px;
+}
+
+.photo-frame {
+  background: var(--paper);
+  padding: 10px 10px 14px;
+  border-radius: 3px;
+  box-shadow:
+    0 2px 6px rgba(20, 38, 71, 0.10),
+    0 14px 30px rgba(20, 38, 71, 0.13);
+  width: min(100%, 340px);
+  transform: rotate(-1.4deg);
+}
+.moment:nth-child(even) .photo-frame { transform: rotate(1.4deg); }
+
+.photo-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+  background: #e7e4dc;
+  min-height: 120px;
+}
+
+.photo-missing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  border-radius: 2px;
+  background: repeating-linear-gradient(
+    45deg, #eceae3, #eceae3 8px, #f4f2ec 8px, #f4f2ec 16px);
+  color: var(--faded-ink);
+  font-family: var(--font-utility);
+  font-size: 13px;
+  text-align: center;
+  padding: 12px;
+}
+
+.caption {
+  margin-top: 14px;
+  text-align: center;
+  padding: 0 8px;
+}
+.caption .caption-num {
+  font-family: var(--font-utility);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+}
+.caption .caption-text {
+  font-style: italic;
+  font-size: 18px;
+  color: var(--delft);
+  margin-top: 3px;
+}
+.caption .caption-text.placeholder { color: var(--faded-ink); opacity: 0.75; }
+
+/* ==========================================================
+   OUTRO
+   ========================================================== */
+.outro {
+  position: relative;
+  overflow: hidden;
+  min-height: 92svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 70px 28px;
+  background: linear-gradient(to bottom, var(--porcelain), #e9e9e6);
+}
+
+.outro-eyebrow {
+  font-family: var(--font-utility);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faded-ink);
+  margin-bottom: 18px;
+}
+
+.outro-title {
+  font-size: clamp(44px, 12vw, 64px);
+  font-weight: 500;
+  line-height: 1.05;
+  color: var(--delft-deep);
+  margin-bottom: 22px;
+}
+
+.outro-text {
+  font-style: italic;
+  font-size: 19px;
+  color: var(--faded-ink);
+  max-width: 320px;
+  transition-delay: 0.15s;
+}
+
+.outro-sign {
+  margin-top: 30px;
+  font-size: 20px;
+  font-style: italic;
+  color: var(--gold);
+  transition-delay: 0.3s;
+}
+
+/* ---------- accessibility ---------- */
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .chevron, .motes span { animation: none; }
+  .motes span { opacity: 0.3; bottom: auto; top: 20%; }
+  .thread-fill { transform: scaleY(1) !important; transition: none; }
+}
